@@ -7,6 +7,18 @@ FengMo Guo -
 
 Vinaya Ayinampudi - 
 
+The AI robot we developed is an innovative blend of many technologies, to create afunctional robot. This robot is constructed primarily using LEGO pieces for its structural framework, which provides both flexibility and durability. The core processing unit is a Raspberry Pi, a versatile and powerful microcomputer known for its wide range of applications in educational and hobbyist projects.
+
+The robot's artificial intelligence capabilities are powered by TensorFlow, a leading open-source machine learning framework. TensorFlow enables the robot to perform complex image recognition tasks by leveraging neural networks. These neural networks have been trained using a substantial dataset of images, allowing the robot to accurately identify and respond to various visual inputs.
+
+Python is the primary programming language used for this project, owing to its simplicity and extensive support for machine learning and robotics libraries. Python scripts handle everything from interfacing with the TensorFlow models to controlling the motors and sensors connected to the Raspberry Pi.
+
+To add a layer of interactivity and functionality, the robot utilizes components from the LEGO Mindstorms EV3 kit. These components include various sensors, such as touch, color, and ultrasonic sensors, as well as motors that provide movement capabilities. The integration of EV3 components with the Raspberry Pi and TensorFlow allows the robot to perform a wide range of tasks, from simple object avoidance to complex image-based interactions.
+
+The training process for the robot involved collecting a diverse set of images relevant to the tasks it was designed to perform. These images were preprocessed and used to train the neural network models in TensorFlow. During training, the models learn to recognize patterns and features in the images, enabling the robot to make accurate predictions and decisions based on new visual data it encounters.
+
+Overall, this AI robot project is a testament to the power of combining hardware and software from different platforms to create a cohesive and functional system. It serves as an excellent educational tool, demonstrating principles of machine learning, robotics, and programming in a tangible and engaging way. The use of LEGO for the structure makes it accessible and customizable, while the Raspberry Pi and TensorFlow provide the computational power needed for advanced AI applications. This project not only highlights the capabilities of modern technology but also inspires further exploration and innovation in the field of robotics.
+
 Technical solution design
 LEGO robot and car body structure design
 AI operating environment design, including structure design, power supply design, communication design, remote control handle.
@@ -31,8 +43,6 @@ The part where the neural network model is called in real time to make a predict
 The part that transmits the prediction data to the LEGO robot.
 The LEGO robot receives the data and performs the part of the action.
 
-
- 
 Overall technical solution design
 Technical Background:
 Machine learning (ML) is an umbrella term。 It refers to a computer software approach that lets machines find and optimize algorithms on their own. 
@@ -167,9 +177,7 @@ The LEGO EV3 medium-sized motor moves the gears left and right.
 Power management is essential to maintain efficiency and ensure the longevity of operation. Our design ensures that power usage is optimized through the differential gear system, which not only provides a realistic driving experience but also conserves energy by adjusting the power output to the wheels based on the steering and speed requirements.
 
 Assembly Instructions and experiences sharing
-To facilitate the replication and further development of our Autonomous Robotic Vehicle (ARV), we have provided detailed assembly instructions thatguide builders through every step of the construction process. In addition, we have produced a video that gives an overview of our ARV's components, which is available on YouTube:
-
-https://www.youtube.com/channel/UC-xgtNl2sAxedzdm55sLFWw
+To facilitate the replication and further development of our Autonomous Robotic Vehicle (ARV), we have provided detailed assembly instructions thatguide builders through every step of the construction process.
 
 We hope to share these resources for the use of educational institutions and enthusiasts alike, with the aim of fostering a collaborative and innovative environment in the field of robotics technology.
 
