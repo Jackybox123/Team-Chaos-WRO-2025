@@ -6,6 +6,8 @@ TensorFlow: An open-source machine learning framework used to develop and train 
 
 PuTTY: A terminal emulator used to connect to the Raspberry Pi remotely. With PuTTY, developers can access the Raspberry Pi's command line interface over SSH, allowing for configuration, debugging, and deployment of software updates without needing a direct physical connection.
 
+Pi Camera: The camera module connected to the Raspberry Pi, used for capturing real-time video and images. The Pi Camera is integral to the AI RC Car's vision system, allowing it to process visual data for object detection, line tracking, and environmental awareness. The camera feeds data into the TensorFlow models for real-time processing.
+
 Calibrate: A function or process within the software used to adjust and fine-tune the sensors and motors to ensure accurate readings and movements. Calibration is essential for the car to operate correctly, as it ensures that sensors provide reliable data and motors respond accurately to control signals.
 
 Config: A configuration module or file that stores settings and parameters for the AI RC Car. This includes sensor thresholds, motor speed limits, and neural network hyperparameters. The config module allows for easy adjustments and fine-tuning of the system.
