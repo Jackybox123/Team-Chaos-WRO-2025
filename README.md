@@ -3,11 +3,16 @@ Team Members:
 
 Coach Fei Guo
 
-FengMo Guo - 
+FengMo Guo -  a tenth-grade high school student from New 
+York, United States. He had participated in WRO in previous 
+seasons. He loves robots and is a very innovative person.  
 
-Vinaya Ayinampudi - 
+Vinaya Ayinampudi -  a 10th grader at eSTEM. In her free 
+time she likes to code, play volleyball, and bake. She loves 
+to experiment with robots and learn more about what can be 
+done with AI.
 
-The AI robot we developed is an innovative blend of many technologies, to create afunctional robot. This robot is constructed primarily using LEGO pieces for its structural framework, which provides both flexibility and durability. The core processing unit is a Raspberry Pi, a versatile and powerful microcomputer known for its wide range of applications in educational and hobbyist projects.
+The AI robot we developed is an innovative blend of many technologies, to create a functional robot. This robot is constructed primarily using LEGO pieces for its structural framework, which provides both flexibility and durability. The core processing unit is a Raspberry Pi, a versatile and powerful microcomputer known for its wide range of applications in educational and hobbyist projects.
 
 The robot's artificial intelligence capabilities are powered by TensorFlow, a leading open-source machine learning framework. TensorFlow enables the robot to perform complex image recognition tasks by leveraging neural networks. These neural networks have been trained using a substantial dataset of images, allowing the robot to accurately identify and respond to various visual inputs.
 
@@ -432,6 +437,8 @@ Tornado webserver:https://tornado-zh.readthedocs.io/zh/latest/#
 Tensorflow:https://www.tensorflow.org
 
 Kersa:https://keras.io/about/
+
+
 
 
 —-Thank You—-
