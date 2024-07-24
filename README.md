@@ -3,14 +3,14 @@ Team Members:
 
 Coach Fei Guo
 
-FengMo Guo -  a tenth-grade high school student from New 
-York, United States. He had participated in WRO in previous 
-seasons. He loves robots and is a very innovative person.  
-
 Vinaya Ayinampudi -  a 10th grader at eSTEM. In her free 
 time she likes to code, play volleyball, and bake. She loves 
 to experiment with robots and learn more about what can be 
 done with AI.
+
+FengMo Guo -  a tenth-grade high school student from New 
+York, United States. He had participated in WRO in previous 
+seasons. He loves robots and is a very innovative person.  
 
 The AI robot we developed is an innovative blend of many technologies, to create a functional robot. This robot is constructed primarily using LEGO pieces for its structural framework, which provides both flexibility and durability. The core processing unit is a Raspberry Pi, a versatile and powerful microcomputer known for its wide range of applications in educational and hobbyist projects.
 
