@@ -10,6 +10,10 @@ She loves to experiment with robots and learn more about what can be done with A
 FengMo Guo -  a senior at Los Osos High School. He had participated in WRO in previous 
 seasons. He loves working with robots and is a very innovative person.  
 
+Jiapeng (Jack) Xu - a sophmore at Rancho Cucamonga High school. Previously competed in the Robo Mission catagory.
+In his free time he likes to snowboard, code, and swim. 
+He loves coming up with solutions to problems by experimenting with robots and Ai.
+
 The AI robot we developed is an innovative blend of many technologies, to create a functional robot. This robot is constructed primarily using LEGO pieces for its structural framework, which provides both flexibility and durability. The core processing unit is a Raspberry Pi, a versatile and powerful microcomputer known for its wide range of applications in educational and hobbyist projects.
 
 The robot's artificial intelligence capabilities are powered by TensorFlow, a leading open-source machine learning framework. TensorFlow enables the robot to perform complex image recognition tasks by leveraging neural networks. These neural networks have been trained using a substantial dataset of images, allowing the robot to accurately identify and respond to various visual inputs.
