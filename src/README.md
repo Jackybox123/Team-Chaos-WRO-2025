@@ -1,6 +1,6 @@
 Control software
 ====
-Python Language: The primary programming language used to develop the control software. Python's simplicity and extensive libraries make it ideal for interfacing with hardware components, processing data, and implementing machine learning algorithms.
+Python: The primary programming language used to develop the control software. Python's simplicity and extensive libraries make it ideal for interfacing with hardware components, processing data, and implementing machine learning algorithms.
 
 TensorFlow: An open-source machine learning framework used to develop and train AI models. TensorFlow allows for the implementation of neural networks that enable the AI RC Car to recognize objects, make decisions, and navigate autonomously.
 
