@@ -1,3 +1,3 @@
-Team's photos
+Team FJV photos
 ====
 
