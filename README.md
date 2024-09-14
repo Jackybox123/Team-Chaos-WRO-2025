@@ -18,9 +18,6 @@ Vinaya Ayinampudi
 Vinaya is a junior at eSTEM Academy and is in her second year participating in the WRO Future Engineers Category internationally. She has a strong passion for AI and coding, and leads the team’s work on developing and refining the AI model for the self-driving car. 
 
 
-
-
-
 Project Overview: AI Self Driving Car
 
 At the heart of our project is a self-driving car that leverages artificial intelligence to navigate autonomously. The key to its functionality lies in the integration of machine learning and deep learning techniques through the TensorFlow framework, running on a Raspberry Pi. The car's AI model is trained to interpret image data and make real time decisions for navigation, all based on patterns learned from its training data.
@@ -191,8 +188,19 @@ AI Model and Neural Network Components
 3. Real Time Decision Making: Once deployed, the neural network runs in realtime, processing new images as they are captured by the car's camera. It uses the trained model to predict whether it should move left or right based on the color of the obstacle.
 4. Image Augmentation: To enhance the robustness of the model, we also use image augmentation techniques during training. This involves creating variations of the original images (such as adjusting brightness, contrast, or orientation) to simulate a wider range of driving conditions. This allows the neural network to perform well even in unfamiliar or challenging environments.
 
+Obstacles 
 
- Conclusion
+During the development of our AI self-driving car, we hit a major problem when we accidentally burned out the **Integrated Circuit (IC)** that controlled the motors. The IC is a crucial part because it helps send signals from the **Raspberry Pi** to the motors, allowing us to control how fast the car moves and in which direction. At first, everything was running smoothly, but after testing the car with more demanding tasks, the IC overheated and stopped working.
+
+We realized something was wrong when the car suddenly stopped moving, even though the Raspberry Pi was still sending commands. After checking, we found that the IC had burned out due to overheating. This happened because the motors were drawing too much power for too long, and the IC wasn’t equipped to handle it. We also hadn’t added any cooling to prevent it from getting too hot, which made the problem worse.
+
+To fix this, we did some research and decided to replace the burned-out IC with a stronger one that could handle more power. We also added heat sinks to help keep the IC cool and installed better airflow around it. On top of that, we added a fuse to the circuit. This fuse would blow if the motors tried to pull too much power, which would stop the IC from overheating again.
+
+After making these changes, we tested the car again under the same conditions that caused the problem, and everything worked perfectly. The new IC and cooling system kept things running smoothly, even when the car was driving for a long time. This experience taught us how important it is to test the car in different scenarios and to make sure all the components are protected against potential problems like overheating.
+
+In the end, this issue turned out to be a valuable learning experience for us. Even though it was frustrating, it helped us understand the importance of making sure all the parts of the car are reliable and safe from damage.
+
+Conclusion
 
 Team FJV’s AI powered self-driving car represents a sophisticated application of machine learning, neural networks, and real time decision making. Our project combines the power of TensorFlow, Raspberry Pi, a custom built CNN and lego structure to create a self driving system capable of navigating autonomously.
 
