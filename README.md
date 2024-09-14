@@ -38,8 +38,120 @@ At the heart of our project is a self-driving car that leverages artificial inte
 5. Image Training: The AI model is trained using images collected from the car’s environment. These images are analyzed during the training phase, with the model learning to recognize important features such as road boundaries, obstacles, and turns. The more diverse the image dataset, the better the model becomes at predicting the necessary actions in different scenarios.
 
 
+Overview of PWM
+Pulse Width Modulation (PWM) is a technique used to control the speed and direction of the motors that drive the wheels of the car. In our self-driving car, PWM is essential for achieving precise control over acceleration and steering, enabling smooth and efficient movement. PWM operates by rapidly switching the power supplied to the motors on and off, with the ratio of "on" time to "off" time determining the effective power delivered.
+
+Duty Cycle: The percentage of time the signal is "on" during each PWM cycle. A higher duty cycle results in more power being delivered to the motor, increasing speed.
+Frequency: The number of times per second the PWM signal repeats. A higher frequency provides finer control, ensuring smoother transitions in motor speed.
+How PWM is Used in Our Project
+For our self-driving car, PWM is used to control both the DC motors that drive the wheels and the servo motors responsible for steering. The Raspberry Pi sends PWM signals to the motor controller, which then adjusts the voltage to the motors based on the desired speed or steering angle.
+
+Wheel Speed Control: By varying the duty cycle of the PWM signal sent to the motors, we can control the speed of the car. For example, a duty cycle of 50% will result in half the maximum speed, while 100% duty cycle delivers full power.
+
+Steering Control: The car’s steering mechanism is controlled by a servo motor, which adjusts the front wheels' angle. The PWM signal sent to the servo determines how much the wheels turn left or right, allowing the car to navigate curves and make sharp turns.
+
+The smooth control provided by PWM is crucial for ensuring that the car responds accurately to the predictions made by the AI model, translating neural network outputs into physical actions in real-time.
+
+Role of the Gyroscope
+The gyroscope plays a key role in tracking the orientation and movement of the self-driving car. Specifically, the WT901C gyroscope is used in our project to measure angular velocity and detect changes in the car’s orientation across multiple axes (pitch, roll, and yaw). This information is critical for real-time adjustments to the car’s path, ensuring it stays balanced and accurately follows its intended course.
+
+Gyroscope Data and Its Impact on AI
+Real-Time Motion Correction: As the car moves, the gyroscope continuously monitors its orientation. If the car encounters uneven terrain or makes sharp turns, the gyroscope data is used to make corrections. For instance, if the car starts to tilt or rotate unexpectedly, the Raspberry Pi uses the gyroscope readings to adjust the motors' power or steering to bring the car back to a stable position.
+
+Feedback Loop: The gyroscope works in tandem with the AI model, providing feedback that complements the camera's visual data. While the camera focuses on image-based navigation, the gyroscope ensures the car maintains proper balance and orientation, preventing it from veering off course due to physical forces like momentum or incline.
+
+Obstacle Navigation: During obstacle avoidance, the gyroscope helps the AI determine how the car's orientation shifts as it navigates around objects. By analyzing these shifts, the neural network can make more informed predictions about how the car should adjust its speed and steering to navigate complex environments.
+
+The physical structure of the car is built using lego components. While LEGO provides flexibility in design, it also offers sufficient durability and modularity for integrating various sensors and electronic components.
+
+It is lightweight, easy to modify, and allows us to quickly prototype and adjust the structure as needed. The open design makes it easy to mount sensors, motors, and the Raspberry Pi.
+
+The team designed the chassis to house the key components, such as the motor, Raspberry Pi, gyroscope, and wiring, ensuring proper balance and weight distribution. The front wheels are connected to a servo motor to enable precise control of steering angles, while the rear wheels are powered by DC motors for propulsion.
+
+The car uses a combination of DC motors for movement and a servo motor for steering:
+
+These are connected to the rear wheels and controlled using Pulse Width Modulation (PWM) signals. The power delivered to the motors varies depending on the speed the car needs to achieve. For example, lower PWM duty cycles reduce speed, while higher duty cycles deliver more power for acceleration.
+  
+The servo motor controls the angle of the front wheels, allowing for precise turns. It operates based on a range of motion determined by the PWM signal sent from the Raspberry Pi, which is determined by the AI model's predictions.
+
+At the heart of the car’s autonomous driving capabilities is a Convolutional Neural Network (CNN) developed using TensorFlow. This deep learning framework is essential for training the AI to recognize driving patterns, road boundaries, and obstacles based on visual data collected by the car’s camera.
+
+The CNN processes input images captured by the camera mounted on the car. Each layer of the CNN extracts features from the images, starting with basic edges and progressing to more complex features such as shapes and objects. These features are then passed through multiple layers, allowing the network to learn important aspects of the driving environment (such as turns, obstacles, or road boundaries).
+
+The CNN is trained using a dataset of images captured during the manual driving phase (discussed in detail later). During training, the network adjusts its internal weights through backpropagation which minimizes prediction errors by iteratively improving the network’s ability to associate input images with driving decisions.
+
+Once trained, the CNN processes live input from the car’s camera and predicts appropriate actions such as accelerating, turning, or stopping. These predictions are then used to generate PWM signals that control the motors.
 
 
+The core AI model operates in real-time, continuously processing visual data from the camera:
+
+Before being fed into the neural network, the captured images are resized and normalized. This step is important because it ensures that the data fed into the neural network is consistent, reducing the computational load and improving the accuracy of predictions.
+
+The AI model is trained to map each image frame to a specific driving action. For example, if the network detects a left curve in the image, it will predict a left turn, which is then executed by adjusting the servo motor accordingly.
+
+
+The Raspberry Pi acts as the brain of the car, running the AI model and handling all communication between the sensors, motors, and other hardware components.
+
+The car uses a Raspberry Pi 4 with the Bullseye upgrade. The Raspberry Pi has enough computational power to run the TensorFlow model in real-time while processing data from sensors and controlling the motors via PWM signals.
+  
+The Raspberry Pi’s General-Purpose Input/Output (GPIO) pins are used to interface with the motor controller, gyroscope, and servo motor. The GPIO pins allow for direct control of the PWM signals that regulate motor speed and steering.
+
+During the training phase, the Raspberry Pi stores image data on an SD card. This data is later used to train the neural network offline.
+
+
+The software running on the Raspberry Pi is written in Python. Python is chosen for its extensive library support, including TensorFlow, and its ease of integration with hardware components.
+
+TensorFlow is used to create and run the neural network models. The Python code loads the trained model onto the Raspberry Pi, processes input images, and uses the model to generate predictions.
+  
+Additional Python libraries are used to handle PWM signal generation and motor control. For example, the RPi.GPIO library is used to interact with the GPIO pins and control motor speed and direction.
+
+PWM is used to control the speed of the DC motors that drive the car’s wheels. By varying the duty cycle of the PWM signal, we can adjust the amount of power delivered to the motors:
+
+The percentage of time the signal is "on" during each PWM cycle. A higher duty cycle increases motor speed, while a lower duty cycle slows the car down.PWM allows for precise control over the car’s movement. This is critical when navigating tight spaces or making small adjustments during obstacle avoidance.
+
+The front wheels are steered using a servo motor, which is controlled via PWM signals. The angle of the wheels is adjusted based on the AI model’s predictions. By varying the PWM signal, we can control the steering angle with high precision, enabling the car to make sharp or gradual turns.
+
+
+The WT901C gyroscope provides real-time orientation data for the car. It measures angular velocity and orientation across the pitch, roll, and yaw axes. This data is essential for keeping the car balanced and ensuring accurate turns.
+
+The gyroscope continuously monitors the car’s orientation and sends this data to the Raspberry Pi. The AI model uses this data to make adjustments to the car’s speed and direction, especially when navigating uneven terrain or sharp turns.
+
+
+The gyroscope works in conjunction with the AI model to form a feedback loop:
+
+If the gyroscope detects that the car is tilting or rotating unexpectedly, the AI model can use this information to adjust motor power or steering angles, bringing the car back to a stable position.
+
+The gyroscope’s data helps ensure smooth driving, especially when the car encounters obstacles or makes sudden turns. For example, if the car begins to tilt while turning, the gyroscope detects this and sends the data to the AI model, which can then adjust the steering angle or motor power to stabilize the vehicle.
+
+
+The first step in training the AI model is collecting data through manual driving. This involves driving the car manually around a demo map that includes both clear roads and obstacles.
+
+As the car is driven manually, the camera continuously captures images of the environment. These images are saved to the Raspberry Pi’s storage, creating a dataset that will later be used to train the AI model.
+
+Each image is associated with a specific action, such as turning left, turning right, or accelerating. This labeled data forms the basis of the training dataset.
+
+Once the dataset has been collected, we train the Convolutional Neural Network (CNN) to recognize patterns in the images and predict the appropriate driving actions:
+
+The collected images are split into a training set and a validation set. The training set is used to adjust the model’s internal parameters, while the validation set ensures that the model generalizes well to new data.
+
+The CNN is trained using backpropagation, a technique that allows the network to learn from its mistakes. During each iteration, the network adjusts its internal weights to reduce the difference between its predictions and the correct driving actions.
+
+
+After training, the AI model is tested on unseen data to evaluate its accuracy and performance:
+
+The model is evaluated using the validation set, ensuring that it performs well on data it has not seen during training. This step is critical for preventing overfitting, where the model performs well on the training data but poorly on new data.
+
+Once the model performs well on the validation set, it is tested in real-world conditions. The car is driven autonomously on the demo map, and the AI’s predictions are compared to the actual driving actions.
+
+The car uses its camera and AI model to detect obstacles in the environment. During training, the model is taught to recognize objects in the car’s path and take appropriate actions to avoid them.
+
+The CNN processes images captured by the camera and identifies obstacles. The AI then decides whether to turn, slow down, or stop based on the location and size of the obstacle.
+  
+The AI model predicts the safest course of action by analyzing the obstacle’s distance and direction relative to the car. It then adjusts the steering and motor power accordingly, allowing the car to navigate around the object without colliding.
+
+The car is tested on a predefined demo map that includes straight paths, curves, and obstacles. This provides a controlled environment for evaluating the car’s ability to navigate different terrains and avoid obstacles.
+
+In more complex environments, the car must deal with moving obstacles, uneven surfaces, and unpredictable conditions. These challenges require the AI model to make quick decisions based on real-time data, and the integration of PWM and gyroscope feedback ensures the car remains stable during these maneuvers.
 
  AI Training and Model Development
 
