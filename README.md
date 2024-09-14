@@ -3,6 +3,7 @@ FVJ WRO 2024 - Future Engineers
 FVJ Team Members
 
 Coach Fei Guo
+
 Coach Fei Guo (Robert Guo)  provides the technical guidance and leadership required to keep Team FVJ on track. With extensive experience in robotics, he helps us navigate complex challenges, refine our designs, and develop solutions that work in competitive and real-world settings.
 
 FengMo Guo  
