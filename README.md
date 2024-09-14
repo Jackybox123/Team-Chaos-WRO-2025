@@ -1,21 +1,21 @@
-FJV WRO 2024 - Future Engineers
+FVJ WRO 2024 - Future Engineers
 
-FJV Team Members
+FVJ Team Members
 
 Coach Fei Guo
-Coach Fei Guo (Robert Guo)  provides the technical guidance and leadership required to keep Team FJV on track. With extensive experience in robotics, he helps us navigate complex challenges, refine our designs, and develop solutions that work in competitive and real-world settings.
+Coach Fei Guo (Robert Guo)  provides the technical guidance and leadership required to keep Team FVJ on track. With extensive experience in robotics, he helps us navigate complex challenges, refine our designs, and develop solutions that work in competitive and real-world settings.
 
 FengMo Guo  
 
 FengMo, a senior at Los Osos High School, is an experienced WRO participant with a keen interest in robotics hardware. His innovative contributions to the project ensure that the car’s structure supports the advanced capabilities of its AI system.
 
-Jiapeng (Jack) Xu  
-
-Jack is a sophomore at Rancho Cucamonga High School with previous experience in the Robo Mission category.. He contributes to the AI model development, focusing on optimizing the system to improve the car’s decision making abilities.
-
 Vinaya Ayinampudi 
  
 Vinaya is a junior at eSTEM Academy and is in her second year participating in the WRO Future Engineers Category internationally. She has a strong passion for AI and coding, and leads the team’s work on developing and refining the AI model for the self-driving car. 
+
+Jiapeng (Jack) Xu  
+
+Jack is a sophomore at Rancho Cucamonga High School with previous experience in the Robo Mission category.. He contributes to the AI model development, focusing on optimizing the system to improve the car’s decision making abilities.
 
 
 Project Overview: AI Self Driving Car
@@ -202,7 +202,7 @@ In the end, this issue turned out to be a valuable learning experience for us. E
 
 Conclusion
 
-Team FJV’s AI powered self-driving car represents a sophisticated application of machine learning, neural networks, and real time decision making. Our project combines the power of TensorFlow, Raspberry Pi, a custom built CNN and lego structure to create a self driving system capable of navigating autonomously.
+Team FVJ’s AI powered self-driving car represents a sophisticated application of machine learning, neural networks, and real time decision making. Our project combines the power of TensorFlow, Raspberry Pi, a custom built CNN and lego structure to create a self driving system capable of navigating autonomously.
 
 Our team has employed a unique approach in the design of our intelligent vehicle, which is characterized by the use of a pure Artificial Intelligence (AI) model. At the heart of this system is a Convolutional Neural Network (CNN) that operates under a Linux environment, utilizing Google's TensorFlow.
 
