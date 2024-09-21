@@ -27,44 +27,33 @@ At the heart of our project is a self-driving car that leverages artificial inte
 
 1. TensorFlow: The primary framework used to build the AI model. TensorFlow allows us to develop a Convolutional Neural Network (CNN), which forms the foundation for the car’s ability to recognize patterns in images and predict appropriate driving actions.
    
-2. Neural Networks: The AI system relies on a neural network architecture, particularly a CNN, to process image inputs and predict the best course of action. Neural networks simulate the way the human brain processes visual and sensory data, which is critical for enabling the car to "learn" from training data.
+2. Convolutional Neural Networks: The AI system relies on a neural network architecture, particularly a CNN, to process image inputs and predict the best course of action. Neural networks simulate the way the human brain processes visual and sensory data, which is critical for enabling the car to "learn" from training data.
 
-3. Python: The coding language used for the entire project. Python’s extensive libraries and compatibility with TensorFlow make it ideal for AI development. All model training, data processing, and decision making algorithms are written in Python.
+4. Python: The coding language used for the entire project. Python’s extensive libraries and compatibility with TensorFlow make it ideal for AI development. All model training, data processing, and decision making algorithms are written in Python.
 
-4. Raspberry Pi: The AI model runs on a Raspberry Pi system. This small, yet powerful, computer provides the necessary computing power to execute TensorFlow models while maintaining the flexibility and compatibility required for robotics projects.
+5. Raspberry Pi: The AI model runs on a Raspberry Pi system. This small, yet powerful, computer provides the necessary computing power to execute TensorFlow models while maintaining the flexibility and compatibility required for robotics projects.
 
-5. Image Training: The AI model is trained using images collected from the car’s environment. These images are analyzed during the training phase, with the model learning to recognize important features such as road boundaries, obstacles, and turns. The more diverse the image dataset, the better the model becomes at predicting the necessary actions in different scenarios.
+6. Image Training: The AI model is trained using images collected from the car’s environment. These images are analyzed during the training phase, with the model learning to recognize important features such as road boundaries, obstacles, and turns. The more diverse the image dataset, the better the model becomes at predicting the necessary actions in different scenarios.
 
 
 Overview of PWM
 Pulse Width Modulation (PWM) is a technique used to control the speed and direction of the motors that drive the wheels of the car. In our self-driving car, PWM is essential for achieving precise control over acceleration and steering, enabling smooth and efficient movement. PWM operates by rapidly switching the power supplied to the motors on and off, with the ratio of "on" time to "off" time determining the effective power delivered.
 
-Duty Cycle: The percentage of time the signal is "on" during each PWM cycle. A higher duty cycle results in more power being delivered to the motor, increasing speed.
 Frequency: The number of times per second the PWM signal repeats. A higher frequency provides finer control, ensuring smoother transitions in motor speed.
+
 How PWM is Used in Our Project
 For our self-driving car, PWM is used to control both the DC motors that drive the wheels and the servo motors responsible for steering. The Raspberry Pi sends PWM signals to the motor controller, which then adjusts the voltage to the motors based on the desired speed or steering angle.
 
-Wheel Speed Control: By varying the duty cycle of the PWM signal sent to the motors, we can control the speed of the car. For example, a duty cycle of 50% will result in half the maximum speed, while 100% duty cycle delivers full power.
-
-Steering Control: The car’s steering mechanism is controlled by a servo motor, which adjusts the front wheels' angle. The PWM signal sent to the servo determines how much the wheels turn left or right, allowing the car to navigate curves and make sharp turns.
-
-The smooth control provided by PWM is crucial for ensuring that the car responds accurately to the predictions made by the AI model, translating neural network outputs into physical actions in real-time.
+Steering and Throttle Control: The car’s steering mechanism is controlled by a servo motor, which adjusts the front wheels' angle. The PWM signal sent to the servo determines how much the wheels turn left or right, allowing the car to navigate curves and make sharp turns. It can move left, right, backwards, and forwards. The smooth control provided by PWM is crucial for ensuring that the car responds accurately to the predictions made by the AI model, translating neural network outputs into physical actions in real-time.
 
 Role of the Gyroscope
-The gyroscope plays a key role in tracking the orientation and movement of the self-driving car. Specifically, the WT901C gyroscope is used in our project to measure angular velocity and detect changes in the car’s orientation across multiple axes (pitch, roll, and yaw). This information is critical for real-time adjustments to the car’s path, ensuring it stays balanced and accurately follows its intended course.
-
-Gyroscope Data and Its Impact on AI
-Real-Time Motion Correction: As the car moves, the gyroscope continuously monitors its orientation. If the car encounters uneven terrain or makes sharp turns, the gyroscope data is used to make corrections. For instance, if the car starts to tilt or rotate unexpectedly, the Raspberry Pi uses the gyroscope readings to adjust the motors' power or steering to bring the car back to a stable position.
+The gyroscope plays a key role in tracking the orientation and movement of the self-driving car. Specifically, the WT901C gyroscope is used in our project to measure angular velocity and detect changes in the car’s orientation across multiple axes (pitch, roll, and yaw). This information is critical for real-time adjustments to the car’s path, ensuring it stays balanced and accurately follows its intended course. The gyroscope helps locate the car on the filed, and determine the position when turnings, going back, and parking.
 
 Feedback Loop: The gyroscope works in tandem with the AI model, providing feedback that complements the camera's visual data. While the camera focuses on image-based navigation, the gyroscope ensures the car maintains proper balance and orientation, preventing it from veering off course due to physical forces like momentum or incline.
 
 Obstacle Navigation: During obstacle avoidance, the gyroscope helps the AI determine how the car's orientation shifts as it navigates around objects. By analyzing these shifts, the neural network can make more informed predictions about how the car should adjust its speed and steering to navigate complex environments.
 
-The physical structure of the car is built using lego components. While LEGO provides flexibility in design, it also offers sufficient durability and modularity for integrating various sensors and electronic components.
-
-It is lightweight, easy to modify, and allows us to quickly prototype and adjust the structure as needed. The open design makes it easy to mount sensors, motors, and the Raspberry Pi.
-
-The team designed the chassis to house the key components, such as the motor, Raspberry Pi, gyroscope, and wiring, ensuring proper balance and weight distribution. The front wheels are connected to a servo motor to enable precise control of steering angles, while the rear wheels are powered by DC motors for propulsion.
+The physical base structure of our car is an RC car, but we added on to this base by designing our own lego structure. The team designed the chassis to house the key components, such as the motor, Raspberry Pi, gyroscope, and wiring, ensuring proper balance and weight distribution. The front wheels are connected to a servo motor to enable precise control of steering angles, while the rear wheels are powered by DC motors for propulsion.
 
 The car uses a combination of DC motors for movement and a servo motor for steering:
 
@@ -79,7 +68,6 @@ The CNN processes input images captured by the camera mounted on the car. Each l
 The CNN is trained using a dataset of images captured during the manual driving phase (discussed in detail later). During training, the network adjusts its internal weights through backpropagation which minimizes prediction errors by iteratively improving the network’s ability to associate input images with driving decisions.
 
 Once trained, the CNN processes live input from the car’s camera and predicts appropriate actions such as accelerating, turning, or stopping. These predictions are then used to generate PWM signals that control the motors.
-
 
 The core AI model operates in real-time, continuously processing visual data from the camera:
 
@@ -102,18 +90,6 @@ The software running on the Raspberry Pi is written in Python. Python is chosen 
 TensorFlow is used to create and run the neural network models. The Python code loads the trained model onto the Raspberry Pi, processes input images, and uses the model to generate predictions.
   
 Additional Python libraries are used to handle PWM signal generation and motor control. For example, the RPi.GPIO library is used to interact with the GPIO pins and control motor speed and direction.
-
-PWM is used to control the speed of the DC motors that drive the car’s wheels. By varying the duty cycle of the PWM signal, we can adjust the amount of power delivered to the motors:
-
-The percentage of time the signal is "on" during each PWM cycle. A higher duty cycle increases motor speed, while a lower duty cycle slows the car down.PWM allows for precise control over the car’s movement. This is critical when navigating tight spaces or making small adjustments during obstacle avoidance.
-
-The front wheels are steered using a servo motor, which is controlled via PWM signals. The angle of the wheels is adjusted based on the AI model’s predictions. By varying the PWM signal, we can control the steering angle with high precision, enabling the car to make sharp or gradual turns.
-
-
-The WT901C gyroscope provides real-time orientation data for the car. It measures angular velocity and orientation across the pitch, roll, and yaw axes. This data is essential for keeping the car balanced and ensuring accurate turns.
-
-The gyroscope continuously monitors the car’s orientation and sends this data to the Raspberry Pi. The AI model uses this data to make adjustments to the car’s speed and direction, especially when navigating uneven terrain or sharp turns.
-
 
 The gyroscope works in conjunction with the AI model to form a feedback loop:
 
@@ -191,7 +167,7 @@ AI Model and Neural Network Components
 
 Obstacles 
 
-During the development of our AI self-driving car, we hit a major problem when we accidentally burned out the **Integrated Circuit (IC)** that controlled the motors. The IC is a crucial part because it helps send signals from the **Raspberry Pi** to the motors, allowing us to control how fast the car moves and in which direction. At first, everything was running smoothly, but after testing the car with more demanding tasks, the IC overheated and stopped working.
+During the development of our AI self-driving car, we hit a major problem when we accidentally burned out the Integrated Circuit (IC) that controlled the motors. The IC is a crucial part because it helps send signals from the Raspberry Pi to the motors, allowing us to control how fast the car moves and in which direction. At first, everything was running smoothly, but after testing the car with more demanding tasks, the IC overheated and stopped working.
 
 We realized something was wrong when the car suddenly stopped moving, even though the Raspberry Pi was still sending commands. After checking, we found that the IC had burned out due to overheating. This happened because the motors were drawing too much power for too long, and the IC wasn’t equipped to handle it. We also hadn’t added any cooling to prevent it from getting too hot, which made the problem worse.
 
