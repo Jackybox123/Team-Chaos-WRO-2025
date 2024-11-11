@@ -189,3 +189,30 @@ Our team has employed a unique approach in the design of our intelligent vehicle
 
 Our design philosophy has been clear and consistent from the beginning: to merge the benefits of traditional programming with AI. By feeding the AI high quality data, it processes information and analyzes data like a brain, making predictions while also learning the driver's habits, thus humanizing the vehicle's driving behavior. Our intelligent vehicle is not merely mechanically operated; it is driven by an intelligent system that combines precise programming with an AI model for an enhanced driving experience.
 
+
+
+1. Mobility Management
+Vehicle Design and Motor Control:
+Our vehicle utilizes a custom-built RC car platform, which incorporates a DC motor to control throttle and a servo for steering. The DC motor was chosen for its ability to provide smooth acceleration and consistent speed, while the servo offers precise steering control. Both components are managed by a custom-designed ESC (Electronic Speed Controller), which interfaces directly with the Raspberry Pi to allow for dynamic control.
+AI-Controlled Mobility:
+To enable autonomous operation, we integrated a Pi Camera to feed real-time visual data to an AI model. The model predicts the appropriate throttle and steering adjustments based on obstacle detection and navigation requirements. The AI model was trained using data collected from manual control, where the car was driven and the corresponding throttle and steering values were logged alongside images captured by the Pi Camera.
+Challenges in Mobility Management:
+One of the challenges faced during development was ensuring the AI model could accurately distinguish between obstacles with similar shapes. We overcame this by incorporating color recognition, which allowed the AI to make more precise decisions. Another challenge was syncing the throttle and steering inputs in real-time during training, especially when switching between AI models for different control tasks.
+
+
+2. Power and Sense Management
+Power Source and Sensors:
+The vehicle’s power is supplied by a dual-battery system. A battery bank powers the Raspberry Pi, while a separate battery provides power to the RC car platform. The Pi Camera provides visual input for the AI model, and various sensors (e.g., encoders, proximity sensors) support the vehicle's obstacle detection and decision-making. These sensors help the AI predict the necessary steering and throttle adjustments for efficient navigation.
+Power Consumption Considerations:
+The power consumption of the Raspberry Pi is monitored, and the battery bank ensures consistent operation of both the Pi and the sensors. A well-organized wiring system connects the power sources to the components, and an efficient power distribution setup minimizes energy loss during operation.
+
+
+3. Obstacle Management
+Obstacle Detection and Strategy:
+Our vehicle uses a combination of AI driven image processing and sensor input from our Pi Camera to detect and navigate obstacles. The Pi Camera captures live images, which are processed by the AI model to predict the appropriate throttle and steering commands. This real-time processing allows the car to adapt to different obstacles by adjusting speed and direction.
+Obstacle Handling Strategy:
+The obstacle handling strategy was developed through a process of trial and error. Initially, the AI model struggled to differentiate between obstacles based on shape alone, so color differentiation was integrated into the training process. Additionally, detailed comments were created on each code that was created to handle these strategies; they can be viewed in the src files on Github.
+Challenges and Solutions:
+A significant challenge was ensuring the AI could process the image data fast enough to make timely adjustments. We addressed this by optimizing the image recognition algorithm and fine-tuning the throttle/steering prediction model. Real-time data handling and efficient algorithm implementation were key to improving obstacle navigation.
+
+
