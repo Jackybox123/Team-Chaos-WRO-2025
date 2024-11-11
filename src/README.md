@@ -42,3 +42,12 @@ The movement of the car is controlled by adjusting PWM signals, which are sent t
 Real-time feedback is displayed on an LCD screen, showing useful information such as the yaw angle and the AI model’s status. This allows the car's performance to be monitored continuously. The car also includes a basic color detection feature, which can identify specific colors, though it is not fully integrated in the current version of the code.
 
 In the main loop, sensor data is gathered, images are captured, predictions are made by the AI model, and the car’s movement is controlled. Once the three rotations are completed, the car stops as planned. Finally, the code includes a shutdown process to safely power down the system, ensuring that everything, including the camera, is properly turned off after the task is complete.
+
+This Python code is used in our RC car project to monitor an activation button that starts the car. The button, connected to GPIO 25, serves as an input device that triggers the car to start running. The code continuously checks whether the button has been pressed, and when it detects the button’s input, it will activate certain functions to begin the car's movement.
+
+
+01_detect_GPIO.py:
+
+We use the GPIO.BCM mode to reference the pins by their Broadcom numbers. GPIO 25 is set up as an input pin with an internal pull-up resistor, which means it will be "high" (on) unless the button is pressed, which would then bring the signal "low" (off). This setup helps the code to distinguish when the button is pressed.
+
+The program runs in a loop, checking the button state every 0.1 seconds. If the button is pressed (GPIO 25 goes low), the car can then start running, making this code crucial for triggering the car's activation. The continuous checking ensures the car responds immediately to the button press.
