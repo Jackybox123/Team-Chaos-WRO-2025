@@ -53,6 +53,14 @@ LCD 1602 in our Ai-Car
 
 In our AI car, the LCD1602 is important because it shows what’s going on with the car. It tells us which AI model is running, shows where the car is displaying the gyroscope data, and signals when the car is processing code. This helps me keep track of everything the car is doing without having to connect it to a computer. It’s a simple but useful tool for making sure the car is working properly.
 
+GPIO Description
+
+GPIO stands for "General Purpose Input/Output." It refers to the pins on devices like the Raspberry Pi that allow you to control and communicate with different electronic components. These pins can be programmed to either send out signals (output) or receive signals (input), which lets the Raspberry Pi interact with things like motors, sensors, LEDs, and more. The flexibility of GPIO makes it super useful for building custom projects that need to control various devices.
+
+GPIO in our Ai-Car
+
+In my AI car, the GPIO pins are essential because they help the Raspberry Pi control the car’s motors, sensors, and display. For example, the pins can send signals to turn the wheels or read data from sensors about the car’s surroundings. Without GPIO, the Raspberry Pi wouldn’t be able to manage all the different parts of the car, which makes it a key part of the project.
+
 
 Designing: Planning the layout and connections of components.
 Assembling: Guiding the physical construction and wiring of the car.
