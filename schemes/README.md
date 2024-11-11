@@ -77,6 +77,14 @@ RC Car in our Ai-Car
 
 The RC car is the car we use for testing and running our AI systems. It's controlled by the Raspberry Pi and has sensors that help it navigate. We feed data from cameras and other sensors into the Raspberry Pi, which processes that data and makes decisions on how the car should steer or move. The car is the physical platform where our AI models run enabling the finishing of the runs.
 
+Lego Pieces Description
+
+The LEGO EV3 set is part of the LEGO Mindstorms series, designed to teach robotics and programming. It includes motors, sensors, and a programmable brick (the EV3 brick) that acts as the brain of the robot. The set also has various LEGO Technic pieces, such as beams, gears, and wheels, which are used to build the robot’s structure. The EV3 set is popular for learning about robotics, coding, and engineering, often used in educational settings and competitions.
+
+Lego Pieces in our Ai-Car
+
+
+We use LEGO parts to build the structure of the car because they’re flexible and easy to work with. The LEGO pieces allow us to create a solid frame to hold all the important parts like the Raspberry Pi, the camera, and the sensors in place. Since LEGO parts are modular, we can easily adjust or rebuild the structure if we need to change the design. This makes it simple to make improvements to the car without having to start from scratch. Plus, LEGO pieces are lightweight, which is helpful for keeping the car fast and agile while it drives.
 
 Designing: Planning the layout and connections of components.
 Assembling: Guiding the physical construction and wiring of the car.
