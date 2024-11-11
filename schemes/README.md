@@ -46,6 +46,7 @@ Raspberry Pi in our Ai-Car
 For our AI car, the Raspberry Pi is essential because it handles all the key tasks needed to run the car. It processes the camera feed, allowing the car to see its environment, and runs the AI model that makes decisions on how to steer and control the speed. Because it’s small and lightweight, it fits easily into the car without taking up too much space or power. Its ability to connect to other components, like the camera and motors, makes it the perfect system for the car. Without the Raspberry Pi, the car wouldn’t be able to think or respond to its surroundings in real time, making it crucial for the car to operate smoothly.
 
 LCD 1602 Description
+
 The LCD1602 is a small screen that shows up to two lines of text with 16 characters each. It’s often used in projects to display important information, like updates or sensor data. It’s easy to use and doesn’t need a lot of power, which makes it a good fit for small projects like mine. It connects easily to devices like the Raspberry Pi and lets you see useful info without needing a big screen.
 
 LCD 1602 in our Ai-Car
