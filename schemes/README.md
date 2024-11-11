@@ -61,6 +61,22 @@ GPIO in our Ai-Car
 
 In my AI car, the GPIO pins are essential because they help the Raspberry Pi control the car’s motors, sensors, and display. For example, the pins can send signals to turn the wheels or read data from sensors about the car’s surroundings. Without GPIO, the Raspberry Pi wouldn’t be able to manage all the different parts of the car, which makes it a key part of the project.
 
+Gyroscope Description
+
+A gyroscope is a sensor that measures the orientation and rotation of an object. It helps detect how an object is tilting, turning, or moving. Gyroscopes are commonly used in things like phones, drones, and robots to track movement and position.
+
+Gyroscope in our Ai-Car
+
+In our AI car, the gyroscope is important for understanding the car’s movement and position. It helps the car know where it is, so the system can decide when to switch between different AI models based on its current position or movement. This allows the car to adjust its driving behavior accurately and ensures it responds properly to changes. The gyroscope data is also displayed on the LCD screen for easy monitoring.
+
+RC Car Description
+
+An RC car is a small car that you can control from a distance using a remote. It’s mainly used for fun or in competitions, and it moves by sending signals from the remote to the car. The car has motors and controllers that let it go forward, backward, and turn.
+
+RC Car in our Ai-Car
+
+The RC car is the car we use for testing and running our AI systems. It's controlled by the Raspberry Pi and has sensors that help it navigate. We feed data from cameras and other sensors into the Raspberry Pi, which processes that data and makes decisions on how the car should steer or move. The car is the physical platform where our AI models run enabling the finishing of the runs.
+
 
 Designing: Planning the layout and connections of components.
 Assembling: Guiding the physical construction and wiring of the car.
