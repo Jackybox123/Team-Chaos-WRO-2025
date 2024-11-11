@@ -61,4 +61,16 @@ In this code, we use the PiCamera with the Picamera2 library to continuously cap
 The code defines two color ranges for red and one for green. It then creates masks for each color by filtering the HSV image. The number of non-zero pixels in each mask is counted to determine the presence of red or green. If there are more red pixels than green pixels and the red count exceeds a threshold (1000 pixels), it prints "Red detected". Similarly, if green has a higher count, it prints "Green detected". If neither color is detected, it prints "No red or green detected". This code helps the car detect obstacles using the camera. It looks for red and green colors to understand which dirction to go on the third round because at the end of the second round it will be able to use this code to know which obstacle its looking at to determine if it will continue towards the third round or it will reverse directions and continue to the third round going in the same direction.
 
 
+06_read_GYRO_with_dts-integral.py:
+
+
+This code helps our car track how much it’s turning by reading data from a WT901 sensor. The sensor measures the car’s rotation around the Z-axis (yaw), which tells us how the car is facing. It works like this:
+
+First, the car uses I2C to talk to the sensor and get data about its Z-axis rotation. The sensor gives us a raw number that represents how fast the car is turning. We convert that number into degrees per second, so we know how much it’s rotating.
+
+Then, the code keeps track of how long it’s been since the last time it checked the sensor. It uses that time difference to calculate how much the car’s yaw angle has changed. This way, we can figure out the car’s exact direction by adding up the changes over time.
+
+So, when the car is running, the code updates the yaw angle and prints out the car’s direction in real time. This helps the car know where it’s facing this is important as it lets us known when to change between ai models for example we trained models for parking and many other stuff once the car reaches a certain degree or location this lets us use a different ai model to accomplish a different task that is required at that point in time of the run.
+
+
 
