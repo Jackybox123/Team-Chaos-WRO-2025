@@ -72,5 +72,24 @@ Then, the code keeps track of how long it’s been since the last time it checke
 
 So, when the car is running, the code updates the yaw angle and prints out the car’s direction in real time. This helps the car know where it’s facing this is important as it lets us known when to change between ai models for example we trained models for parking and many other stuff once the car reaches a certain degree or location this lets us use a different ai model to accomplish a different task that is required at that point in time of the run.
 
+07_Control_RCcar_with_KB.py:
+
+
+This code is used to control the car’s speed and direction using a keyboard. It begins by setting up the signals for controlling the car’s motors. The car starts with a default speed and steering values, both set to 350, which represent the car’s starting movement.
+
+You can control how the car moves by pressing certain keys on the keyboard. Pressing the i key increases the car’s speed, while pressing the k key decreases the speed. If you press j, the car will steer left, and pressing l will steer it right. Each time you press one of these keys, the car’s speed or direction will change accordingly.
+
+To stop controlling the car, you can press the q key. This will stop the car’s movement and end the program. After stopping, the car will automatically reset to its default speed and steering position, moving in a neutral state for a short time before the program ends.
+
+In summary, this code allows you to control the car’s speed and steering by using the i, k, j, and l keys, and you can stop the car anytime by pressing the q key and this important for us as that lets up to adjust the car by using manual controls from keyboard to drive it around and observe its movements for further adjustments.
+
+
+08_Control_RCcar_with_PSControler.py:
+
+
+This script is designed for us to control a car's movement using a joystick, with the help of the Adafruit PCA9685 module to adjust the car's throttle and steering. First, we set the PWM frequency for the servos at 60Hz, which is standard for servo motors, and initialize the joystick with the Pygame library. After the joystick is connected, the script waits for input. Once data is received from the joystick, it moves forward with setting default values for the throttle and steering signals, which help control the car’s movement.
+
+In the main loop, we read the joystick's axis values to control the throttle and steering. The vertical axis (`axis4`) controls the car’s throttle, and the signal is adjusted between 300 and 400. The horizontal axis (`axis0`) controls the steering, with the signal adjusted between 220 and 520. These PWM signals are then sent to the PCA9685 module, which controls the servos, allowing us to steer and adjust the throttle in real-time. The script continuously updates the servo positions based on joystick input, giving us full control over the car’s movement this is like 07_Control_RCcar_with_KB.py where the difference is we are controlling the car this time with controller which makes it easier to drive the car and observe the car in at the same time.
+
 
 
