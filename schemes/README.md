@@ -22,16 +22,28 @@ These diagrams are crucial for ensuring that every component of the AI RC Car is
 Pi Camera:
 
 Pi Camera Description
+
 The Raspberry Pi Camera is a small, high-definition camera module designed for use with Raspberry Pi boards. It connects directly to the Pi via a CSI (Camera Serial Interface) port and is capable of capturing still images and videos with high resolution and clarity. The Pi Camera is popular in DIY electronics, robotics, and computer vision projects due to its compact size and versatility. It supports different modes of image processing and works well in combination with machine learning models to enable applications like object detection, tracking, and video analysis.
 
 Pi Camera in our Ai-Car
+
 In our RC car system, the Pi Camera acts as the "eyes" of the self-driving car, providing visual input for the AI model. The camera records images during initial training runs, capturing the environment, track, and obstacles. These images are then used to train an AI model created with TensorFlow, which learns to recognize patterns and make driving decisions. Once the AI model is trained, the Pi Camera continues to play a critical role by providing real-time image data during runs. The AI analyzes the camera feed to predict throttle and steering values, allowing the car ewwfewto navigate autonomously. Thus, the Pi Camera is essential for both training and driving, making it a key component for our self-driving car.
 
 PWM Description
+
 Pulse Width Modulation (PWM) is a technique used to control the power delivered to electronic components, especially motors and LEDs. Instead of sending a continuous signal, PWM rapidly switches the power on and off, varying the ratio of the "on" time to the "off" time. This ratio, known as the duty cycle, determines how much power is supplied. A higher duty cycle means more power, while a lower duty cycle means less. PWM is widely used in electronics for precise control of motor speed, light brightness, and other components that need fine-tuned power regulation.
 
-PWM in Our RC Car System
+PWM in Our Ai-Car
+
 In our RC car system, PWM is essential for controlling the car’s throttle (speed) and steering (direction). By adjusting the cycle of the PWM signals, we can regulate how much power is sent to the car’s motors, enabling smooth and accurate control. For the throttle, PWM is used to control the motor’s speed by providing more power, making the car go faster, while lower power slow the car down. For steering, PWM adjusts the position of the servo motor that controls the car’s wheels, allowing the AI to precisely control the turning angle. The AI model running on the Raspberry Pi processes real-time data and generates commands that are translated into PWM signals. These signals are then used to adjust the car's speed and steering, enabling autonomous driving. In this way, PWM allows the Raspberry Pi to fine-tune the car’s movements based on the AI's predictions, ensuring smooth and controlled driving.
+
+Raspberry Pi Description
+
+The Raspberry Pi is a small, affordable computer designed for learning and experimentation. It’s about the size of a credit card but works like a full computer, capable of running programs, handling input/output operations, and connecting to various devices. It can run different operating systems and is often used for electronics projects, programming, and robotics due to its versatility and low cost. 
+
+Raspberry Pi in our Ai-Car
+
+For our AI car, the Raspberry Pi is essential because it handles all the key tasks needed to run the car. It processes the camera feed, allowing the car to see its environment, and runs the AI model that makes decisions on how to steer and control the speed. Because it’s small and lightweight, it fits easily into the car without taking up too much space or power. Its ability to connect to other components, like the camera and motors, makes it the perfect system for the car. Without the Raspberry Pi, the car wouldn’t be able to think or respond to its surroundings in real time, making it crucial for the car to operate smoothly.
 
 
 
