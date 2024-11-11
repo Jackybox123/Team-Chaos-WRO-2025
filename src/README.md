@@ -53,7 +53,12 @@ We use the GPIO.BCM mode to reference the pins by their Broadcom numbers. GPIO 2
 The program runs in a loop, checking the button state every 0.1 seconds. If the button is pressed (GPIO 25 goes low), the car can then start running, making this code crucial for triggering the car's activation. The continuous checking ensures the car responds immediately to the button press.
 
 
-02_I2CLCD1602.py:
+04_picamerahsv01.py:
+
+
+In this code, we use the PiCamera with the Picamera2 library to continuously capture frames from the camera. The frames are processed to detect specific colors, namely red and green, in the image. We use OpenCV’s cv2 library to convert the captured frames to the HSV (Hue, Saturation, Value) color space, which helps in better detecting color ranges.
+
+The code defines two color ranges for red and one for green. It then creates masks for each color by filtering the HSV image. The number of non-zero pixels in each mask is counted to determine the presence of red or green. If there are more red pixels than green pixels and the red count exceeds a threshold (1000 pixels), it prints "Red detected". Similarly, if green has a higher count, it prints "Green detected". If neither color is detected, it prints "No red or green detected". This code helps the car detect obstacles using the camera. It looks for red and green colors to understand which dirction to go on the third round because at the end of the second round it will be able to use this code to know which obstacle its looking at to determine if it will continue towards the third round or it will reverse directions and continue to the third round going in the same direction.
 
 
 
