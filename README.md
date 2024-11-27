@@ -165,32 +165,7 @@ AI Model and Neural Network Components
 3. Real Time Decision Making: Once deployed, the neural network runs in realtime, processing new images as they are captured by the car's camera. It uses the trained model to predict whether it should move left or right based on the color of the obstacle.
 4. Image Augmentation: To enhance the robustness of the model, we also use image augmentation techniques during training. This involves creating variations of the original images (such as adjusting brightness, contrast, or orientation) to simulate a wider range of driving conditions. This allows the neural network to perform well even in unfamiliar or challenging environments.
 
-Obstacles 
-
-During the development of our AI self-driving car, we hit a major problem when we accidentally burned out the Integrated Circuit (IC) that controlled the motors. The IC is a crucial part because it helps send signals from the Raspberry Pi to the motors, allowing us to control how fast the car moves and in which direction. At first, everything was running smoothly, but after testing the car with more demanding tasks, the IC overheated and stopped working.
-
-We realized something was wrong when the car suddenly stopped moving, even though the Raspberry Pi was still sending commands. After checking, we found that the IC had burned out due to overheating. This happened because the motors were drawing too much power for too long, and the IC wasn’t equipped to handle it. We also hadn’t added any cooling to prevent it from getting too hot, which made the problem worse.
-
-To fix this, we did some research and decided to replace the burned-out IC with a stronger one that could handle more power. We also added heat sinks to help keep the IC cool and installed better airflow around it. On top of that, we added a fuse to the circuit. This fuse would blow if the motors tried to pull too much power, which would stop the IC from overheating again.
-
-After making these changes, we tested the car again under the same conditions that caused the problem, and everything worked perfectly. The new IC and cooling system kept things running smoothly, even when the car was driving for a long time. This experience taught us how important it is to test the car in different scenarios and to make sure all the components are protected against potential problems like overheating.
-
-In the end, this issue turned out to be a valuable learning experience for us. Even though it was frustrating, it helped us understand the importance of making sure all the parts of the car are reliable and safe from damage.
-
-Conclusion
-
-Team FVJ’s AI powered self-driving car represents a sophisticated application of machine learning, neural networks, and real time decision making. Our project combines the power of TensorFlow, Raspberry Pi, a custom built CNN and lego structure to create a self driving system capable of navigating autonomously.
-
-Our team has employed a unique approach in the design of our intelligent vehicle, which is characterized by the use of a pure Artificial Intelligence (AI) model. At the heart of this system is a Convolutional Neural Network (CNN) that operates under a Linux environment, utilizing Google's TensorFlow.
-
-
- The purpose of the CNN is to learn and emulate the driving habits of the operator. It does this by processing images captured by the camera and the movements of the remote control, allowing the network to train itself to respond to these inputs. In practice, the neural network analyzes images from the race, making predictions about the best course of action in a given situation. In terms of ground perception modules, our AI captures images with its camera and processes them using the CNN, which then compares them with a well-trained model to make accurate predictions.
-
-
-Our design philosophy has been clear and consistent from the beginning: to merge the benefits of traditional programming with AI. By feeding the AI high quality data, it processes information and analyzes data like a brain, making predictions while also learning the driver's habits, thus humanizing the vehicle's driving behavior. Our intelligent vehicle is not merely mechanically operated; it is driven by an intelligent system that combines precise programming with an AI model for an enhanced driving experience.
-
-
-
+Other Key Components
 1. Mobility Management
 Vehicle Design and Motor Control:
 Our vehicle utilizes a custom-built RC car platform, which incorporates a DC motor to control throttle and a servo for steering. The DC motor was chosen for its ability to provide smooth acceleration and consistent speed, while the servo offers precise steering control. Both components are managed by a custom-designed ESC (Electronic Speed Controller), which interfaces directly with the Raspberry Pi to allow for dynamic control.
@@ -214,5 +189,29 @@ Obstacle Handling Strategy:
 The obstacle handling strategy was developed through a process of trial and error. Initially, the AI model struggled to differentiate between obstacles based on shape alone, so color differentiation was integrated into the training process. Additionally, detailed comments were created on each code that was created to handle these strategies; they can be viewed in the src files on Github.
 Challenges and Solutions:
 A significant challenge was ensuring the AI could process the image data fast enough to make timely adjustments. We addressed this by optimizing the image recognition algorithm and fine-tuning the throttle/steering prediction model. Real-time data handling and efficient algorithm implementation were key to improving obstacle navigation.
+
+Obstacles 
+During the development of our AI self-driving car, we hit a major problem when we accidentally burned out the Integrated Circuit (IC) that controlled the motors. The IC is a crucial part because it helps send signals from the Raspberry Pi to the motors, allowing us to control how fast the car moves and in which direction. At first, everything was running smoothly, but after testing the car with more demanding tasks, the IC overheated and stopped working.
+
+We realized something was wrong when the car suddenly stopped moving, even though the Raspberry Pi was still sending commands. After checking, we found that the IC had burned out due to overheating. This happened because the motors were drawing too much power for too long, and the IC wasn’t equipped to handle it. We also hadn’t added any cooling to prevent it from getting too hot, which made the problem worse.
+
+To fix this, we did some research and decided to replace the burned-out IC with a stronger one that could handle more power. We also added heat sinks to help keep the IC cool and installed better airflow around it. On top of that, we added a fuse to the circuit. This fuse would blow if the motors tried to pull too much power, which would stop the IC from overheating again.
+
+After making these changes, we tested the car again under the same conditions that caused the problem, and everything worked perfectly. The new IC and cooling system kept things running smoothly, even when the car was driving for a long time. This experience taught us how important it is to test the car in different scenarios and to make sure all the components are protected against potential problems like overheating.
+
+In the end, this issue turned out to be a valuable learning experience for us. Even though it was frustrating, it helped us understand the importance of making sure all the parts of the car are reliable and safe from damage.
+
+Conclusion
+
+Team FVJ’s AI powered self-driving car represents a sophisticated application of machine learning, neural networks, and real time decision making. Our project combines the power of TensorFlow, Raspberry Pi, a custom built CNN and lego structure to create a self driving system capable of navigating autonomously.
+
+Our team has employed a unique approach in the design of our intelligent vehicle, which is characterized by the use of a pure Artificial Intelligence (AI) model. At the heart of this system is a Convolutional Neural Network (CNN) that operates under a Linux environment, utilizing Google's TensorFlow.
+
+
+ The purpose of the CNN is to learn and emulate the driving habits of the operator. It does this by processing images captured by the camera and the movements of the remote control, allowing the network to train itself to respond to these inputs. In practice, the neural network analyzes images from the race, making predictions about the best course of action in a given situation. In terms of ground perception modules, our AI captures images with its camera and processes them using the CNN, which then compares them with a well-trained model to make accurate predictions.
+
+
+Our design philosophy has been clear and consistent from the beginning: to merge the benefits of traditional programming with AI. By feeding the AI high quality data, it processes information and analyzes data like a brain, making predictions while also learning the driver's habits, thus humanizing the vehicle's driving behavior. Our intelligent vehicle is not merely mechanically operated; it is driven by an intelligent system that combines precise programming with an AI model for an enhanced driving experience.
+
 
 
