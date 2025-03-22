@@ -28,8 +28,8 @@ def preprocess_image(image):
 # Main function to process the video stream
 def main():
     while True:
-        # Capture an image from the PiCamera
-        frame = camera.capture()
+        # Capture an image from the PiCamera (Donkey Car way)
+        frame = camera.get_frame()  # Use get_frame() instead of capture()
 
         # Preprocess the captured image
         preprocessed_frame = preprocess_image(frame)
