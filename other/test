@@ -1,68 +1,82 @@
 import cv2
 import numpy as np
-import donkeycar as dk
+from picamera.array import PiRGBArray
+from picamera import PiCamera
 import time
+from keras.models import load_model
+from keras.preprocessing.image import img_to_array
 
-# Initialize Donkey Car's camera
-IMAGE_W, IMAGE_H = 160, 120
-camera = dk.parts.Camera(width=IMAGE_W, height=IMAGE_H)
-camera.open()
+# Pi Camera 设置
+CAMERA_RESOLUTION = (160, 120)  # 分辨率
+CAMERA_FRAMERATE = 20           # 帧率
 
-# LAB color range for obstacle detection
-rRed = np.array([[0, 171, 106], [255, 195, 135]])  # Red Pillar
-rGreen = np.array([[0, 45, 0], [255, 117, 153]])   # Green Pillar
+# 初始化 Pi Camera
+camera = PiCamera()
+camera.resolution = CAMERA_RESOLUTION
+camera.framerate = CAMERA_FRAMERATE
+raw_capture = PiRGBArray(camera, size=CAMERA_RESOLUTION)
 
-# Morphological kernel
-kernel = np.ones((5, 5), np.uint8)
+# 加载模型（假设您已经训练并保存了模型）
+model = load_model('my_model.h5')
 
-# Function to process the image
-def process_image(image, color_range):
-    img_lab = cv2.cvtColor(image, cv2.COLOR_BGR2Lab)  # Convert to LAB
-    img_blur = cv2.GaussianBlur(img_lab, (7, 7), 0)  # Apply Gaussian Blur
-    mask = cv2.inRange(img_blur, color_range[0], color_range[1])  # Thresholding
-    mask = cv2.erode(mask, kernel, iterations=1)  # Erosion
-    mask = cv2.dilate(mask, kernel, iterations=1)  # Dilation
-    return mask
+# 图像预处理函数
+def preprocess_image(image):
+    # 转换为灰度
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    # 直方图均衡化
+    equalized = cv2.equalizeHist(gray)
+    # 归一化
+    normalized = equalized / 255.0
+    return normalized
 
-# Function to find contours
-def detect_obstacle(mask):
-    contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    if contours:
-        largest = max(contours, key=cv2.contourArea)
-        area = cv2.contourArea(largest)
-        if area > 100:  # Minimum threshold to consider an obstacle
-            x, y, w, h = cv2.boundingRect(largest)
-            return (x, y, w, h)
-    return None
+# 数据增强函数
+def augment_image(image):
+    # 随机亮度调整
+    alpha = 1.0 + np.random.uniform(-0.2, 0.2)
+    beta = np.random.uniform(-50, 50)
+    augmented = cv2.convertScaleAbs(image, alpha=alpha, beta=beta)
+    # 随机旋转
+    rows, cols = image.shape[:2]
+    M = cv2.getRotationMatrix2D((cols/2, rows/2), np.random.uniform(-15, 15), 1)
+    augmented = cv2.warpAffine(augmented, M, (cols, rows))
+    return augmented
 
-# Main loop
-while True:
-    img = camera.read()  # Capture an image from the Donkey Car camera
-    if img is None:
-        print("No image captured, exiting...")
-        break
-    
-    mask_red = process_image(img, rRed)
-    mask_green = process_image(img, rGreen)
-    
-    red_pillar = detect_obstacle(mask_red)
-    green_pillar = detect_obstacle(mask_green)
-    
-    if red_pillar:
-        print("Turn Left (Red Pillar Detected)")
-    elif green_pillar:
-        print("Turn Right (Green Pillar Detected)")
-    else:
-        print("Move Forward (No Obstacle Detected)")
+# 推理函数
+def predict_steering_throttle(image):
+    # 预处理图像
+    processed_image = preprocess_image(image)
+    # 扩展维度以匹配模型输入
+    processed_image = np.expand_dims(processed_image, axis=0)
+    # 预测转向和油门
+    predictions = model.predict(processed_image)
+    steering = predictions[0][0]  # 假设模型输出为 [steering, throttle]
+    throttle = predictions[0][1]
+    return steering, throttle
 
-    # Optional: Show the image and masks
-    cv2.imshow("Original Image", img)
-    cv2.imshow("Red Mask", mask_red)
-    cv2.imshow("Green Mask", mask_green)
+# 主循环
+try:
+    for frame in camera.capture_continuous(raw_capture, format="bgr", use_video_port=True):
+        # 获取当前帧
+        image = frame.array
 
-    # Exit the loop if the user presses 'q'
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+        # 数据增强（可选，用于训练时）
+        augmented_image = augment_image(image)
 
-cv2.destroyAllWindows()
-camera.close()
+        # 推理
+        steering, throttle = predict_steering_throttle(augmented_image)
+
+        # 打印结果
+        print(f"Steering: {steering}, Throttle: {throttle}")
+
+        # 显示图像（可选）
+        cv2.imshow("Processed Image", augmented_image)
+        if cv2.waitKey(1) & 0xFF == ord('q'):  # 按 'q' 退出
+            break
+
+        # 清空缓冲区
+        raw_capture.truncate(0)
+
+finally:
+    # 释放资源
+    camera.close()
+    cv2.destroyAllWindows()
