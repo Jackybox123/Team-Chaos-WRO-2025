@@ -1,113 +1,47 @@
 import cv2
 import numpy as np
+from donkeycar.parts.camera import PiCamera
 
-# Function to preprocess the image for consistency
+# Initialize the PiCamera (Donkey Car way)
+camera = PiCamera()
+
+# Preprocess image function
 def preprocess_image(image):
-    # Step 1: Resize the image to a fixed size (e.g., 224x224)
-    image_resized = cv2.resize(image, (224, 224))  # Example size
+    # Resize image to a fixed size (e.g., 224x224)
+    image_resized = cv2.resize(image, (224, 224))
     
-    # Step 2: Convert to HSV (more robust to lighting conditions)
+    # Convert to HSV color space (more robust under varying light)
     image_hsv = cv2.cvtColor(image_resized, cv2.COLOR_BGR2HSV)
     
-    # Step 3: Normalize the image (scale pixel values to [0, 1])
+    # Normalize image (optional, but helpful for machine learning models)
     image_normalized = image_hsv / 255.0
     
-    # Step 4: Apply histogram equalization for better contrast
+    # Apply histogram equalization to improve contrast
     image_gray = cv2.cvtColor(image_normalized, cv2.COLOR_BGR2GRAY)
     image_equalized = cv2.equalizeHist(image_gray)
     
-    # Step 5: Denoise the image to remove noise
+    # Denoise image to remove noise (optional)
     image_denoised = cv2.GaussianBlur(image_equalized, (5, 5), 0)
     
     return image_denoised
 
-# Function to detect red and green pillars
-def detect_pillars(image):
-    # Convert to HSV
-    hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-    
-    # Define red color ranges in HSV (both lower and upper ranges due to red hue wrapping)
-    lower_red1 = np.array([0, 120, 70])
-    upper_red1 = np.array([10, 255, 255])
-    lower_red2 = np.array([170, 120, 70])
-    upper_red2 = np.array([180, 255, 255])
-    
-    # Mask for red color
-    mask_red1 = cv2.inRange(hsv, lower_red1, upper_red1)
-    mask_red2 = cv2.inRange(hsv, lower_red2, upper_red2)
-    mask_red = cv2.bitwise_or(mask_red1, mask_red2)
-    
-    # Define green color range in HSV
-    lower_green = np.array([35, 100, 100])
-    upper_green = np.array([85, 255, 255])
-    mask_green = cv2.inRange(hsv, lower_green, upper_green)
-    
-    # Find contours for red and green pillars
-    contours_red, _ = cv2.findContours(mask_red, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    contours_green, _ = cv2.findContours(mask_green, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    
-    return contours_red, contours_green
-
-# Function to get the centroid of a contour (used for determining pillar positions)
-def get_centroid(contour):
-    moments = cv2.moments(contour)
-    cx = int(moments["m10"] / moments["m00"])
-    cy = int(moments["m01"] / moments["m00"])
-    return (cx, cy)
-
-# Function to determine the direction based on pillar positions
-def determine_direction(red_centroids, green_centroids):
-    if len(red_centroids) > 0 and len(green_centroids) > 0:
-        # Get the x-coordinates of the centroids
-        red_x = red_centroids[0][0]
-        green_x = green_centroids[0][0]
-        
-        # Determine direction based on the relative x positions of red and green pillars
-        if red_x < green_x:
-            direction = "left"  # Red pillar is to the left of the green pillar, go left
-        else:
-            direction = "right"  # Green pillar is to the left of the red pillar, go right
-    else:
-        direction = "stop"  # No pillars detected, stop or handle error
-        
-    return direction
-
-# Main function for Donkey Car
+# Main function to process the video stream
 def main():
-    # Open the camera (for Donkey Car, you'll likely be using an onboard camera)
-    cap = cv2.VideoCapture(0)  # Adjust the camera index if necessary
-    
     while True:
-        ret, frame = cap.read()
-        if not ret:
-            print("Failed to grab frame")
-            break
-        
-        # Step 1: Preprocess the image
-        preprocessed_image = preprocess_image(frame)
-        
-        # Step 2: Detect red and green pillars
-        contours_red, contours_green = detect_pillars(frame)
-        
-        # Step 3: Get centroids of detected red and green pillars
-        red_centroids = [get_centroid(c) for c in contours_red]
-        green_centroids = [get_centroid(c) for c in contours_green]
-        
-        # Step 4: Determine the direction (left or right)
-        direction = determine_direction(red_centroids, green_centroids)
-        
-        # Display direction on the image
-        cv2.putText(frame, f"Direction: {direction}", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
-        
-        # Display the processed frame
-        cv2.imshow("Obstacle Detection", frame)
-        
-        # Break the loop on pressing 'q'
+        # Capture an image from the PiCamera
+        frame = camera.capture()
+
+        # Preprocess the captured image
+        preprocessed_frame = preprocess_image(frame)
+
+        # Display the processed image using OpenCV
+        cv2.imshow("Processed Image", preprocessed_frame)
+
+        # Exit if 'q' is pressed
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
-    
-    # Release the camera and close all windows
-    cap.release()
+
+    # Release resources when done
     cv2.destroyAllWindows()
 
 if __name__ == "__main__":
