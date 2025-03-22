@@ -29,7 +29,7 @@ def preprocess_image(image):
 def main():
     while True:
         # Capture an image from the PiCamera (Donkey Car way)
-        frame = camera.get_frame()  # Use get_frame() instead of capture()
+        frame = camera.read()  # Use read() method to get the frame
 
         # Preprocess the captured image
         preprocessed_frame = preprocess_image(frame)
