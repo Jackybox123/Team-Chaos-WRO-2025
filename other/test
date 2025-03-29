@@ -1,82 +1,95 @@
 import cv2
 import numpy as np
-from picamera.array import PiRGBArray
-from picamera import PiCamera
-import time
-from keras.models import load_model
-from keras.preprocessing.image import img_to_array
+import matplotlib.pyplot as plt
 
-# Pi Camera 设置
-CAMERA_RESOLUTION = (160, 120)  # 分辨率
-CAMERA_FRAMERATE = 20           # 帧率
+def adjust_hsv_thresholds(image):
+    """Dynamically adjust HSV color thresholds based on lighting conditions."""
+    brightness = np.mean(cv2.cvtColor(image, cv2.COLOR_BGR2GRAY))  # Get avg brightness
 
-# 初始化 Pi Camera
-camera = PiCamera()
-camera.resolution = CAMERA_RESOLUTION
-camera.framerate = CAMERA_FRAMERATE
-raw_capture = PiRGBArray(camera, size=CAMERA_RESOLUTION)
+    # Adjust saturation & value thresholds based on brightness level
+    if brightness < 50:   # Very dark room
+        s_lower, s_upper = 50, 255
+        v_lower, v_upper = 50, 255
+    elif brightness > 200:  # Very bright room
+        s_lower, s_upper = 80, 255
+        v_lower, v_upper = 100, 255
+    else:  # Normal lighting
+        s_lower, s_upper = 100, 255
+        v_lower, v_upper = 70, 255
 
-# 加载模型（假设您已经训练并保存了模型）
-model = load_model('my_model.h5')
+    return s_lower, s_upper, v_lower, v_upper
 
-# 图像预处理函数
-def preprocess_image(image):
-    # 转换为灰度
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    # 直方图均衡化
-    equalized = cv2.equalizeHist(gray)
-    # 归一化
-    normalized = equalized / 255.0
-    return normalized
+def segment_and_replace_colors(image):
+    """Segment and replace colors with predefined pure colors."""
+    hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
-# 数据增强函数
-def augment_image(image):
-    # 随机亮度调整
-    alpha = 1.0 + np.random.uniform(-0.2, 0.2)
-    beta = np.random.uniform(-50, 50)
-    augmented = cv2.convertScaleAbs(image, alpha=alpha, beta=beta)
-    # 随机旋转
-    rows, cols = image.shape[:2]
-    M = cv2.getRotationMatrix2D((cols/2, rows/2), np.random.uniform(-15, 15), 1)
-    augmented = cv2.warpAffine(augmented, M, (cols, rows))
-    return augmented
+    # Define pure colors in HSV
+    color_map = {
+        "red": ([0, 100, 70], [10, 255, 255], [170, 100, 70], [180, 255, 255]),
+        "green": ([35, 100, 70], [85, 255, 255]),
+        "blue": ([90, 100, 70], [130, 255, 255]),
+        "yellow": ([20, 100, 70], [30, 255, 255]),
+        "orange": ([10, 100, 70], [20, 255, 255]),
+        "white": ([0, 0, 200], [180, 50, 255]),
+        "black": ([0, 0, 0], [180, 255, 50])
+    }
 
-# 推理函数
-def predict_steering_throttle(image):
-    # 预处理图像
-    processed_image = preprocess_image(image)
-    # 扩展维度以匹配模型输入
-    processed_image = np.expand_dims(processed_image, axis=0)
-    # 预测转向和油门
-    predictions = model.predict(processed_image)
-    steering = predictions[0][0]  # 假设模型输出为 [steering, throttle]
-    throttle = predictions[0][1]
-    return steering, throttle
+    # Output image
+    output = np.zeros_like(image)
 
-# 主循环
-try:
-    for frame in camera.capture_continuous(raw_capture, format="bgr", use_video_port=True):
-        # 获取当前帧
-        image = frame.array
+    # Pure BGR colors to replace segmented regions
+    pure_colors = {
+        "red": (0, 0, 255),
+        "green": (0, 255, 0),
+        "blue": (255, 0, 0),
+        "yellow": (0, 255, 255),
+        "orange": (0, 165, 255),
+        "white": (255, 255, 255),
+        "black": (0, 0, 0)
+    }
 
-        # 数据增强（可选，用于训练时）
-        augmented_image = augment_image(image)
+    # Apply color segmentation and replacement
+    for color, ranges in color_map.items():
+        lower1 = np.array(ranges[0])
+        upper1 = np.array(ranges[1])
+        mask = cv2.inRange(hsv, lower1, upper1)
 
-        # 推理
-        steering, throttle = predict_steering_throttle(augmented_image)
+        if len(ranges) == 4:  # Handles red which has two HSV ranges
+            lower2 = np.array(ranges[2])
+            upper2 = np.array(ranges[3])
+            mask2 = cv2.inRange(hsv, lower2, upper2)
+            mask = cv2.bitwise_or(mask, mask2)
 
-        # 打印结果
-        print(f"Steering: {steering}, Throttle: {throttle}")
+        output[mask > 0] = pure_colors[color]
 
-        # 显示图像（可选）
-        cv2.imshow("Processed Image", augmented_image)
-        if cv2.waitKey(1) & 0xFF == ord('q'):  # 按 'q' 退出
-            break
+    return output
 
-        # 清空缓冲区
-        raw_capture.truncate(0)
+# Load the image
+image_path = "/home/pi/mycar/data4pccw/images/435_cam_image_array_.jpg"
+image = cv2.imread(image_path)
 
-finally:
-    # 释放资源
-    camera.close()
-    cv2.destroyAllWindows()
+if image is None:
+    print("Error: Could not read image. Check the path.")
+else:
+    # Apply CLAHE to normalize brightness
+    lab = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
+    l, a, b = cv2.split(lab)
+    clahe = cv2.createCLAHE(clipLimit=3.0, tileGridSize=(8,8))
+    l = clahe.apply(l)  # Apply CLAHE to the L-channel
+    lab = cv2.merge((l, a, b))
+    image = cv2.cvtColor(lab, cv2.COLOR_LAB2BGR)
+
+    # Process image
+    result_image = segment_and_replace_colors(image)
+
+    # Show images
+    fig, ax = plt.subplots(1, 2, figsize=(12, 6))
+    ax[0].imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+    ax[0].set_title("Original Image (Preprocessed)")
+    ax[0].axis("off")
+
+    ax[1].imshow(cv2.cvtColor(result_image, cv2.COLOR_BGR2RGB))
+    ax[1].set_title("Segmented Image (Pure Colors Applied)")
+    ax[1].axis("off")
+
+    plt.show()
