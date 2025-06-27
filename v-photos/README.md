@@ -3,7 +3,7 @@ Vehicle's photos
 Front View
 The front view showcases the mounted sensors, including the camera and gyroscope.
 
-Rear View
+Back View
 The rear view highlights the motor housing and cable management.
 
 Side View
