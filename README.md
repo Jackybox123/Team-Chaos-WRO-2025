@@ -6,14 +6,6 @@ Coach Fei Guo
 
 Coach Fei Guo (Robert Guo)  provides the technical guidance and leadership required to keep Team FVJ on track. With extensive experience in robotics, he helps us navigate complex challenges, refine our designs, and develop solutions that work in competitive and real-world settings.
 
-FengMo Guo  
-
-FengMo, a senior at Los Osos High School, is an experienced WRO participant with a keen interest in robotics hardware. His innovative contributions to the project ensure that the car’s structure supports the advanced capabilities of its AI system.
-
-Vinaya Ayinampudi 
- 
-Vinaya is a junior at eSTEM Academy and is in her second year participating in the WRO Future Engineers Category internationally. She has a strong passion for AI and coding, and leads the team’s work on developing and refining the AI model for the self-driving car. 
-
 Jiapeng (Jack) Xu  
 
 Jack is a sophomore at Rancho Cucamonga High School with previous experience in the Robo Mission category.. He contributes to the AI model development, focusing on optimizing the system to improve the car’s decision making abilities.
