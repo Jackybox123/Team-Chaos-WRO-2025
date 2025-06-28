@@ -1,4 +1,4 @@
-FVJ WRO 2024 - Future Engineers
+FVJ WRO 2025 - Future Engineers
 
 FVJ Team Members
 
@@ -6,9 +6,11 @@ Coach Fei Guo
 
 Coach Fei Guo (Robert Guo)  provides the technical guidance and leadership required to keep Team FVJ on track. With extensive experience in robotics, he helps us navigate complex challenges, refine our designs, and develop solutions that work in competitive and real-world settings.
 
-Jiapeng (Jack) Xu  
+Jiapeng Xu  
 
 Jack is a sophomore at Rancho Cucamonga High School with previous experience in the Robo Mission category.. He contributes to the AI model development, focusing on optimizing the system to improve the car’s decision making abilities.
+
+Kyle
 
 
 Project Overview: AI Self Driving Car
