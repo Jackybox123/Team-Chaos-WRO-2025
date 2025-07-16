@@ -15,7 +15,6 @@ import time
 import signal
 from pathlib import Path
 from typing import Tuple
-import colorsys
 
 # ------------------ Sense HAT selection -----------------------------------
 from sense_hat import SenseHat
@@ -32,7 +31,6 @@ FREERUN_MODEL_PATH_CW    = "~/projectbuildhat/freeruncwmodels09/mypilot.h5"
 FREERUN_MODEL_PATH_CCW   = "~/projectbuildhat/freerunccwmodels09/mypilot.h5"
 OBSTACLE_MODEL_PATH_CW   = "~/projectbuildhat/obstacleruncwmodels14/mypilot.h5"
 OBSTACLE_MODEL_PATH_CCW  = "~/projectbuildhat/obstacleruncwmodels09/mypilot.h5"
-
 
 sense = SenseHat()
 sense.set_rotation(180)
@@ -83,7 +81,6 @@ else:
 
 print("Model:", MODEL_PATH_DEFAULT)
 
-
 # ------------------ Config ------------------------------------------------
 CAP_W, CAP_H = 192, 144
 CROP_W, CROP_H = 160, 120
@@ -104,19 +101,11 @@ def center_crop(img, tw=CROP_W, th=CROP_H):
 # ------------------ Gyro parts -------------------------------------------
 from sense_hat import SenseHat as SH
 
-# ---------------------------------------------------------------------------
-# GyroYaw - uses Z-axis gyro integration, provides offset reset
-# ---------------------------------------------------------------------------
+from sense_hat import SenseHat
+
 class GyroYaw:
-    """
-    * On startup averages bias for GYRO_CAL_SEC seconds
-    * Cumulatively integrates all yaw increments
-    * set_offset(val) resets current yaw to zero point
-    * run() returns yaw - offset
-    """
     def __init__(self):
         self.sh = SenseHat()
-        # Enable gyro only, disable accel/mag to reduce noise
         self.sh.set_imu_config(True, False, False)
         self.bias = self._calibrate_bias()
         self.yaw = 0.0
@@ -137,7 +126,6 @@ class GyroYaw:
         return bias
 
     def set_offset(self, val):
-        """Set current accumulated yaw as new zero point"""
         self.offset = val
 
     def run(self):
@@ -145,22 +133,19 @@ class GyroYaw:
         dt = now - self.last_time
         self.last_time = now
 
-        # Integrate angular velocity (minus bias) -> cumulative yaw in degrees
         z_rad_s = self.sh.get_gyroscope_raw()["z"] - self.bias
         self.yaw += z_rad_s * GYRO2DEG * dt
 
-        # Return adjusted yaw (offset removed)
         return self.yaw - self.offset
 
 class YawGuard:
-    """Stops throttle and raises KeyboardInterrupt if |yaw| > limit."""
     def __init__(self, limit_deg=YAW_LIMIT_DEG):
         self.limit = limit_deg
     def run(self, throttle, yaw):
         if abs(yaw) > self.limit:
             print("\nYaw limit reached ({:.1f} deg) - stopping.".format(yaw))
             raise KeyboardInterrupt
-        return throttle  # safe throttle passes through
+        return throttle
 
 # ------------------ Car hardware parts -----------------------------------
 class LegoSteering:
@@ -208,159 +193,113 @@ class LegoThrottle:
     def shutdown(self):
         self._stop()
 
-
-# ---------------------------------------------------------------------------
-# ColorLineCounter - improved BuildHat RGBI color detection with HSV logic
-# ---------------------------------------------------------------------------
+# ---------------- ColorLineCounter (simplified non-white line counting) --------------
 class ColorLineCounter:
     """
-    Uses BuildHat ColorSensor RGBA to detect orange and blue strips.
-    Converts RGB to HSV internally for better classification.
-    Debounces to avoid multiple counts on one strip.
+    Counts any non-white color detected by BuildHat ColorSensor as a line.
+    White is defined as high RGB values and close to each other.
+    Counts transitions from white to non-white to increment.
     """
-
     def __init__(self):
         self.sensor = ColorSensor("D")
         self.prev_on_line = False
-        self.orange_count = 0
-        self.blue_count = 0
+        self.total_count = 0
         self.last_detect_time = 0
-        self.debounce_time = 0.5  # seconds between counts to avoid double counting
+        self.debounce_time = 0.5  # seconds
 
-    def rgb_to_hsv(self, r, g, b):
-        # Normalize RGB 0-255 to 0-1
-        r_n, g_n, b_n = r / 255.0, g / 255.0, b / 255.0
-        return colorsys.rgb_to_hsv(r_n, g_n, b_n)  # returns (h,s,v) with h in [0,1]
-
-    def _classify(self, r, g, b, i):
-        """
-        Classify color by HSV ranges:
-        - orange hue approx 20-40 deg (normalized 0.055 - 0.11)
-        - blue hue approx 190-240 deg (normalized 0.53 - 0.67)
-        Use saturation and value thresholds to filter out low saturation (gray/white).
-        """
-
-        h, s, v = self.rgb_to_hsv(r, g, b)
-
-        # Require some minimum saturation and brightness
-        if s < 0.4 or v < 0.3:
-            return None
-
-        # Orange hue range (approx 20° to 40°)
-        if 0.055 <= h <= 0.11:
-            return "orange"
-
-        # Blue hue range (approx 190° to 240°)
-        if 0.53 <= h <= 0.67:
-            return "blue"
-
-        return None
+    def is_white(self, r, g, b):
+        threshold = 200
+        max_diff = 30
+        if (r > threshold and g > threshold and b > threshold and
+            max(abs(r - g), abs(g - b), abs(b - r)) < max_diff):
+            return True
+        return False
 
     def run(self):
         r, g, b, i = self.sensor.get_color_rgbi()
 
-        kind = self._classify(r, g, b, i)
-
         now = time.monotonic()
-        counted = False
 
-        if kind and not self.prev_on_line:
-            # Debounce: only count if sufficient time elapsed since last count
+        on_line = not self.is_white(r, g, b)
+
+        counted = False
+        if on_line and not self.prev_on_line:
             if now - self.last_detect_time > self.debounce_time:
-                if kind == "orange":
-                    self.orange_count += 1
-                elif kind == "blue":
-                    self.blue_count += 1
+                self.total_count += 1
                 self.last_detect_time = now
                 counted = True
 
-        self.prev_on_line = kind is not None
+        self.prev_on_line = on_line
 
-        # Debug print
-        print(f"Detected: {kind if kind else 'none'}  (R={r} G={g} B={b} I={i})"
-              + (f" -- Counted {kind}" if counted else ""))
+        print(f"R:{r} G:{g} B:{b} Int:{i} -> {'LINE' if on_line else 'WHITE'}"
+              + (f" -- Counted line #{self.total_count}" if counted else ""))
 
-        return self.orange_count, self.blue_count
+        return self.total_count
 
-
-# ---------------------------------------------------------------------------
-# StopGuard - stops throttle after yaw and color counts conditions met + delay
-# ---------------------------------------------------------------------------
+# ---------------- StopGuard (waits for yaw limit and total lines reached) --------------
 class StopGuard:
+    """
+    Stops throttle after yaw exceeds limit AND total lines count reached.
+    """
     def __init__(self, yaw_lim=YAW_LIMIT_DEG,
-                 need_orange=12, need_blue=12, delay_sec=3.0):
+                 need_lines=24, delay_sec=3.0):
         self.yaw_lim = yaw_lim
-        self.need_o  = need_orange
-        self.need_b  = need_blue
-        self.delay   = delay_sec
+        self.need_lines = need_lines
+        self.delay = delay_sec
         self.line_met_time = None
 
-    def run(self, throttle, yaw, orange_cnt, blue_cnt):
+    def run(self, throttle, yaw, total_lines):
         now = time.monotonic()
 
-        # Already met line count conditions
-        if orange_cnt >= self.need_o and blue_cnt >= self.need_b:
+        if total_lines >= self.need_lines:
             if self.line_met_time is None:
-                self.line_met_time = now          # First time met, start timer
+                self.line_met_time = now
         else:
-            self.line_met_time = None             # Reset timer if conditions lost
+            self.line_met_time = None
 
-        # Both conditions met and delay elapsed
-        if (abs(yaw) > self.yaw_lim and
-            self.line_met_time is not None and
-            now - self.line_met_time >= self.delay):
-            print("\nStopGuard: Conditions met, stopping.")
+        if abs(yaw) > self.yaw_lim and self.line_met_time is not None and now - self.line_met_time >= self.delay:
+            print(f"\nStopGuard: Yaw {yaw:.1f} deg and total lines {total_lines} reached, stopping.")
             raise KeyboardInterrupt
 
-        return throttle  # normal output
+        return throttle
 
-
-# ---------------------------------------------------------------------------
-# ConsoleTelemetry - prints status line every period seconds
-# ---------------------------------------------------------------------------
+# ---------------- ConsoleTelemetry ----------------------------------------
 class ConsoleTelemetry:
     def __init__(self, period=0.5):
         self.period = period
         self.next_time = time.monotonic()
 
-    def run(self, angle, throttle, yaw_deg, orange_cnt, blue_cnt):
+    def run(self, angle, throttle, yaw_deg, total_lines):
         now = time.monotonic()
         if now >= self.next_time:
             msg = (
                 "Angle {:+6.2f}  Thr {:+6.2f}  "
                 "Yaw {:+8.2f} deg  "
-                "Orange {:2d}  Blue {:2d}"
-            ).format(angle, throttle, yaw_deg, orange_cnt, blue_cnt)
+                "Total Lines {:2d}"
+            ).format(angle, throttle, yaw_deg, total_lines)
             print(msg)
             self.next_time = now + self.period
-        # no output
 
-
+# ---------------- Alignment sequence ----------------------------------------
 def alignment_sequence(drive_mode, gyro):
-    """
-    OCW / OCCW alignment maneuver.
-    Prints real-time yaw angle at the terminal.
-    """
     if drive_mode not in ("OCW", "OCCW"):
         return
 
     steer = LegoSteering()
     throttle = LegoThrottle(max_speed=40)
 
-    # Simple print function: overwrite the same line
     def print_yaw():
         sys.stdout.write("\rYaw:{:+8.2f} deg".format(gyro.yaw))
         sys.stdout.flush()
 
-    # Wait until condition true, while updating yaw printout
     def wait_until(cond):
         while True:
-            yaw_val = gyro.run()   # update yaw
+            yaw_val = gyro.run()
             print_yaw()
             if cond(yaw_val):
                 break
             time.sleep(0.01)
-        print()  # newline
+        print()
 
     def settle(duration, step=0.02):
         end_time = time.monotonic() + duration
@@ -369,7 +308,6 @@ def alignment_sequence(drive_mode, gyro):
             print_yaw()
             time.sleep(step)
 
-    # Turn / motion lambdas (keep original logic)
     turn_r = lambda: steer.run(+1.0)
     turn_l = lambda: steer.run(-1.0)
     stop_m = lambda: throttle.run(0.0)
@@ -403,13 +341,13 @@ def alignment_sequence(drive_mode, gyro):
             turn_r();  settle(0.4)
             fwd();  wait_until(lambda y: y > -10);  stop_m()
 
-        print("Car will stop and gyro settle 3 s ...")
+        print("car will stop and Gyro settle 3 s ...")
         stop_m()
         steer.shutdown()
         throttle.shutdown()
         t0 = time.time()
         while time.time() - t0 < 3.0:
-            yaw_now = gyro_global.run()
+            yaw_now = gyro.run()
             sys.stdout.write("\rIdle yaw:{:+.2f} ".format(yaw_now))
             sys.stdout.flush()
             time.sleep(0.02)
@@ -422,8 +360,7 @@ def alignment_sequence(drive_mode, gyro):
         steer.shutdown()
         throttle.shutdown()
 
-
-# ------------------ Camera helper ----------------------------------------
+# ---------------- Camera helper ----------------------------------------
 def add_camera(car):
     from donkeycar.parts.camera import PiCamera
     cam = PiCamera(image_w=CAP_W, image_h=CAP_H, image_d=3,
@@ -431,7 +368,7 @@ def add_camera(car):
     car.add(cam, outputs=["cam/raw"], threaded=True)
     car.add(Lambda(center_crop), inputs=["cam/raw"], outputs=["cam/image_array"])
 
-# ------------------ Vehicle builder --------------------------------------
+# ---------------- Vehicle builder --------------------------------------
 def build_vehicle(model_path, gyro):
     car = dk.vehicle.Vehicle()
     add_camera(car)
@@ -445,37 +382,23 @@ def build_vehicle(model_path, gyro):
     # Gyro yaw part
     car.add(gyro, outputs=["yaw"])
 
-    # Color sensor line counter
+    # Color line counter (simplified)
     line_counter = ColorLineCounter()
-    car.add(line_counter, outputs=["cnt/orange", "cnt/blue"])
+    car.add(line_counter, outputs=["total_lines"])
 
-    # Composite guard replaces YawGuard: stops if yaw and color counts meet conditions
+    # Stop guard with yaw and total lines
     guard = StopGuard()
-    car.add(
-        guard,
-        inputs=["pilot/throttle", "yaw", "cnt/orange", "cnt/blue"],
-        outputs=["safe/throttle"]
-    )
+    car.add(guard, inputs=["pilot/throttle", "yaw", "total_lines"], outputs=["safe/throttle"])
 
-    # Console telemetry printout
-    car.add(
-        ConsoleTelemetry(),
-        inputs=[
-            "pilot/angle",
-            "safe/throttle",
-            "yaw",
-            "cnt/orange",
-            "cnt/blue"
-        ],
-        outputs=[]
-    )
+    # Telemetry console print
+    car.add(ConsoleTelemetry(),
+            inputs=["pilot/angle", "safe/throttle", "yaw", "total_lines"],
+            outputs=[])
 
     # Actuators
     car.add(LegoSteering(), inputs=["pilot/angle"])
     car.add(LegoThrottle(), inputs=["safe/throttle"])
-
     return car
-
 
 # ---------------------------------------------------------------
 # one global gyro instance: zero here, then reused everywhere
@@ -485,7 +408,6 @@ gyro_global = GyroYaw()
 alignment_sequence(DRIVE_MODE, gyro_global)
 
 # ------------------ Main --------------------------------------------------
-
 vehicle = build_vehicle(MODEL_PATH_DEFAULT, gyro_global)
 
 def shutdown(_sig=None, _frm=None):
