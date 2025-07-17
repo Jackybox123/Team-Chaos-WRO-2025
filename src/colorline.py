@@ -2,32 +2,28 @@ from buildhat import ColorSensor
 import time
 
 class ColorLineCounter:
-    def __init__(self, max_count=24):
+    def __init__(self, max_total_count=24):
         self.sensor = ColorSensor("D")
-        self.last_count_time = 0
         self.total_count = 0
-        self.debounce_seconds = 0.5
-        self.max_count = max_count
-        self.prev_was_white = True  # Start assuming it's on white
-
-    def is_white(self, r, g, b, i):
-        return (r > 230 and g > 230 and b > 230 and i > 180)
+        self.max_total_count = max_total_count
+        self.last_count_time = 0
+        self.debounce_seconds = 0.1  # Prevents double-counts
 
     def run(self):
-        while self.total_count < self.max_count:
-            # Wait until color changes
-            r, g, b, i = self.sensor.wait_for_new_color()
+        print("🚗 Starting line counting...")
+
+        while self.total_count < self.max_total_count:
+            color = self.sensor.wait_for_new_color()
             current_time = time.monotonic()
 
-            is_white = self.is_white(r, g, b, i)
+            # Only count if debounce time has passed
+            if current_time - self.last_count_time < self.debounce_seconds:
+                continue
 
-            # Detect transition: white → non-white
-            if self.prev_was_white and not is_white:
-                if current_time - self.last_count_time > self.debounce_seconds:
-                    self.total_count += 1
-                    self.last_count_time = current_time
-                    print(f"✅ COUNTED {self.total_count} | RGBI: R={r}, G={g}, B={b}, I={i}")
+            if color in ["orange", "blue"]:
+                self.total_count += 1
+                self.last_count_time = current_time
+                print(f"✅ Line {self.total_count}: Detected {color}")
 
-            self.prev_was_white = is_white
-
-        return self.total_count, 0
+        print("🎉 Done counting 24 lines!")
+        return self.total_count
