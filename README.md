@@ -18,6 +18,8 @@ Project Overview: AI Self Driving Car
 
 At the heart of our project is a self-driving car that leverages artificial intelligence to navigate autonomously. The key to its functionality lies in the integration of machine learning and deep learning techniques through the TensorFlow framework, running on a Raspberry Pi. The car's AI model is trained to interpret image data and make real time decisions for navigation, all based on patterns learned from its training data.
 
+https://1drv.ms/w/c/055dcb6976a35dcd/EaQ8GYw9RDpGrUUJAVrUT8QBrVu6nQBtKwHuMYwWNGyMYA?e=fxwyDp
+
  Core Technology Components
 
 1. TensorFlow: The primary framework used to build the AI model. TensorFlow allows us to develop a Convolutional Neural Network (CNN), which forms the foundation for the car’s ability to recognize patterns in images and predict appropriate driving actions.
