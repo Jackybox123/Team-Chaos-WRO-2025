@@ -1,29 +1,39 @@
-from buildhat import ColorSensor
-import time
-
 class ColorLineCounter:
-    def __init__(self, max_total_count=24):
+    def __init__(self):
         self.sensor = ColorSensor("D")
-        self.total_count = 0
-        self.max_total_count = max_total_count
-        self.last_count_time = 0
-        self.debounce_seconds = 0.1  # Prevents double-counts
+        self.prev_color = "white"  # track previous detected color
+        self.orange_count = 0
+        self.blue_count = 0
 
     def run(self):
-        print("🚗 Starting line counting...")
+        r, g, b, i = self.sensor.get_color_rgbi()
 
-        while self.total_count < self.max_total_count:
-            color = self.sensor.wait_for_new_color()
-            current_time = time.monotonic()
+        # Define white as high RGB + intensity
+        is_white = (r > 200 and g > 200 and b > 200 and i > 180)
 
-            # Only count if debounce time has passed
-            if current_time - self.last_count_time < self.debounce_seconds:
-                continue
+        # Detect orange roughly (adjust thresholds as needed)
+        is_orange = (r > 180 and g > 50 and g < 140 and b < 50 and i > 100)
 
-            if color in ["orange", "blue"]:
-                self.total_count += 1
-                self.last_count_time = current_time
-                print(f"✅ Line {self.total_count}: Detected {color}")
+        # Detect blue roughly
+        is_blue = (r < 50 and g < 100 and b > 150 and i > 100)
 
-        print("🎉 Done counting 24 lines!")
-        return self.total_count
+        current_color = "white"
+        if is_orange:
+            current_color = "orange"
+        elif is_blue:
+            current_color = "blue"
+        elif not is_white:
+            current_color = "other"
+
+        # Count on transition from white → orange or white → blue
+        if self.prev_color == "white":
+            if current_color == "orange":
+                self.orange_count += 1
+                print(f"Orange line detected! Count: {self.orange_count}")
+            elif current_color == "blue":
+                self.blue_count += 1
+                print(f"Blue line detected! Count: {self.blue_count}")
+
+        self.prev_color = current_color
+
+        return self.orange_count, self.blue_count
