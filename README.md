@@ -1,17 +1,18 @@
-FVJ WRO 2025 - Future Engineers
+Team Chaos WRO 2025 - Future Engineers
 
-FVJ Team Members
+Team Members
 
 Coach Fei Guo
 
-Coach Fei Guo (Robert Guo)  provides the technical guidance and leadership required to keep Team FVJ on track. With extensive experience in robotics, he helps us navigate complex challenges, refine our designs, and develop solutions that work in competitive and real-world settings.
+Coach Fei Guo (Robert Guo)  provides the technical guidance and leadership required to keep Team Chaos on track. With extensive experience in robotics, he helps us navigate complex challenges, refine our designs, and develop solutions that work in competitive and real-world settings.
 
 Jiapeng Xu  
 
-Jack is a sophomore at Rancho Cucamonga High School with previous experience in the Robo Mission category.. He contributes to the AI model development, focusing on optimizing the system to improve the car’s decision making abilities.
+Jack is a sophomore at Rancho Cucamonga High School with previous experience in the Robo Mission category. He contributes to the AI model development, focusing on optimizing the system to improve the car’s decision making abilities.
 
-Kyle
+Kyle Ho
 
+Kyle is a freshman at Roosevelt High School with prior experience in the RoboSports category. He contributes to the structural design of the robot, focusing on the functionality of its components and motors.
 
 Project Overview: AI Self Driving Car
 
