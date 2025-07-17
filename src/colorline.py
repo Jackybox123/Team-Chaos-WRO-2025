@@ -1,39 +1,42 @@
-class ColorLineCounter:
-    def __init__(self):
+from buildhat import ColorSensor
+import time
+
+class WaitColorLineCounter:
+    def __init__(self, max_count=24):
         self.sensor = ColorSensor("D")
-        self.prev_color = "white"  # track previous detected color
+        self.max_count = max_count
         self.orange_count = 0
         self.blue_count = 0
 
     def run(self):
-        r, g, b, i = self.sensor.get_color_rgbi()
+        # Wait for white space (to reset)
+        self.sensor.wait_until_color('white')
+        
+        # Wait for next color - orange or blue
+        while self.orange_count + self.blue_count < self.max_count:
+            # wait for orange or blue - we can’t pass multiple colors in one call
+            # so wait for *any* color other than white by polling wait_for_new_color()
 
-        # Define white as high RGB + intensity
-        is_white = (r > 200 and g > 200 and b > 200 and i > 180)
+            color = self.sensor.wait_for_new_color()
 
-        # Detect orange roughly (adjust thresholds as needed)
-        is_orange = (r > 180 and g > 50 and g < 140 and b < 50 and i > 100)
-
-        # Detect blue roughly
-        is_blue = (r < 50 and g < 100 and b > 150 and i > 100)
-
-        current_color = "white"
-        if is_orange:
-            current_color = "orange"
-        elif is_blue:
-            current_color = "blue"
-        elif not is_white:
-            current_color = "other"
-
-        # Count on transition from white → orange or white → blue
-        if self.prev_color == "white":
-            if current_color == "orange":
+            if color == 'orange':
                 self.orange_count += 1
-                print(f"Orange line detected! Count: {self.orange_count}")
-            elif current_color == "blue":
+                print(f"Orange line counted: {self.orange_count}")
+            elif color == 'blue':
                 self.blue_count += 1
-                print(f"Blue line detected! Count: {self.blue_count}")
+                print(f"Blue line counted: {self.blue_count}")
+            else:
+                # Ignore other colors, but if white, wait for color again
+                if color == 'white':
+                    continue
+                print(f"Ignored color: {color}")
 
-        self.prev_color = current_color
+            # After detecting a color, wait for white again before next count
+            self.sensor.wait_until_color('white')
 
         return self.orange_count, self.blue_count
+
+# Usage example:
+counter = WaitColorLineCounter(max_count=24)
+orange_total, blue_total = counter.run()
+print(f"Counting finished! Orange: {orange_total}, Blue: {blue_total}")
