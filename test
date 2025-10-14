@@ -1,0 +1,91 @@
+# 🤖 Team Chaos – WRO 2025 Future Engineers
+
+### AI-Powered LEGO Autonomous Vehicle  
+*USA | Rancho Cucamonga High School | July 2025*
+
+---
+
+## 📂 Repository Overview
+**GitHub Repository:** [Jackybox123/Team-Chaos-WRO-2025](https://github.com/Jackybox123/Team-Chaos-WRO-2025)  
+**YouTube Channel:** [Team Chaos - YouTube](https://www.youtube.com/@teamchaos)
+
+This repository contains all design documents, source code, AI models, and multimedia related to our **WRO Future Engineers 2025** project — a LEGO-based autonomous vehicle driven by an AI neural network trained using real human driving data.
+
+---
+
+## 🧠 Executive Summary
+Our project aims to design and develop a **semi-AI, semi-robotic self-driving car** using a **Raspberry Pi**, **TensorFlow**, and **LEGO Build HAT** components. The system learns driving behavior from human-controlled data through a **Convolutional Neural Network (CNN)** model that maps camera images to steering and throttle commands.
+
+The result is a fully autonomous LEGO car that can:
+- Detect and navigate around obstacles
+- Recognize colors (red → turn right, green → turn left)
+- Complete multi-lap obstacle courses autonomously
+- Transition between different AI models for tasks such as obstacle navigation and parking
+
+---
+
+## ⚙️ Technical Solution Framework
+### **Hardware Architecture**
+| Component | Function |
+|------------|-----------|
+| **Raspberry Pi 4** | Central processing and AI inference |
+| **Pi Camera** | Captures real-time video feed for model input |
+| **Sense HAT** | Provides gyroscope and motion data |
+| **Build HAT** | Controls LEGO motors for steering and throttle |
+| **LEGO Technic Chassis** | Physical structure for modular testing |
+| **Power System** | 7.4V lithium battery (motors) + 5V power bank (Pi & sensors) |
+
+---
+
+### **Software Architecture**
+- **OS:** Raspberry Pi OS (Linux)
+- **Language:** Python 3
+- **Frameworks:** TensorFlow, OpenCV, Pygame, Picamera2, Adafruit PCA9685
+- **Training Data:** ~90,000 labeled frames of human driving
+- **AI Model:** Convolutional Neural Network (11 layers)
+- **Control Flow:**
+  1. Capture real-time camera frames
+  2. Preprocess and feed into CNN
+  3. CNN predicts throttle + steering values
+  4. Send control signals to motors via Build HAT
+
+---
+
+## 🧩 Mobility and Control System
+The robot uses a **DC motor** (throttle) and **servo** (steering) controlled through the Raspberry Pi’s Build HAT interface.  
+AI-generated commands are continuously updated at runtime to achieve smooth path correction and adaptive obstacle avoidance.
+
+**Highlights:**
+- Real-time response with minimal latency
+- Adaptive steering synchronization with CNN outputs
+- Manual override support via joystick and keyboard
+
+---
+
+## 🚦 Obstacle and Color Management
+Our system uses computer vision and color filtering to make autonomous navigation decisions:
+- **Red** → Turn right  
+- **Green** → Turn left  
+- **No color detected** → Continue forward  
+
+The CNN model integrates **HSV color filtering** from OpenCV for reliable color-based decision-making even under variable lighting.
+
+---
+
+## 🧬 AI Model and Dataset
+**Training Phase:**
+- Human-operated sessions collect synchronized image, throttle, and steering data.
+- Dataset: 90,000+ labeled frames  
+- Preprocessing: Downscaled to 160×120 resolution for faster training  
+- Framework: TensorFlow 2.9  
+- Optimizer: Adam  
+- Output: Steering (float) and throttle (float)
+
+**Inference Phase:**
+- Real-time predictions on Raspberry Pi  
+- Continuous adjustment for steering and speed  
+- Switches between specialized AI models for tasks like obstacle detection and parking
+
+---
+
+## 🧰 Repository Structure
