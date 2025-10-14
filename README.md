@@ -213,16 +213,12 @@ Our team has employed a unique approach in the design of our intelligent vehicle
 Our design philosophy has been clear and consistent from the beginning: to merge the benefits of traditional programming with AI. By feeding the AI high quality data, it processes information and analyzes data like a brain, making predictions while also learning the driver's habits, thus humanizing the vehicle's driving behavior. Our intelligent vehicle is not merely mechanically operated; it is driven by an intelligent system that combines precise programming with an AI model for an enhanced driving experience.
 
 
-<center><h1> Nerdvana Cancer 2024 </center>
+<center><h1> Team Chaos </center>
 
 ![Banner](./other/readme-images/banner.png)
+[![Youtube](https://img.shields.io/badge/Youtube-%23FF0000.svg?style=for-the-badge&logo=Youtube&logoColor=white)](https://www.youtube.com/@TeamChaos-i4m)
 
-[![Website](https://img.shields.io/badge/Website-Visit-brightgreen?style=for-the-badge&logo=web&logoColor=white)](https://nerdvana.ro)
-[![Facebook](https://img.shields.io/badge/Facebook-%231877F2.svg?style=for-the-badge&logo=Facebook&logoColor=white)](https://www.facebook.com/nerdvanaro/)
-[![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?style=for-the-badge&logo=Instagram&logoColor=white)](https://instagram.com/nerdvana_romania/)
-[![Youtube](https://img.shields.io/badge/Youtube-%23FF0000.svg?style=for-the-badge&logo=Youtube&logoColor=white)](https://www.youtube.com/@NerdvanaRomania)
-
-This repository contains the documentation for the Nerdvana Cancer team's robot for the 2024 World Robot Olympiad Future Engineers competition. The robot, was designed and built by a team of three students.
+This repository contains the documentation for Team Chaos USA’s AI-powered LEGO robot designed for the 2025 World Robot Olympiad Future Engineers competition.
 
 ## Table of Contents
 * [The Team](#team)
@@ -277,75 +273,21 @@ This repository contains the documentation for the Nerdvana Cancer team's robot 
 
 ## The Team <a class="anchor" id="team"></a>
 
-### Nicola Victor Teodor
-<p align="center">
-  <img src="./team-photos/nicola-victor-teodor.jpeg" alt="Nicola Victor Teodor" width="80%">
-</p>
+Team Members
 
-<b>Age:</b> 18
+Coach Fei Guo
 
-<b>High School:</b> National College of Informatics "Tudor Vianu", Bucharest
+Coach Fei Guo (Robert Guo)  provides the technical guidance and leadership required to keep Team Chaos on track. With extensive experience in robotics, he helps us navigate complex challenges, refine our designs, and develop solutions that work in competitive and real-world settings.
 
-<b>Description:</b> Hi! I’m Victor from Romania and this is my second WRO season. Last year I participated in the RoboMission category and this year I wanted a new challenge. I own the fact that I’m a huge nerd: from coding and robotics, to photography, cinema, music, guitar, and even Formula 1.
+Jiapeng Xu  
 
----
+Jack is a sophomore at Rancho Cucamonga High School with previous experience in the Robo Mission category. He contributes to the AI model development, focusing on optimizing the system to improve the car’s decision making abilities.
 
-### Bălan Teodor Ovidiu
-<p align="center">
-  <img src="./team-photos/balan-teodor-ovidiu.jpg" alt="Bălan Teodor Ovidiu" width="80%">
-</p>
+Kyle Ho
 
-<b>Age:</b> 19
-
-<b>University:</b> University of Bucharest
-
-<b>Description:</b> Wassup y'all! My name is Teodor, and I love traveling and experiencing new things. Since I was a kid, I’ve always been drawn to solving puzzles, playing basketball, discovering new inventions, and thinking of creative ways to do things. Also, I know how to do a backflip. 🤠
+Kyle is a freshman at Roosevelt High School with prior experience in the RoboSports category. He contributes to the structural design of the robot, focusing on the functionality of its components and motors.
 
 ---
-
-### Priboi Luca Mihai
-<p align="center">
-  <img src="./team-photos/priboi-luca-mihai.jpg" alt="Priboi Luca Mihai" width="80%">
-</p>
-
-<b>Age:</b> 19
-
-<b>University:</b> Politehnica University of Bucharest
-
-<b>Description:</b> Hello! I am Mihai! I've been participating at WRO since 2015 and I am very excited to be part of the Nerdvana Romania team. My academic passions are programming, physics and robotics, but I also enjoy playing the piano 🎹, whatching movies 🎬, traveling ✈️ and Formula 1 🏎️🏁.
-
----
-
-### Tuțu Mihai Alexandru
-<p align="center">
-  <img src="./team-photos/tutu-mihai-alexandru.jpg" alt="Tuțu Mihai Alexandru" width="80%">
-  <p align="center">Nerdvana Romania Founder</p>
-</p>
-
-<b>Role:</b> Coach
-
-<b>Description:</b> Hard working young man, objective driven and ready for the long haul. I like challenges and I never back down. The harder, the better. I like being pushed over my limits just to prove myself I can do better.
-
-Very social, I can easily blend in a team. Like to communicate a lot with others and to coordinate with other teammates. I was led and I led teams to certain objectives. I believe the only way to get where you want is to never stop trying and to never give up until you reach your destination.
-
----
-
-### Priboi Maria Marcela
-<p align="center">
-  <img src="./team-photos/priboi-maria-marcela.jpg" alt="Priboi Maria Marcela" width="80%">
-  <p align="center">Nerdvana Romania Founder</p>
-</p>
-
-<b>Role:</b> Manager
-
-<b>Description:</b> I am a very ambitious person, I like to work hard and to be involved in many projects. I am a very organized person and I like to have everything planned. I am a very sociable person and I like to communicate with people. I am a very responsible person and I like to take care of everything that is happening around me. I am a very creative person and I like to come up with new ideas. I am a very determined person and I like to achieve my goals.
-
----
-
-### Team photo
-<p align="center">
-  <img src="./team-photos/team-image.jpg" alt="Team" width="80%">
-</p>
 
 ## The Challenge <a class="anchor" id="challenge"></a>
 
@@ -372,7 +314,7 @@ Learn more about the challenge [here](https://wro-association.org/wp-content/upl
 
 <br>
 
-## Our video of the robot on [Youtube](https://www.youtube.com/watch?v=aLT0-nPUaAE) <a class="anchor" id="video"></a>
+## Our video of the robot on [Youtube]() <a class="anchor" id="video"></a>
 
 <br>
 
@@ -1902,23 +1844,4 @@ To ensure the robot's ability to adapt to any course, we developed a randomizer 
 <li> LiPo Battery - https://hpi-racing.ro/29739-medium_default/acumulator-lipo-gens-ace-g-tech-soaring-450mah-74v-30c-2s1p-cu-jst-syp.jpg
 <li> Grove BMI088 Gyroscope - https://files.seeedstudio.com/wiki/Grove-6-Axis_Accelerometer-Gyroscope-BMI088/img/main.jpg
 <li> Linear voltage regulator - https://m.media-amazon.com/images/I/71gro1yTESL._SL1500_.jpg
-
-<br>
-
-## Copyright <a class="anchor" id="copyright"></a>
-
-```
-MIT License
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-© 2024 Nerdvana Romania
-```
-
-
-
 
