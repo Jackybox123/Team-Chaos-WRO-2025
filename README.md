@@ -1,1847 +1,365 @@
-Team Chaos WRO 2025 - Future Engineers
+<center><h1>Team Chaos — WRO 2025 Future Engineers</h1></center>
 
-Team Members
+<!-- ====== Banner Section ====== -->
+<p align="center">
+  <!-- Paste your banner image here -->
+  <img src="./images/banner.png" width="100%" alt="Team Chaos Banner">
+</p>
 
-Coach Fei Guo
+[![GitHub](https://img.shields.io/badge/GitHub-Jackybox123/Team--Chaos--WRO--2025-blue?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Jackybox123/Team-Chaos-WRO-2025)
+[![YouTube](https://img.shields.io/badge/YouTube-Team%20Chaos-red?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/@teamchaos)
 
-Coach Fei Guo (Robert Guo)  provides the technical guidance and leadership required to keep Team Chaos on track. With extensive experience in robotics, he helps us navigate complex challenges, refine our designs, and develop solutions that work in competitive and real-world settings.
-
-Jiapeng Xu  
-
-Jack is a sophomore at Rancho Cucamonga High School with previous experience in the Robo Mission category. He contributes to the AI model development, focusing on optimizing the system to improve the car’s decision making abilities.
-
-Kyle Ho
-
-Kyle is a freshman at Roosevelt High School with prior experience in the RoboSports category. He contributes to the structural design of the robot, focusing on the functionality of its components and motors.
-
-Project Overview: AI Self Driving Car
-
-At the heart of our project is a self-driving car that leverages artificial intelligence to navigate autonomously. The key to its functionality lies in the integration of machine learning and deep learning techniques through the TensorFlow framework, running on a Raspberry Pi. The car's AI model is trained to interpret image data and make real time decisions for navigation, all based on patterns learned from its training data.
-
-A more detailed Summary is here:
-
-https://1drv.ms/w/c/055dcb6976a35dcd/EaQ8GYw9RDpGrUUJAVrUT8QBrVu6nQBtKwHuMYwWNGyMYA?e=fxwyDp
-
- Core Technology Components
-
-1. TensorFlow: The primary framework used to build the AI model. TensorFlow allows us to develop a Convolutional Neural Network (CNN), which forms the foundation for the car’s ability to recognize patterns in images and predict appropriate driving actions.
-   
-2. Convolutional Neural Networks: The AI system relies on a neural network architecture, particularly a CNN, to process image inputs and predict the best course of action. Neural networks simulate the way the human brain processes visual and sensory data, which is critical for enabling the car to "learn" from training data.
-
-4. Python: The coding language used for the entire project. Python’s extensive libraries and compatibility with TensorFlow make it ideal for AI development. All model training, data processing, and decision making algorithms are written in Python.
-
-5. Raspberry Pi: The AI model runs on a Raspberry Pi system. This small, yet powerful, computer provides the necessary computing power to execute TensorFlow models while maintaining the flexibility and compatibility required for robotics projects.
-
-6. Image Training: The AI model is trained using images collected from the car’s environment. These images are analyzed during the training phase, with the model learning to recognize important features such as road boundaries, obstacles, and turns. The more diverse the image dataset, the better the model becomes at predicting the necessary actions in different scenarios.
-
-
-Overview of PWM
-Pulse Width Modulation (PWM) is a technique used to control the speed and direction of the motors that drive the wheels of the car. In our self-driving car, PWM is essential for achieving precise control over acceleration and steering, enabling smooth and efficient movement. PWM operates by rapidly switching the power supplied to the motors on and off, with the ratio of "on" time to "off" time determining the effective power delivered.
-
-Frequency: The number of times per second the PWM signal repeats. A higher frequency provides finer control, ensuring smoother transitions in motor speed.
-
-How PWM is Used in Our Project
-For our self-driving car, PWM is used to control both the DC motors that drive the wheels and the servo motors responsible for steering. The Raspberry Pi sends PWM signals to the motor controller, which then adjusts the voltage to the motors based on the desired speed or steering angle.
-
-Steering and Throttle Control: The car’s steering mechanism is controlled by a servo motor, which adjusts the front wheels' angle. The PWM signal sent to the servo determines how much the wheels turn left or right, allowing the car to navigate curves and make sharp turns. It can move left, right, backwards, and forwards. The smooth control provided by PWM is crucial for ensuring that the car responds accurately to the predictions made by the AI model, translating neural network outputs into physical actions in real-time.
-
-Role of the Gyroscope
-The gyroscope plays a key role in tracking the orientation and movement of the self-driving car. Specifically, the WT901C gyroscope is used in our project to measure angular velocity and detect changes in the car’s orientation across multiple axes (pitch, roll, and yaw). This information is critical for real-time adjustments to the car’s path, ensuring it stays balanced and accurately follows its intended course. The gyroscope helps locate the car on the filed, and determine the position when turnings, going back, and parking.
-
-Feedback Loop: The gyroscope works in tandem with the AI model, providing feedback that complements the camera's visual data. While the camera focuses on image-based navigation, the gyroscope ensures the car maintains proper balance and orientation, preventing it from veering off course due to physical forces like momentum or incline.
-
-Obstacle Navigation: During obstacle avoidance, the gyroscope helps the AI determine how the car's orientation shifts as it navigates around objects. By analyzing these shifts, the neural network can make more informed predictions about how the car should adjust its speed and steering to navigate complex environments.
-
-The physical base structure of our car is an RC car, but we added on to this base by designing our own lego structure. The team designed the chassis to house the key components, such as the motor, Raspberry Pi, gyroscope, and wiring, ensuring proper balance and weight distribution. The front wheels are connected to a servo motor to enable precise control of steering angles, while the rear wheels are powered by DC motors for propulsion.
-
-The car uses a combination of DC motors for movement and a servo motor for steering:
-
-These are connected to the rear wheels and controlled using Pulse Width Modulation (PWM) signals. The power delivered to the motors varies depending on the speed the car needs to achieve. For example, lower PWM duty cycles reduce speed, while higher duty cycles deliver more power for acceleration.
-  
-The servo motor controls the angle of the front wheels, allowing for precise turns. It operates based on a range of motion determined by the PWM signal sent from the Raspberry Pi, which is determined by the AI model's predictions.
-
-At the heart of the car’s autonomous driving capabilities is a Convolutional Neural Network (CNN) developed using TensorFlow. This deep learning framework is essential for training the AI to recognize driving patterns, road boundaries, and obstacles based on visual data collected by the car’s camera.
-
-The CNN processes input images captured by the camera mounted on the car. Each layer of the CNN extracts features from the images, starting with basic edges and progressing to more complex features such as shapes and objects. These features are then passed through multiple layers, allowing the network to learn important aspects of the driving environment (such as turns, obstacles, or road boundaries).
-
-The CNN is trained using a dataset of images captured during the manual driving phase (discussed in detail later). During training, the network adjusts its internal weights through backpropagation which minimizes prediction errors by iteratively improving the network’s ability to associate input images with driving decisions.
-
-Once trained, the CNN processes live input from the car’s camera and predicts appropriate actions such as accelerating, turning, or stopping. These predictions are then used to generate PWM signals that control the motors.
-
-The core AI model operates in real-time, continuously processing visual data from the camera:
-
-Before being fed into the neural network, the captured images are resized and normalized. This step is important because it ensures that the data fed into the neural network is consistent, reducing the computational load and improving the accuracy of predictions.
-
-The AI model is trained to map each image frame to a specific driving action. For example, if the network detects a left curve in the image, it will predict a left turn, which is then executed by adjusting the servo motor accordingly.
-
-
-The Raspberry Pi acts as the brain of the car, running the AI model and handling all communication between the sensors, motors, and other hardware components.
-
-The car uses a Raspberry Pi 4 with the Bullseye upgrade. The Raspberry Pi has enough computational power to run the TensorFlow model in real-time while processing data from sensors and controlling the motors via PWM signals.
-  
-The Raspberry Pi’s General-Purpose Input/Output (GPIO) pins are used to interface with the motor controller, gyroscope, and servo motor. The GPIO pins allow for direct control of the PWM signals that regulate motor speed and steering.
-
-During the training phase, the Raspberry Pi stores image data on an SD card. This data is later used to train the neural network offline.
-
-
-The software running on the Raspberry Pi is written in Python. Python is chosen for its extensive library support, including TensorFlow, and its ease of integration with hardware components.
-
-TensorFlow is used to create and run the neural network models. The Python code loads the trained model onto the Raspberry Pi, processes input images, and uses the model to generate predictions.
-  
-Additional Python libraries are used to handle PWM signal generation and motor control. For example, the RPi.GPIO library is used to interact with the GPIO pins and control motor speed and direction.
-
-The gyroscope works in conjunction with the AI model to form a feedback loop:
-
-If the gyroscope detects that the car is tilting or rotating unexpectedly, the AI model can use this information to adjust motor power or steering angles, bringing the car back to a stable position.
-
-The gyroscope’s data helps ensure smooth driving, especially when the car encounters obstacles or makes sudden turns. For example, if the car begins to tilt while turning, the gyroscope detects this and sends the data to the AI model, which can then adjust the steering angle or motor power to stabilize the vehicle.
-
-
-The first step in training the AI model is collecting data through manual driving. This involves driving the car manually around a demo map that includes both clear roads and obstacles.
-
-As the car is driven manually, the camera continuously captures images of the environment. These images are saved to the Raspberry Pi’s storage, creating a dataset that will later be used to train the AI model.
-
-Each image is associated with a specific action, such as turning left, turning right, or accelerating. This labeled data forms the basis of the training dataset.
-
-Once the dataset has been collected, we train the Convolutional Neural Network (CNN) to recognize patterns in the images and predict the appropriate driving actions:
-
-The collected images are split into a training set and a validation set. The training set is used to adjust the model’s internal parameters, while the validation set ensures that the model generalizes well to new data.
-
-The CNN is trained using backpropagation, a technique that allows the network to learn from its mistakes. During each iteration, the network adjusts its internal weights to reduce the difference between its predictions and the correct driving actions.
-
-
-After training, the AI model is tested on unseen data to evaluate its accuracy and performance:
-
-The model is evaluated using the validation set, ensuring that it performs well on data it has not seen during training. This step is critical for preventing overfitting, where the model performs well on the training data but poorly on new data.
-
-Once the model performs well on the validation set, it is tested in real-world conditions. The car is driven autonomously on the demo map, and the AI’s predictions are compared to the actual driving actions.
-
-The car uses its camera and AI model to detect obstacles in the environment. During training, the model is taught to recognize objects in the car’s path and take appropriate actions to avoid them.
-
-The CNN processes images captured by the camera and identifies obstacles. The AI then decides whether to turn, slow down, or stop based on the location and size of the obstacle.
-  
-The AI model predicts the safest course of action by analyzing the obstacle’s distance and direction relative to the car. It then adjusts the steering and motor power accordingly, allowing the car to navigate around the object without colliding.
-
-The car is tested on a predefined demo map that includes straight paths, curves, and obstacles. This provides a controlled environment for evaluating the car’s ability to navigate different terrains and avoid obstacles.
-
-In more complex environments, the car must deal with moving obstacles, uneven surfaces, and unpredictable conditions. These challenges require the AI model to make quick decisions based on real-time data, and the integration of PWM and gyroscope feedback ensures the car remains stable during these maneuvers.
-
- AI Training and Model Development
-
-The training process for our self-driving car's AI model involves a multistep approach designed to simulate real world driving conditions and improve the car's ability to make autonomous decisions. Below is a breakdown of our process:
-
- 1. Preparing the Raspberry Pi  
-First, we power up the Raspberry Pi by connecting it to an external power source. We then insert the training SD card, which contains the necessary programs and data collection tools. The training SD card is critical for gathering the image data used to train the neural network.
-
- 2. Establishing a Remote Connection  
-We remotely control the Raspberry Pi by opening VNC Viewer on a laptop, allowing us to manage the system and monitor the training process without physically accessing the Raspberry Pi. VNC Viewer lets us execute commands and run the training programs directly on the Raspberry Pi’s operating system.
-
- 3. Data Collection via Remote Control  
-Using a remote controller, we manually drive the car on a demo map that simulates a variety of driving conditions, including straight roads, turns, and obstacles. During this process, the car captures images from its surroundings, which are stored for later use in training the neural network.
-
- 4. Image Collection and Data Labeling  
-The images collected from the car’s manual driving sessions are saved to the Raspberry Pi’s storage. Along with the images, we record the corresponding actions (e.g., turning left, turning right, accelerating, stopping), creating a dataset that maps visual inputs to driving decisions. This dataset forms the foundation for training the AI model.
-
- 5. Training the AI Model  
-We then use TensorFlow to develop a Convolutional Neural Network (CNN) that processes the collected images. The goal of the training process is for the neural network to identify the key features in the images (such as road edges or obstacles) and predict how the car should respond. This involves repeated training cycles where the network adjusts its internal parameters to reduce prediction errors.
-
- 6. Model Optimization  
-Once the initial training phase is complete, we finetune the model by running additional training sessions with varied data, ensuring that the neural network becomes more accurate and responsive. The optimization process also includes adjusting hyperparameters such as learning rates, batch sizes, and layer structures to improve the model’s overall performance.
-
- 7. Deployment of the Trained Model  
-After the AI model has been sufficiently trained, we swap out the training SD card for the driving SD card. This card contains the finalized model and the programs required to run the car in autonomous mode. When the program is executed, the AI model processes real time images from the car's environment, using its training to predict the best driving actions.
-
- 8. Running the Autonomous Driving Program  
-With the trained model running on the Raspberry Pi, the car now operates autonomously. The AI system continuously processes images from the car’s camera, making real time predictions about the car’s next move. The car navigates its environment based entirely on the patterns learned during the training phase, without any human intervention.
-
-
-AI Model and Neural Network Components
-
-1. Convolutional Neural Network (CNN): The CNN is specifically designed to process image data and identify patterns in visual information. Each layer of the CNN extracts increasingly complex features, from basic edges to higher level concepts like objects and road boundaries, allowing the model to predict driving actions based on the input images.
-
-2. Back propagation and Training: During the training process, the AI model compares its predictions to the correct driving actions and calculates the error. Backpropagation enables the network to learn by minimizing these errors through repeated iterations, improving its accuracy.
-
-3. Real Time Decision Making: Once deployed, the neural network runs in realtime, processing new images as they are captured by the car's camera. It uses the trained model to predict whether it should move left or right based on the color of the obstacle.
-4. Image Augmentation: To enhance the robustness of the model, we also use image augmentation techniques during training. This involves creating variations of the original images (such as adjusting brightness, contrast, or orientation) to simulate a wider range of driving conditions. This allows the neural network to perform well even in unfamiliar or challenging environments.
-
-Other Key Components
-1. Mobility Management
-Vehicle Design and Motor Control:
-Our vehicle utilizes a custom-built RC car platform, which incorporates a DC motor to control throttle and a servo for steering. The DC motor was chosen for its ability to provide smooth acceleration and consistent speed, while the servo offers precise steering control. Both components are managed by a custom-designed ESC (Electronic Speed Controller), which interfaces directly with the Raspberry Pi to allow for dynamic control.
-AI-Controlled Mobility:
-To enable autonomous operation, we integrated a Pi Camera to feed real-time visual data to an AI model. The model predicts the appropriate throttle and steering adjustments based on obstacle detection and navigation requirements. The AI model was trained using data collected from manual control, where the car was driven and the corresponding throttle and steering values were logged alongside images captured by the Pi Camera.
-Challenges in Mobility Management:
-One of the challenges faced during development was ensuring the AI model could accurately distinguish between obstacles with similar shapes. We overcame this by incorporating color recognition, which allowed the AI to make more precise decisions. Another challenge was syncing the throttle and steering inputs in real-time during training, especially when switching between AI models for different control tasks.
-
-
-2. Power and Sense Management
-Power Source and Sensors:
-The vehicle’s power is supplied by a dual-battery system. A battery bank powers the Raspberry Pi, while a separate battery provides power to the RC car platform. The Pi Camera provides visual input for the AI model, and various sensors (e.g., encoders, proximity sensors) support the vehicle's obstacle detection and decision-making. These sensors help the AI predict the necessary steering and throttle adjustments for efficient navigation.
-Power Consumption Considerations:
-The power consumption of the Raspberry Pi is monitored, and the battery bank ensures consistent operation of both the Pi and the sensors. A well-organized wiring system connects the power sources to the components, and an efficient power distribution setup minimizes energy loss during operation.
-
-
-3. Obstacle Management
-Obstacle Detection and Strategy:
-Our vehicle uses a combination of AI driven image processing and sensor input from our Pi Camera to detect and navigate obstacles. The Pi Camera captures live images, which are processed by the AI model to predict the appropriate throttle and steering commands. This real-time processing allows the car to adapt to different obstacles by adjusting speed and direction.
-Obstacle Handling Strategy:
-The obstacle handling strategy was developed through a process of trial and error. Initially, the AI model struggled to differentiate between obstacles based on shape alone, so color differentiation was integrated into the training process. Additionally, detailed comments were created on each code that was created to handle these strategies; they can be viewed in the src files on Github.
-Challenges and Solutions:
-A significant challenge was ensuring the AI could process the image data fast enough to make timely adjustments. We addressed this by optimizing the image recognition algorithm and fine-tuning the throttle/steering prediction model. Real-time data handling and efficient algorithm implementation were key to improving obstacle navigation.
-
-Obstacles 
-During the development of our AI self-driving car, we hit a major problem when we accidentally burned out the Integrated Circuit (IC) that controlled the motors. The IC is a crucial part because it helps send signals from the Raspberry Pi to the motors, allowing us to control how fast the car moves and in which direction. At first, everything was running smoothly, but after testing the car with more demanding tasks, the IC overheated and stopped working.
-
-We realized something was wrong when the car suddenly stopped moving, even though the Raspberry Pi was still sending commands. After checking, we found that the IC had burned out due to overheating. This happened because the motors were drawing too much power for too long, and the IC wasn’t equipped to handle it. We also hadn’t added any cooling to prevent it from getting too hot, which made the problem worse.
-
-To fix this, we did some research and decided to replace the burned-out IC with a stronger one that could handle more power. We also added heat sinks to help keep the IC cool and installed better airflow around it. On top of that, we added a fuse to the circuit. This fuse would blow if the motors tried to pull too much power, which would stop the IC from overheating again.
-
-After making these changes, we tested the car again under the same conditions that caused the problem, and everything worked perfectly. The new IC and cooling system kept things running smoothly, even when the car was driving for a long time. This experience taught us how important it is to test the car in different scenarios and to make sure all the components are protected against potential problems like overheating.
-
-In the end, this issue turned out to be a valuable learning experience for us. Even though it was frustrating, it helped us understand the importance of making sure all the parts of the car are reliable and safe from damage.
-
-Conclusion
-
-Team FVJ’s AI powered self-driving car represents a sophisticated application of machine learning, neural networks, and real time decision making. Our project combines the power of TensorFlow, Raspberry Pi, a custom built CNN and lego structure to create a self driving system capable of navigating autonomously.
-
-Our team has employed a unique approach in the design of our intelligent vehicle, which is characterized by the use of a pure Artificial Intelligence (AI) model. At the heart of this system is a Convolutional Neural Network (CNN) that operates under a Linux environment, utilizing Google's TensorFlow.
-
-
- The purpose of the CNN is to learn and emulate the driving habits of the operator. It does this by processing images captured by the camera and the movements of the remote control, allowing the network to train itself to respond to these inputs. In practice, the neural network analyzes images from the race, making predictions about the best course of action in a given situation. In terms of ground perception modules, our AI captures images with its camera and processes them using the CNN, which then compares them with a well-trained model to make accurate predictions.
-
-
-Our design philosophy has been clear and consistent from the beginning: to merge the benefits of traditional programming with AI. By feeding the AI high quality data, it processes information and analyzes data like a brain, making predictions while also learning the driver's habits, thus humanizing the vehicle's driving behavior. Our intelligent vehicle is not merely mechanically operated; it is driven by an intelligent system that combines precise programming with an AI model for an enhanced driving experience.
-
-
-<center><h1> Team Chaos </center>
-
-![Banner](./other/readme-images/banner.png)
-[![Youtube](https://img.shields.io/badge/Youtube-%23FF0000.svg?style=for-the-badge&logo=Youtube&logoColor=white)](https://www.youtube.com/@TeamChaos-i4m)
-
-This repository contains the documentation for Team Chaos USA’s AI-powered LEGO robot designed for the 2025 World Robot Olympiad Future Engineers competition.
+---
 
 ## Table of Contents
-* [The Team](#team)
-* [The Challenge](#challenge)
-* [The Robot](#robot-image)
-* [Performance Video](#video)
+* [The Team](#the-team)
+* [Project Summary](#project-summary)
+* [Executive Summary](#executive-summary)
+* [Communication Design](#communication-design)
+* [Technical Solution Design](#technical-solution-design)
+* [Robot Photos](#robot-photos)
 * [Mobility Management](#mobility-management)
-  * [Powertrain](#powertrain-mechanical)
-    * [Drivetrain](#drivetrain-mechanical)
-    * [Motor](#motor-mechanical)
-    * [Motor Driver](#motor-driver-mechanical)
-  * [Steering](#steering-mechanical)
-    * [Servo Motor](#servo-motor)
-  * [Chassis](#chassis-mechanical)
-* [Power and Sense Management](#power-and-sense-management)
-  * [Li-Po Battery](#li-po-battery)
-  * [Arduino Nano ESP32](#arduino-nano-esp32)
-  * [IMU](#imu-sensor)
-  * [OpenMV Cam H7 R2](#openmv-cam-h7-r2)
-  * [Voltage Regulator](#voltage-regulator)
-  * [PCB Design](#pcb)
-  * [Circuit Diagram](#circuit-diagram)
-* [Code for each component](#code-for-each-component)
-  * [Drive Motor](#drive-motor-code)
-  * [Servo Motor](#servo-motor-code)
-  * [Camera](#camera-code)
-  * [IMU](#gyro-sensor-code)
+* [Power & Sense Management](#power-and-sense-management)
 * [Obstacle Management](#obstacle-management)
-  * [Qualification Round](#quali-management)
-  * [Final Round](#final-management)
-  * [Additional code](#additional-code)
-* [Robot Construction Guide](#robot-construction-guide)
-  * [Step 0: Print the 3D parts](#3d-printing)
-  * [Step 1: Assemble the steering system](#steering-system-assembly)
-  * [Step 2: Assemble the powertrain](#powertrain-assembly)
-  * [Step 3: Attach the electronics](#electronics-attachment)
-  * [Step 4: Attach the wheels](#wheel-attachment)
-  * [Step 5: Final touches](#final-touches)
-  * [Step 6: Upload the code](#code-upload)
-* [Cost Report](#cost-report)
-  * [3D Printing Costs](#3d-printing-costs)
-  * [Other Parts Tested](#other-parts-tested)
-  * [Tools and Equipment](#tools-and-equipment)
-  * [Summary of Costs](#summary-of-costs)
-* [Randomizer](#randomizer)
-* [Resources](#resources)
-  * [3D Models](#3d-models-resources)
-  * [Images](#images-resources)
-* [License](#copyright)
+* [Software and Coding Explanation](#software-and-coding-explanation)
+* [Photos of the Data We Captured](#photos-of-the-data-we-captured)
+* [Schematic Diagram of the CNN](#schematic-diagram-of-the-cnn)
+* [Code Explanations & Code Blocks](#code-explanations--code-blocks)
+* [Car Components and Explanation](#car-components-and-explanation)
+* [Component Cost Table](#component-cost-table)
+* [Assembly Instructions](#assembly-instructions)
+* [Challenges and Solutions](#challenges-and-solutions)
+* [Conclusion](#conclusion)
 
 ---
 
-## The Team <a class="anchor" id="team"></a>
+## The Team <a name="the-team"></a>
 
-Team Members
+### Team Members
 
-Coach Fei Guo
+**Kyle Ho:**  
+An 9th grader high school student from California, United States. He had participated in WRO in previous seasons. He loves robots and is a very innovative person.  
 
-Coach Fei Guo (Robert Guo)  provides the technical guidance and leadership required to keep Team Chaos on track. With extensive experience in robotics, he helps us navigate complex challenges, refine our designs, and develop solutions that work in competitive and real-world settings.
+**Jiapeng Xu:**  
+Hello, I am a 11th grader from California United States. In my free time I like to code, swim, and snowboard.  I love to come up with solutions for problems and experiment with robotics and AI. This is my second year competing in WRO.  
 
-Jiapeng Xu  
-
-Jack is a sophomore at Rancho Cucamonga High School with previous experience in the Robo Mission category. He contributes to the AI model development, focusing on optimizing the system to improve the car’s decision making abilities.
-
-Kyle Ho
-
-Kyle is a freshman at Roosevelt High School with prior experience in the RoboSports category. He contributes to the structural design of the robot, focusing on the functionality of its components and motors.
+**Coach: Fei Guo (Robert Guo):**  
+Fei Guo (Robert Guo) provides the technical guidance and leadership required to keep Team Chaos on track. With extensive experience in robotics, he helps us navigate complex challenges, refine our designs, and develop solutions that work in competitive and real-world settings.
 
 ---
 
-## The Challenge <a class="anchor" id="challenge"></a>
+## Project Summary <a name="project-summary"></a>
 
-The **[WRO 2024 Future Engineers - Self-Driving Cars](https://wro-association.org/)** challenge invites teams to design, build, and program a robotic vehicle capable of driving autonomously on a racetrack that changes dynamically for each round. The competition includes two main tasks: completing laps while navigating randomized obstacles and successfully performing a precise parallel parking maneuver. Teams must integrate advanced robotics concepts such as computer vision, sensor fusion, and kinematics, focusing on innovation and reliability.
+Using the method of machine learning, a CNN neural network is built to train and predict the pictures of the competition venue.  
+This is our AI Lego Car.
 
-This challenge emphasizes all aspects of the engineering process, including:
-- **Mobility Management:** Developing efficient vehicle movement mechanisms.
-- **Obstacle Handling:** Strategizing to detect and navigate traffic signs (red and green markers) within specified rules.
-- **Documentation:** Showcasing engineering progress, design decisions, and open-source collaboration through a public GitHub repository.
+Our project combines semi-artificial intelligence and semi-robotics to create a fully functional AI-powered self-driving robot.
 
-Points are awarded based on performance in the challenge rounds, quality of the engineering documentation, and the ability to create an innovative and robust solution. The goal is to inspire STEM learning through real-world robotics applications, teamwork, and creative problem-solving.
+---
 
-Learn more about the challenge [here](https://wro-association.org/wp-content/uploads/WRO-2024-Future-Engineers-Self-Driving-Cars-General-Rules.pdf).
+## Executive Summary <a name="executive-summary"></a>
 
-## Photos of our robot MOOYA (Mechanized Optimization for Outstanding Yield and Adaptation) <a class="anchor" id="robot-image"></a>
+The Future Engineers competition is an autonomous driving challenge where the robot must navigate and avoid obstacles on the course. We designed our system using a Raspberry Pi as the core processing unit for AI operations. Running on the Raspberry Pi’s Linux OS, the Python environment integrates seamlessly with TensorFlow, Google’s machine learning framework.
 
-| <img src="./robot-photos/front.png" width="90%" /> | <img src="./robot-photos/back.png" width="85%" /> | 
+We began by attaching a camera module (lens) to the Raspberry Pi to record video footage of a manually operated vehicle. This footage, along with the associated remote-control input data (steering and throttle), was used to train a Convolutional Neural Network (CNN). The CNN learns patterns between image frames and control inputs. Once trained, the model is used to analyze live camera input and predict throttle and steering values in real time.
+
+These AI-generated control signals are then transmitted to a LEGO-based vehicle, enabling it to drive autonomously without human intervention.
+
+---
+
+
+## Communication Design <a name="communication-design"></a>
+
+Our design facilitates communication between the remote-control interface and the Raspberry Pi, which in turn communicates seamlessly with the LEGO car.
+
+<p align="center">
+  <!-- Paste your image of the communication setup here -->
+  <img src="./images/communication_setup.jpg" width="80%" alt="Communication Design">
+</p>
+
+Control Logic Design: The control logic involves recording the playing field's images and data through a remote-controlled robot. We designed and trained a neural network using a model of the field. During runs, the neural network accesses the trained behavior model to execute actions reminiscent of human operations. These action commands are sent to the LEGO car, which then performs the designated tasks, such as determining throttle or speed based on the image feedback from the Pi Camera.
+
+---
+
+## Technical Solution Design <a name="technical-solution-design"></a>
+
+### Overall Technical Solution Framework
+
+<p align="center">
+  <!-- Paste your image of the communication setup here -->
+  <img src="./images/technicalsolution_setup.jpg" width="80%" alt="Technical Design">
+</p>
+
+Machine learning (ML) encompasses a spectrum of methodologies that empower computers to autonomously discover and refine algorithms. A convolutional neural network (CNN) is a specialized feed-forward neural network that inherently learns and perfects feature engineering through filter optimization, making it particularly effective in AI image recognition and autonomous driving applications.
+
+TensorFlow is a renowned, open-source software library dedicated to machine learning and artificial intelligence, offering a versatile toolkit for developers.
+
+---
+## Robot Photos <a name="robot-photos"></a>
+
+Here are multiple views of our AI Lego Car.  
+
+| <img src="./images/front.jpg" width="90%" /> | <img src="./images/back.jpg" width="85%" /> | 
 | :--: | :--: | 
 | *Front* | *Back* |
-| <img src="./robot-photos/left.png" width="90%" /> | <img src="./robot-photos/right.png" width="85%" /> | 
+| <img src="./images/left.jpg" width="90%" /> | <img src="./images/right.jpg" width="85%" /> | 
 | *Left* | *Right* |
-| <img src="./robot-photos/top.png" width="90%" /> | <img src="./robot-photos/bottom.png" width="85%" /> | 
+| <img src="./images/top.jpg" width="90%" /> | <img src="./images/bottom.jpg" width="85%" /> | 
 | *Top* | *Bottom* |
 
-<br>
+---
 
-## Our video of the robot on [Youtube]() <a class="anchor" id="video"></a>
+## Mobility Management <a name="mobility-management"></a>
 
-<br>
+![Mobility Model](./images/mobility_model.jpg)
 
-# Mobility Management <a class="anchor" id="mobility-management"></a>
-<!-- ![Powertrain](./images/resources/powertrain.png "Powertrain") -->
+Our vehicle utilizes a custom-built LEGO car platform, which incorporates a DC motor to control throttle and a servo for steering. The DC motor was chosen for its ability to provide smooth acceleration and consistent speed, while the servo offers precise steering control. Both components are managed by the Build HAT, which interfaces directly with the Raspberry Pi to allow for dynamic control.
 
-The robot's mobility is managed by a combination of components, including the powertrain, steering system, and chassis. These elements work together to ensure the robot's smooth and efficient movement.
+**AI-Controlled Mobility:**  
+To enable autonomous operation, we integrated a Pi Camera to feed real-time visual data to an AI model. The model predicts the appropriate throttle and steering adjustments based on obstacle detection and navigation requirements. The AI model was trained using data collected from manual control, where the car was driven, and the corresponding throttle and steering values were logged alongside images captured by the Pi Camera.
 
-## Powertrain <a class="anchor" id="powertrain-mechanical"></a>
-
-<!-- ![Powertrain - Bottom View](./images/resources/powertrain_bottom_text.png "Powertrain - Bottom View") -->
-
-### Drivetrain <a class="anchor" id="drivetrain-mechanical"></a>
-
-To minimize friction and thereby reduce speed loss, driving axle was made from lego pieces. We conected the motor to the driving axle using a custom 3D-printed adapter. The driving axle has a rear wheel lego differential, which allows the robot to turn smoothly. As the axle was already lego, we used lego wheels.
-
-<br>
-
-**Potential Improvements**:
-- Upgrade to a stronger or more precise differential for smoother turning.
-- Test alternative materials for the Lego driving axle to reduce weight and increase durability.
-- Replace the 3D-printed adapter with a metal one to improve robustness and reliability.
-
-### Motor <a class="anchor" id="motor-mechanical"></a>
-
-<table>
-  <tr>
-    <td width="50%" style="text-align: left;">
-      <img src="./other/readme-images/drive-motor.jpg" alt="DC Gearmotor" width="100%">
-    </td>
-    <td width="50%" style="text-align: left; vertical-align: top;">
-      <h3>Specifications:</h3>
-      <li>Voltage: 12V</li>
-      <li>Gear Ratio: 1:50</li>
-      <li>Speed: 650 ± 31% rpm</li>
-      <li>Torque: 0.67 ± kg·cm</li>
-      <li>Weight: 9.5g</li>
-      </li>
-    </td>
-  </tr>
-</table>
-
-Following an evaluation of different motors, we settled on a micro DC gear motor on which we attached a magnetic encoder. This motor was selected for its lightweight and compact design, which stands out among others with comparable output. Additionally, the magnetic encoder offers greater precision than its optical counterpart. We secured the motor to the chassis using a custom 3D-printed holder.
-
-Where to buy the motor: https://www.pololu.com/product/3039
-
-To connect the motor's axle to a Lego-compatible axle, we created a custom 3D-printed adapter.
-
-![Gearmotor to axle - 3D Model](./other/readme-images/motor_to_axle_v2_drawing.png "Gearmotor to axle 3D piece")
-
-To secure the motor to the chassis, we designed a custom 3D-printed holder. The holder is split into two halves, which are then screwed together to ensure the motor remains in place.
-
-![Micro motor holder (half) - 3D Model](./other/readme-images/motor_mount_v3_drawing.png "Micro motor holder (half) 3D piece")
-
-<br>
-
-**Potential Improvements**:
-- Consider upgrading to a brushless motor for higher efficiency and better thermal management.
-- Implement a more robust motor holder to prevent vibrations and ensure stability.
-- Explore alternative motor designs to enhance performance and reduce weight.
-
-### Motor Driver <a class="anchor" id="motor-driver-mechanical"></a>
-
-<table>
-  <tr>
-    <td width="50%" style="text-align: left;">
-      <img src="./other/readme-images/motor-driver.png" alt="Motor driver" width="100%">
-    </td>
-    <td width="50%" style="text-align: left; vertical-align: top;">
-      <h3>Specifications:</h3>
-      <li>Power supply voltage: VM = 15V max, VCC = 2.7--5.5V</li>
-      <li>Output current: Iout = 1.2A (average) / 3.2A (peak)</li>
-      <li>Standby control to save power</li>
-      <li>CW/CCW/short-brake/stop motor control modes</li>
-      <li>Built-in thermal shutdown circuit and low-voltage detecting circuit</li>
-    </td>
-  </tr>
-</table>
-
-To control the speed of the drive motor, we utilized a SparkFun Dual TB6612FNG motor driver.
-
-Where to buy the motor driver: https://www.sparkfun.com/products/14450
-
-<br>
-
-**Potential Improvements**:
-- Replace the motor driver with a custom PCB to reduce weight and improve space utilization.
-- Add active cooling or heat sinks for enhanced thermal performance during extended use.
-- Explore higher-current motor drivers to accommodate potential motor upgrades.
-- Implement a more robust power management system to ensure reliable operation.
-
-## Steering <a class="anchor" id="steering-mechanical"></a>
-
-<!-- ![Powertrain - Angled Bottom View](./images/resources/bottom_angle.png "Powertrain - Angled Bottom View") -->
-
-After experimenting with various steering mechanisms such as Ackermann steering and bell-crank steering, we assessed their advantages and drawbacks. Ultimately, we chose a straightforward steering system consisting of a parallelogram linkage. This decision was made because the alternative systems were either too large or too complex to implement effectively. Our selected mechanism is simple, light, and compact, providing a satisfactory steering angle. While it does not adhere to the Ackermann steering geometry, our tests showed that for our robot's small size and light weight, this omission was not critically significant.
-
-As an upgrade to last year's design, we replaced the Lego-based steering system with a custom 3D-printed one. This change allowed us to reduce the robot's weight and size, while also enhancing its overall performance. The new steering system is more robust and offers greater flexibility in terms of design and implementation.
-
-The steering system is composed of 2 symmetrical wheel holders, that are conected togheter by a steering arm. The steering arm is conected to the servo motor. The joints between the wheel holders and the steering arm are made using steel rods.
-
-![Steering System](./other/readme-images/steering_system.png "Steering System")
-
-![Steering Axle](./other/readme-images/steering_axle_v8_drawing.png "Steering Axle")
-
-![Steering Hub](./other/readme-images/steering_hub_v5_drawing.png "Steering Hub")
-
-![Servo Mount](./other/readme-images/servo_mount_v8_drawing.png "Servo Mount")
-
-<br>
-
-**Potential Improvements**:
-- Make the steering angle wider to improve the robot's turning radius.
-- Implement Ackermann steering geometry for more precise and efficient turning.
-- Use ball-bearing joints in the linkage to reduce friction and increase durability.
-- Replace the 3D-printed components with lightweight aluminum for greater strength.
-
-### Servo Motor <a class="anchor" id="servo-motor"></a>
-
-<table>
-  <tr>
-    <td width="50%" style="text-align: left;">
-      <img src="./other/readme-images/mg90s.jpg" alt="Servo Motor" width="100%">
-    </td>
-    <td width="50%" style="text-align: left; vertical-align: top;">
-      <h3>Specifications:</h3>
-      <li>Weight: 13.4g</li>
-      <li>Stall torque: 2.2 kgf·cm (6V)</li>
-      <li>Operating speed: 0.08 s/60 degree (6V)</li>
-      <li>Rotation angle: 120 degree</li>
-    </td>
-  </tr>
-</table>
-
-For steering, we selected the MG90S servo motor, favoring it for its high torque and swift response.
-
-Where to buy the servo motor: https://cleste.ro/motor-servo-mg90s-180g.html
-
-<br>
-
-**Potential Improvements**:
-- Test servos with a wider rotation angle to improve steering flexibility.
-- Integrate position feedback into the servo for real-time adjustment and enhanced precision.
-
-## Chassis <a class="anchor" id="chassis-mechanical"></a>
-
-Our previous attempts at designing a robot for the Future Engineers category were bulky and heavy, mostly lego based. This year, we aimed to create a more compact and lightweight robot. We achieved this by using a almost entirely 3D-printed chassis. Because of this, the fact that we tried to use as few components as possible, the robot is aproximately 50% lighter than last year's robot, while also being more compact.
-
-Another improvement we made was the way of connecting 3D parts togheter. Instead of using lego or screws, we used snapping joints and pins.
-
-The chassis holds basically all of the components. Only the gearmotor and the gyroscope are attached to a separate piece that is then attached to the chassis. The back holds the differential; the middle part has a hole for the battery, on top of which the pcb is mounted using a 3d printed holder. The front holds the camera and the servo motor; the servo mount piece is attached to the chassis as well.
-
-![Chassis](./other/readme-images/chasis_v5_drawing.png "Chassis")
-
-The motor support is a separate piece that holds the motor and the gyroscope. It is attached to the chassis using snapping joints.
-
-![Motor Support](./other/readme-images/motor_support_v7_drawing.png "Motor Support")
-
-<br>
-
-**Potential Improvements**:
-- Add vibration-damping materials to minimize disturbances during operation.
-- Test modular chassis designs for quicker assembly and maintenance.
-- Implement a more aerodynamic shape to reduce drag and improve speed.
-- Integrate a suspension system to enhance stability and shock absorption.
-- Explore alternative materials for the chassis to improve durability and performance.
-- Add a protective cover to shield the components from dust and debris.
-
-# Power and Sense Management <a class="anchor" id="power-and-sense-management"></a>
-
-The robot's power and sense management system is composed of several components, including a Li-Po battery, an Arduino Nano ESP32, an IMU sensor, and an OpenMV Cam H7 R2. These components work together to provide the robot with the necessary power and sensory input to navigate its environment effectively.
-
-### Li-Po Battery <a class="anchor" id="li-po-battery"></a>
-
-<table>
-  <tr>
-    <td width="50%" style="text-align: left;">
-      <img src="./other/readme-images/battery.jpg" alt="Li-Po Battery" width="100%">
-    </td>
-    <td width="50%" style="text-align: left; vertical-align: top;">
-      <h3>Specifications:</h3>
-      <li>Capacity: 450mAh</li>
-      <li>Voltage: 7.4V/2S</li>
-      <li>Discharge rate: 30C</li>
-      <li>Weight: 33 g</li>
-      <li>Size: 56.5*31*9mm</li>
-    </td>
-  </tr>
-</table>
-
-Where to buy the battery: https://hpi-racing.ro/li-po-2s-74v/acumulator-lipo-gens-ace-g-tech-soaring-450mah-74v-30c-2s1p-cu-jst-syp.html
-
-The battery is mounted using a custom 3D-printed holder, which is secured to the chassis.
-
-<br>
-
-**Potential Improvements**:
-- Consider using a higher-capacity battery to extend runtime without increasing weight significantly.
-- Add a battery management system (BMS) for better charging and discharging safety.
-- Use quick-release connectors for easier battery replacement during competition.
-- Implement a battery level indicator to monitor power consumption and remaining charge.
-
-<!-- ![Battery Mount - 3D Model](./images/resources/BatteryMount.jpg "Battery Mount - 3D Model") -->
-
-### Arduino Nano ESP32 <a class="anchor" id="arduino-nano-esp32"></a>
-
-<table>
-  <tr>
-    <td width="50%" style="text-align: left;">
-      <img src="./other/readme-images/arduino-nano-esp32.jpg" alt="Arduino Nano ESP32" width="100%">
-    </td>
-    <td width="50%" style="text-align: left; vertical-align: top;">
-      <h3>Specifications:</h3>
-      <li>Microcontroller: ESP32</li>
-      <li>Flash memory: 4MB</li>
-      <li>SRAM: 520KB</li>
-      <li>Frequency: 240MHz</li>
-      <li>Pins: 22</li>
-      <li>Input voltage: 5V</li>
-    </td>
-  </tr>
-</table>
-
-At previous competitions, we used many microcontrollers to manage the robot's various components. This year, we opted for the Arduino Nano ESP32, which combines the functionalities of an Arduino Nano and an ESP32. This microcontroller is capable of handling all of the robot's sensors and actuators, providing a more streamlined and efficient solution.
-
-Where to buy the Arduino Nano ESP32: https://store.arduino.cc/products/nano-esp32
-
-The Arduino, mounted on a prototype board, is secured to the chassis with a 3D-printed holder. The pcb is attached to the chassis using screws.
-
-![PCB Mount](./other/readme-images/pcb_plaque_v5_drawing.png "PCB Mount")
-
-<br>
-
-**Potential Improvements**:
-- Design a custom PCB to integrate the Arduino Nano ESP32 with other components for a cleaner setup.
-- Test alternative microcontrollers with additional processing power or I/O pins for future scalability.
-- Optimize the mounting mechanism to allow easier access for debugging and repairs.
-- Implement a power management system to ensure stable voltage supply and prevent damage to the microcontroller.
-
-### IMU <a class="anchor" id="imu-sensor"></a>
-
-<table>
-  <tr>
-    <td width="50%" style="text-align: left;">
-      <img src="./other/readme-images/gyro.jpg" alt="IMU Sensor - BMI088" width="100%">
-    </td>
-    <td width="50%" style="text-align: left; vertical-align: top;">
-      <h3>Specifications:</h3>
-      <li>Gyroscope range: ±2000°/s</li>
-      <li>Accelerometer range: ±24g</li>
-      <li>Interface: I2C</li>
-      <li>Supply voltage: 1.71V to 3.6V</li>
-      <li>Current consumption: 0.9mA</li>
-    </td>
-  </tr>
-</table>
-
-One importat aspect that helps the robot navigate is the inertial measurement unit (IMU). This sensor is based on BOSCH BMI088, which is a high-performance IMU with high vibration suppression. While the IMU measure the angular velocity and the acceleration of the robot, we only use the angular velocity to calculate the angle of the robot. The IMU is wired to the SDA and SCL pins on the arduino.
-
-Where to buy the gyro sensor: https://www.seeedstudio.com/Grove-6-Axis-Accelerometer-Gyroscope-BMI088.html
-
-<br>
-
-**Potential Improvements**:
-- Explore alternative IMU sensors with higher accuracy and better vibration resistance.
-- Implement sensor fusion with additional sensors (e.g., magnetometer) for enhanced navigation.
-- Test calibration procedures to minimize drift over longer runs.
-
-### OpenMV Cam H7 R2 <a class="anchor" id="openmv-cam-h7-r2"></a>
-
-<table>
-  <tr>
-    <td width="50%" style="text-align: left;">
-      <img src="./other/readme-images/openmv-cam-h7-r2.jpg" alt="OpenMV Cam H7 R2" width="100%">
-    </td>
-    <td width="50%" style="text-align: left; vertical-align: top;">
-      <h3>Specifications:</h3>
-      <li>Microcontroller: STM32H7</li>
-      <li>Flash memory: 32MB</li>
-      <li>RAM: 512KB</li>
-      <li>Frequency: 480MHz</li>
-      <li>Resolution: 640x480</li>
-      <li>Frame rate: 60fps</li>
-    </td>
-  </tr>
-</table>
-
-The OpenMV Cam H7 R2 is a high-performance camera capable of color tracking. The best feature of this camera compared to other options (like the Pixy cam) is that is has a built-in microcontroller that can process the images and send the results to the Arduino. This way, the Arduino can focus on the robot's movement and the camera can focus on the image processing.
-
-Together with the Arduino Nano ESP32, the camera delivers readings at approximately 60 frames per second.
-
-Where to buy the OpenMV Cam H7 R2: https://openmv.io/products/openmv-cam-h7-r2
-
-<br>
-
-**Potential Improvements**:
-- Upgrade to a camera with higher resolution for better object detection and tracking.
-- Test alternative lighting solutions to improve visibility in various conditions.
-- Implement advanced image processing algorithms to enhance detection accuracy.
-- Use color correction algorithms: Apply color correction algorithms to compensate for any variations in lighting conditions. These algorithms can adjust the color values of the captured image to match a reference color space, making the colors more consistent and easier to calibrate.
-- Provide user-adjustable parameters: Allow users to manually adjust color thresholds or ranges to fine-tune the color detection. This can be done through a user interface or by providing configuration files that can be modified.
-- Implement real-time feedback: Display the detected colors in real-time to the user, along with the calibrated values. This allows users to visually verify the accuracy of the color detection and make adjustments if necessary.
-
-### Voltage regulator <a class="anchor" id="voltage-regulator"></a>
-
-<table>
-  <tr>
-    <td width="50%" style="text-align: left;">
-      <img src="./other/readme-images/linear-voltage-regulator.jpg" alt="Voltage regulator" width="100%">
-    </td>
-    <td width="50%" style="text-align: left; vertical-align: top;">
-      <h3>Specifications:</h3>
-      <li>Input voltage: 35V max</li>
-      <li>Output voltage: 5V</li>
-      <li>Output current: 1.5A</li>
-      <li>Thermal shutdown circuit</li>
-      <li>Short-circuit protection</li>
-    </td>
-  </tr>
-</table>
-
-To provide the Arduino Nano ESP32 with the required 5V, we needed to decrease the output from the 7.4V battery, which can reach up to 8.4V when fully charged. We employed a linear voltage regulator, the L7805CV, capable of converting input voltages below 35V down to a steady 5V.
-
-Where to buy the 5V voltage regulator: https://ro.mouser.com/ProductDetail/STMicroelectronics/L7805CV?qs=9NrABl3fj%2FqplZAHiYUxWg%3D%3D
-
-<br>
-
-**Potential Improvements**:
-- Replace the linear voltage regulator with a switching regulator for better efficiency.
-- Add heat sinks to the regulator for improved thermal management.
-- Design a compact custom regulator circuit to save space.
-
-### PCB design <a class="anchor" id="pcb"></a>
-
-The PCB was made on a prototype board. The board has a voltage regulator, the Arduino Nano ESP32, the motor driver, and connectors for the motor, the servo motor, the IMU, and the camera. The board is powered by the LiPo battery.
-
-| PCB connections | PCB w/ regulator | PCB complete |
-| :--: | :--: | :--: |
-| <img src="./other/readme-images/pcb_1.jpg" alt="PCB connections" height="400"> | <img src="./other/readme-images/pcb_2.jpg" alt="PCB w/ regulator" height="400"> | <img src="./other/readme-images/pcb_3.jpg" alt="PCB complete" height="400"> |
-
-<br>
-
-**Potential Improvements**:
-- Transition from prototype boards to fully custom PCBs for better durability and compactness.
-- Include dedicated connectors for easier and faster assembly.
-- Integrate debugging points on the PCB to simplify troubleshooting.
-
-### Circuit diagram <a class="anchor" id="circuit-diagram"></a>
-![Circuit diagram](./electrical-diagram/circuit.png "Circuit diagram")
-
-<br>
-
-# Code for each component <a class="anchor" id="code-for-each-component"></a>
-
-## Drive Motor <a class="anchor" id="drive-motor-code"></a>
-
-The motor driver can be directly managed with a single PWM pin that adjusts the motor's speed and two digital pins designated for determining the motor's rotation direction. Consequently, the use of any external library for motor manipulation was unnecessary.
-
-We devised two functions within our control system: one to modify the motor's velocity and another to halt it effectively, incorporating a braking feature. To achieve this, we convert the desired speed from our established scale of -100 to +100 to the PWM equivalent of 0 to 1023. The motor's direction is then adjusted according to the sign of the input value.
-
-Given the fact that the Arduino has an ESP chip, the PWM signals have to be sent using the ```ledc``` utility.
-
-```ino
-void motor_driver_setup() {
-  ledcSetup(DRIVER_PWM_CHANNEL, PWM_FREQ, PWM_RES);
-  ledcAttachPin(PWMA, DRIVER_PWM_CHANNEL);
-
-  pinMode(AIN1, OUTPUT);
-  pinMode(AIN2, OUTPUT);
-}
-
-void move_motor(double speed) {  // move the motor with a given speed in the [-100, 100] interval
-  int dir = 1;
-  if (speed < 0) {
-    dir = -1;
-    speed *= -1;
-  }
-  else if (speed == 0) {
-    dir = 0;
-  }
-  speed = map_double(speed, 0, 100, 0, 1023);
-  if (dir == 1) { // move the motor forward
-    digitalWrite(AIN1, HIGH);
-    digitalWrite(AIN2, LOW);
-  }
-  else if (dir == -1) { // move it backwards
-    digitalWrite(AIN1, LOW);
-    digitalWrite(AIN2, HIGH);
-  }
-  else { // implement active break (not used since we don't know how reliable it is)
-    digitalWrite(AIN1, LOW);
-    digitalWrite(AIN2, LOW);
-  }
-  ledcWrite(DRIVER_PWM_CHANNEL, (int)speed); // write the speed using PWM
-}
-
-void motor_break(long long break_time) { // stop the robot for a given time
-  move_motor(-3);
-  custom_delay(break_time);
-}
-```
-
-However, for the encoder, we required a specialized library to handle the more complex signal processing. The library we use for interfacing with the encoder is called ```Encoder.h```.
-
-The encoder operates with a straightforward function that we found easy to comprehend and program. In order to determine the distance in cm, we divided the returned value by 12, since the encoder measures 12 counts per revolution. Then we multiplied this with the gear ratio, wheel diameter and Pi. After that we divided by 10 to convert to cm.
-
-Because of the way the ESP32 chip interacts with the components, in order for this library to properly work, we should select the pin numbering option as "by GPIO number", not as the default "by Arduino pin".
-
-```ino
-double read_motor_cm() {  // getting the distance driven by the motor in cm
-  return GEAR_RATIO * WHEEL_DIAM * M_PI * (double)myEnc.read() / 12 / 10;
-}
-```
-
-## Servo Motor <a class="anchor" id="servo-motor-code"></a>
-
-For controlling the servo motor, we utilize the ```Servo.h``` library, which provides the necessary functions to manage the servo's movements. Initially, we configure the servo by establishing its range, defining the maximum and minimum angles it can achieve in both directions. This ensures that we can accurately position the servo within its operational limits.
-
-```ino
-void servo_setup() {
-  // attach the servo to the right pin and move it to the minimum and maximum angles
-  // in the end, center the servo so that we start the program moving straight
-  servo.attach(SERVO_PIN);
-  for (int deg = servo.read() - 1; deg >= ANGLE_MIN; deg--)
-    servo.write(deg);
-  custom_delay(500);
-  // Serial.println("after ANGLE_MIN");
-  for (int deg = servo.read() + 1; deg <= ANGLE_MID; deg++)
-    servo.write(deg);
-  // Serial.println("after ANGLE_MID");
-  for (int deg = servo.read() + 1; deg <= ANGLE_MAX; deg++)
-    servo.write(deg);
-  custom_delay(500);
-  // Serial.println("after ANGLE_MAX");
-  for (int deg = servo.read() - 1; deg >= ANGLE_MID; deg--)
-    servo.write(deg);
-  custom_delay(500);
-  // Serial.println("after ANGLE_MID");
-  goal_deg = ANGLE_MID;
-  custom_delay(2000); // some time to get rid of any unwanted movements so we don't disturb the gyro
-}
-```
-
-The servo motor is controlled dinamically in the loop by setting a goal angle and taking small steps towards that goal at every iteration. This way we make sure that we can send a lot of fast angle changes to the servo and get the wanted results.
-
-The function ```move_servo``` sets the goal angle to the given parameter. If the angle is negative the motor will rotate to the right, and if it is positive, the motor will rotate to left. This way, 0 is going to be the position in which the wheels are straight. Also, the values given the motor need to be between -1 and 1, so we use a clamp function to limit the value we are going to give the motor to rotate to and an interval mapping function to map the parameter from the [-1; 1] interval to the [ANGLE_MIN; ANGLE_MAX] interval.
-
-The function ```update_servo``` takes a small step towards the goal angle as described above.
-
-```ino
-void move_servo(double angle) {  // move the servo to the angle checkpoint by setting the goal degrees to the angle value
-  goal_deg = map_double(angle, -1, 1, ANGLE_MIN, ANGLE_MAX);
-}
-
-void update_servo() { // update the servo, making it closer to the goal angle by a small step
-  int current_angle_servo = servo.read();
-  if (abs(current_angle_servo - goal_deg) >= ANGLE_VARIANCE_THRESHOLD) { // if we're too far off, directly write the new angle
-    servo.write(goal_deg);
-  }
-  else {
-    // increment the angle with a small step in the right direction
-    // making sure we don't exceed our angle limitations
-    if (current_angle_servo < goal_deg) {
-      servo.write(min(current_angle_servo + STEP, ANGLE_MAX));
-    }
-    else if (current_angle_servo > goal_deg) {
-      servo.write(max(current_angle_servo - STEP, ANGLE_MIN));
-    }
-  }
-}
-
-void loop() {
-  // other code
-  update_servo();
-}
-```
-
-## Camera <a class="anchor" id="camera-code"></a>
-
-Now that we finished implementing the functions that we need to make the robot move and steer, we have to make it see the lines that trigger the turns, the cubes and the parking walls and move accordingly. To communicate with the camera, we use the ```UART``` protocol. In order for this to work, we must link the ```RX0``` pin on the arduino (the receiver pin) to the ```P4``` pin on the camera (the transmitter pin) and the ```TX1``` pin on the arduino (the transmitter pin) to the ```P5``` pin on the camera (the receiver pin). In addition, the baud rates from the ```Serial0``` object on the arduino and the ```uart``` object on the camera must match.
-
-**Arduino code:**
-
-```ino
-void comm_setup() {
-  Serial.begin(9600);
-  // while(!Serial);
-  blink_led(LED_BUILTIN, 500);
-
-  Serial0.begin(19200);
-  while(!Serial0); // wait for the serial to properly initialize
-  blink_led(LED_BUILTIN, 500);
-  receivedMessage = "";
-}
-
-void loop() {
-  // execute pending commands
-  while (Serial0.available() > 0) { // if we have some characters waiting
-    char receivedChar = Serial0.read(); // we get the first character
-    if (receivedChar == '\n') { // if it's the end of message marker
-      if (CASE != PARK) { // if we want to execute commands
-        execute(receivedMessage); // execute the received command from the OpenMV camera
-      }
-      receivedMessage = ""; // reset the received message
-    }
-    else {
-      receivedMessage += receivedChar; // append characters to the received message
-    }
-  }
-}
-```
-
-**Camera code:**
-
-```py
-# setup UART connection to arduino
-uart = UART(3, 19200)
-# 3 - the uart config, meaning that we use pins P4 as the transmitter, P5 as the receiver
-# 19200 - baud rate aka frequency, must match the one set up on the arduino
-
-# because we have a one-sided communication going on
-# we can directly write messages without any supplementary checks
-uart.write(msg)
-```
-
-In order to detect colors, we have to take pictures in which to search for colors. This is the sequence that sets up the camera sensor. Due to the limitations of the sensor, we couldn't manually adjust the white balance, gain, exposure time or access its registries.
-
-```py
-import sensor
-
-# initialize the sensor
-sensor.reset()
-sensor.set_pixformat(sensor.RGB565)
-sensor.set_framesize(sensor.QQVGA)
-#sensor.set_framerate(40)
-sensor.set_vflip(True)
-sensor.set_hmirror(True)
-
-# disable auto gain, white balance, and exposure
-sensor.set_auto_gain(False)  # must be turned off for color tracking
-sensor.set_auto_whitebal(False)  # must be turned off for color tracking
-sensor.set_auto_exposure(False, exposure_us=10000) # set constant exposure for the best visibility
-
-# skip some frames to let the camera adjust
-sensor.skip_frames(time=2000)
-```
-
-Now for the camera logic, the color tracking is pretty simple: the camera can return blobs of pixels that fit into a certain ```LAB``` threshold representing a color. We can also restrain the blob detection to a rectangle of interest and apply pixel count, bounding rectangle area and density filters as well. The reason for which we do this, is that certain colors, like green, red, blue and orange are pretty common, therefore we don't want the camera to interpret clothes or other objects outside of the map as obstacles. In addition, the orange and red colors, in some light conditions, are quite similar. This is why we apply the pixel count, bounding rectangle area and density filters, to ensure that we are seeing the correct object.
-
-For quali we firstly scan the color of the first seen line. This will give us the direction of the run. Then, we constantly look out for lines that are over a certain area. Once we find one, we send the turn trigger to the Arduino via ```UART```.
-
-```py
-while (True):
-    clock.tick()
-    img = sensor.snapshot()
-
-    # find the coloured blobs corresponding to the turn lines
-    orange_blobs = img.find_blobs(orange_threshold, roi=lines_roi, pixels_threshold=line_blob_size, area_threshold=line_blob_size, merge=True)
-    blue_blobs = img.find_blobs(blue_threshold, roi=lines_roi, pixels_threshold=line_blob_size, area_threshold=line_blob_size, merge=True)
-
-    orange_blob_w = None
-    orange_blob_h = None
-    max_width = 0
-    max_height = 0
-    for blob in orange_blobs:
-        if blob.w() >= img.width() * 0.4: # if it meets the minimum width requirement
-            if blob.w() > max_width: # if it's the biggest blob yet
-                max_width = blob.w()
-                orange_blob_w = blob # biggest blob on the width
-        if blob.h() >= lines_roi[3] * 0.4: # if it meets the minimum height requirement
-            if blob.h() > max_height: # if it's the biggest blob yet
-                max_height = blob.h()
-                orange_blob_h = blob # biggest blob on the height
-    # if we have a blob meeting either the minimum width or height requirement we remember it
-    orange_blob = orange_blob_w
-    if not orange_blob:
-        orange_blob = orange_blob_h
-
-    blue_blob_w = None
-    blue_blob_h = None
-    max_width = 0
-    max_height = 0
-    for blob in blue_blobs:
-        if blob.w() >= img.width() * 0.4: # if it meets the minimum width requirement
-            if blob.w() > max_width: # if it's the biggest blob yet
-                max_width = blob.w()
-                blue_blob_w = blob # biggest blob on the width
-        if blob.h() >= lines_roi[3] * 0.4: # if it meets the minimum height requirement
-            if blob.h() > max_height: # if it's the biggest blob yet
-                max_height = blob.h()
-                blue_blob_h = blob # biggest blob on the height
-    # if we have a blob meeting either the minimum width or height requirement we remember it
-    blue_blob = blue_blob_w
-    if not blue_blob:
-        blue_blob = blue_blob_h
-
-    if direction == 0: # if we didn't set a turn direction yet
-        if orange_blob: # if the first line we saw was an orange one
-            direction = 2
-        elif blue_blob: # if the first line we saw was a blue one
-            direction = 1
-
-    has_line = False
-    if orange_blob or blue_blob: # if we saw either coloured lines, we can make a turn
-        has_line = True
-
-    if has_line:
-        # if we must turn, send the turn trigger
-        uart.write(str(direction) + '\n')
-```
-
-
-## IMU <a class="anchor" id="gyro-sensor-code"></a>
-
-To utilize the gyro sensor, we needed to include the ```BMI088.h``` library. During initialization, we allocate a 10-second window to measure the sensor's drift, allowing us to refine the robot's angular readings for greater precision. Additionally, we configure the sensor's output data rate to 400Hz and set the bandwidth to 47Hz. The bandwidth determines the frequency of data sampling by the sensor; a higher bandwidth yields more precise data at the cost of increased power consumption. We also designate pin A6 as an input and attach an interrupt to it, enabling us to capture data from the sensor as soon as it becomes available.
-
-```ino
-void gyro_setup(bool debug) {
-  int status = accel.begin();
-  status = accel.setOdr(Bmi088Accel::ODR_200HZ_BW_80HZ);
-  status = accel.pinModeInt1(Bmi088Accel::PUSH_PULL,Bmi088Accel::ACTIVE_HIGH);
-  status = accel.mapDrdyInt1(true);
-
-  status = gyro.begin();
-
-  status = gyro.setOdr(Bmi088Gyro::ODR_400HZ_BW_47HZ);
-  status = gyro.pinModeInt3(Bmi088Gyro::PUSH_PULL,Bmi088Gyro::ACTIVE_HIGH);
-  status = gyro.mapDrdyInt3(true);
-
-  pinMode(INT_PIN,INPUT);
-  attachInterrupt(INT_PIN,gyro_drdy,RISING);
-
-  if(status < 0) {
-    if(debug){
-      Serial.print("BMI Initialization Error!  error: ");
-      Serial.println(status);
-    }
-  }
-  else  {
-    // Gyro drift calculation
-    if(debug) Serial.println("Starting gyro drift calculation...");
-
-    gx = 0;
-    // gy = 0;
-    // gz = 0;
-
-    gyro_last_read_time = millis();
-
-    double start_time = millis();
-    while(millis() - start_time < DRIFT_TEST_TIME * 1000) {
-      gyro.readSensor();
-      double read_time = millis();
-      gx += (gyro.getGyroX_rads() * (read_time - gyro_last_read_time) * 0.001);
-      // gy += (gyro.getGyroY_rads() * (read_time - gyro_last_read_time) * 0.001);
-      // gz += (gyro.getGyroZ_rads() * (read_time - gyro_last_read_time) * 0.001);
-
-      gyro_last_read_time = read_time;
-    }
-
-    drifts_x = gx / DRIFT_TEST_TIME;
-    // drifts_y = gy / DRIFT_TEST_TIME;
-    // drifts_z = gz / DRIFT_TEST_TIME;
-
-    if(debug) Serial.print("Drift test done!\nx: ");
-    if(debug) Serial.println(drifts_x, 6);
-    // if(debug) Serial.print("   y: ");
-    // if(debug) Serial.print(drifts_y, 6);
-    // if(debug) Serial.print("   z: ");
-    // if(debug) Serial.println(drifts_z, 6);
-  }
-  // Gyro value reset
-  gx = 0;
-  // gy = 0;
-  // gz = 0;
-
-  gyro_last_read_time = millis();
-}
-```
-
-Within the ```read_gyro``` function, we're retrieving data from the gyro sensor and adjusting it to account for any detected drift, enhancing the accuracy of the readings. Since the gyro provides data in radians, a conversion to degrees is necessary for our application. We're focusing solely on the rotation around the x-axis, hence we only compute the ```gx``` value, which represents the robot's angular rotation in degrees on that specific axis.
-
-```ino
-void read_gyro(bool debug) {
-  if(gyro_flag) {
-    gyro_flag = false;
-    gyro.readSensor();   
-    double read_time = millis();
-
-    gx += ((gyro.getGyroX_rads() - drifts_x) * (read_time - gyro_last_read_time) * 0.001) * 180.0 / PI;
-    // gy += ((gyro.getGyroY_rads() - drifts_y) * (read_time - gyro_last_read_time) * 0.001) * 180.0 / PI;
-    // gz += ((gyro.getGyroZ_rads() - drifts_z) * (read_time - gyro_last_read_time) * 0.001) * 180.0 / PI;
-
-    gyro_last_read_time = read_time;
-
-    if(debug) {
-      Serial.print("Gyro: gx: ");
-      Serial.println(gx);
-      // Serial.print(" gy: ");
-      // Serial.print(gy);
-      // Serial.print(" gz: ");
-      // Serial.println(gz);
-    }
-  }
-}
-```
-
-<br>
-
-# Obstacle Management <a class="anchor" id="obstacle-management"></a>
-
-## Qualification Round <a class="anchor" id="quali-management"></a>
-
-For the qualifying round, we set up a basic switch-case system to guide our robot. This system tells the robot what to do next, depending on where it is. The robot knows where it is by counting how many times it has turned.
-
-We use two main switch cases: ```PID``` and ```STOP_QUALI```.
-
-In the ```PID``` case, the robot moves straight and turns. It uses a special tool (PID controller) with a gyro sensor to stay on a straight line. If it sees a corner line, it gets a trigger from the camera to make a turn by adding 90 degrees to the goal angle.
-
-```ino
-case PID: {
-  double err = current_angle_gyro - gx;
-  if (millis() - last_rotate > FIRST_STOP_DELAY && turns >= 12) { // if we did 3 runs of the round
-    if (FINAL) {
-      CASE = STOP_BEFORE_FIND_PARKING; // we need to stop and search for the parking
-    }
-    else {
-      CASE = STOP_QUALI; // stop, challenge over
-    }
-  }
-  else {
-    // classic pid on the gyro so that we can move straight
-    pid_error_gyro = (err) * kp_gyro + (pid_error_gyro - pid_last_error_gyro) * kd_gyro;
-    pid_last_error_gyro = pid_error_gyro;
-    move_servo(pid_error_gyro);
-  }
-  move_motor(MOTOR_SPEED);
-  break;
-}
-
-case STOP_QUALI: {
-  // we finished the challenge, stop the robot
-  move_until_angle(MOTOR_SPEED, current_angle_gyro);
-  move_cm_gyro(10, MOTOR_SPEED, current_angle_gyro);
-  is_running = false;
-  Serial.println("Stop case");
-  motor_break(1000000000);
-}
-```
-
-### Line Detection
-![Line Detection](./other/readme-images/orange-line-camera.png)
-
-## Final Round <a class="anchor" id="final-management"></a>
-
-For the final round, we based our controller algorithm on the quali code, adding a PID controller on the camera to follow the closest cube until it is in its proximity. In order to get the closest cube to the robot we just search for the biggest red or green coloured blob in the image.
-After we're in the cube's proximity, we send a trigger from the camera to the arduino with the cube color so that we can start avoiding it.
-
-```py
-img = sensor.snapshot()
-
-# find the coloured blobs corresponding to the cubes
-red_blobs = img.find_blobs(red_threshold, roi=cubes_roi, pixels_threshold=min_cube_size, area_threshold=min_cube_size, merge=True)
-green_blobs = img.find_blobs(green_threshold, roi=cubes_roi, pixels_threshold=min_cube_size, area_threshold=min_cube_size, merge=True)
-
-msg = "0\n"
-max_area = 0
-color = 'none'
-saved_cube = None
-for blob in red_blobs: # for every red blob
-    # if they're passing the height and density filters
-    # we're keeping the biggest one and its color
-    if is_cube(blob, orange_blob, parking_blobs) and blob.area() > max_area:
-        max_area = blob.area()
-        saved_cube = blob
-        color = 'red'
-for blob in green_blobs: # for every green blob
-    # if they're passing the height and density filters
-    # we're keeping the biggest one and its color
-    if is_cube(blob, blue_blob, parking_blobs) and blob.area() > max_area:
-        max_area = blob.area()
-        saved_cube = blob
-        color = 'green'
-
-if saved_cube != None: # if we saw a cube
-    # if the cube area is over a certain threshold
-    # it means we must avoid the cube as we are too close to it
-    if saved_cube.h() >= max_cube_height:
-        # send the right trigger
-        err_old = 0
-        if color == 'red':
-            uart.write('R\n')
-        else:
-            uart.write('G\n')
-        if has_line:
-            # if we must also turn, send the trigger
-            uart.write(str(direction) + '\n') # send the turn trigger
-    else: # if the cube isn't too big we must follow it
-        # calculate the angle using PID
-        err = saved_cube.cx() - img.width() / 2
-        steering = err * kp + (err - err_old) * kd
-        steering = -clamp(steering, -1, 1)
-        err_old = err
-        # craft the command
-        if color == 'red':
-            msg = 'r' + str(steering) + '\n'
-        else:
-            msg = 'g' + str(steering) + '\n'
-        uart.write(msg) # send the message
-        if has_line:
-            # if we must also turn, send the turn trigger
-            uart.write(str(direction) + '\n')
-elif has_line: # if we don't see any cubes
-    uart.write(str(direction) + '\n')
-```
-
-### Cube Detection
-![Red Cube Detection](./other/readme-images/red-cube-camera.png)
-![Green Cube Detection](./other/readme-images/green-cube-camera.png)
+**Challenges in Mobility Management:**  
+One of the challenges faced during development was ensuring the AI model could accurately distinguish between obstacles with similar shapes. We overcame this by incorporating color recognition, which allowed the AI to make more precise decisions. Another challenge was syncing the throttle and steering inputs in real-time during training, especially when switching between AI models for different control tasks.
 
 ---
 
-The arduino part is quite simple, consisting of the quali switch but with two extra cases: ```FOLLOW_CUBE``` and ```AFTER_CUBE```. In the ```FOLLOW_CUBE``` case we just write to the servo the steering angle calculated by the PID algorithm ran on the camera. After we get the proximity trigger from the camera, we have a custom function called ```pass_cube``` which steers us away from the cube and puts us in the ```AFTER_CUBE``` state. This case consists of two substates: in the first one the robot steers in the opposite direction to center itself again and the second one in which the robot uses a PID with the gyro to move an additional distance so that we're perfectly positioned to see the next cube. After that, we go back to the default ```PID``` case that is used in the quali code.
+## Power & Sense Management <a name="power-and-sense-management"></a>
 
-```ino
-// hardcoded sequence that avoids a cube
-void pass_cube(int cube_last) {
-  read_gyro(false);
-  double angle_addition = 0;
-  double start_angle = gx;
-  double err = abs(current_angle_gyro - start_angle);
+![Wiring Diagram](./images/wiring_diagram.png)
 
-  if (err >= 50) { // if we're really crooked, substract a given value so that we don't overcompensate
-    angle_addition -= 10;
-  }
-  else {
-    angle_addition -= max(err / 2.75, 0.0); // if we're crooked, dinamically adjust the avoidance angle so that we don't overshoot
-  }
-  move_until_angle(MOTOR_SPEED, start_angle - cube_last * (AVOIDANCE_ANGLE + angle_addition)); // steer away from the cube
-  start_angle = gx;
+Our technical solution incorporated a dual system approach for managing the power and sensing capabilities of the autonomous vehicle.
 
-  last_cube_time = millis();
-  CASE = AFTER_CUBE;
-}
-```
-
-```ino
-case FOLLOW_CUBE: {
-  if (millis() - last_rotate > FIRST_STOP_DELAY && turns >= 12) { // if we did 3 runs of the obstacle round, we need to stop and search for the parking
-    CASE = STOP_BEFORE_FIND_PARKING;
-  }
-  else {
-    if (millis() - last_follow_cube > FOLLOW_CUBE_DEAD_TIME) // if we lost the cube, we just go back to the default PID case
-      CASE = PID;
-    // write to the servo the pid computed on the camera in order to follow the cube
-    move_servo(follow_cube_angle);
-    move_motor(MOTOR_SPEED);
-  }
-  break;
-}
-
-case AFTER_CUBE: {
-  if (millis() - last_rotate > FIRST_STOP_DELAY && turns >= 12) { // if we did 3 runs of the obstacle round, we need to stop and search for the parking
-    CASE = STOP_BEFORE_FIND_PARKING;
-  }
-  else {
-    int angle_addition = 0;
-    if (cube_last == 1) // due to a slight asymmetry in the steering, when avoiding red cubes we need to steer less
-      angle_addition = -9;
-    double err = current_angle_gyro - gx + cube_last * (CORRECTION_ANGLE + angle_addition);
-    if (abs(err) < 5) {
-      // after we avoid the cube, move forward a bit more so that we're positioned
-      // to see the next cube
-      if (cube_last == turn_direction) // compensate less on the inside
-        move_cm_gyro(5, MOTOR_SPEED, current_angle_gyro + cube_last * (CORRECTION_ANGLE + angle_addition));
-      else
-        move_cm_gyro(10, MOTOR_SPEED, current_angle_gyro + cube_last * (CORRECTION_ANGLE + angle_addition));
-      CASE = PID;
-    }
-    else {
-      // classic pid on the gyro so that we can move in the opposite direction
-      // so that we can see the next cube
-      pid_error_gyro = (err) * kp_gyro + (pid_error_gyro - pid_last_error_gyro) * kd_gyro;
-      pid_last_error_gyro = pid_error_gyro;
-      move_servo(pid_error_gyro);
-    }
-  }
-  move_motor(MOTOR_SPEED);
-  break;
-}
-```
-
-The next challenge in this round consists in the final turnaround. If the last seen cube is red, we need to do a roundabout and complete the last lap in the opposite direction. The way we deal with this is an ```if``` condition that gets executed before we pass a cube. The turn condition is simple: if we did the required number of turns and if we're either right after a turn and the last avoided cube is red or if we're further away from the turn and the cube we want to avoid now is red then we turn around.
-
-```ino
-void execute() {
-  if ((cmd[0] == 'R' || cmd[0] == 'G') && millis() - last_cube_time >= PASS_CUBE_DELAY) { // if we're in the proximity of a cube
-    before_side_last_cube = cube_last; // remember the last passed cube (excluding this one)
-    if (cmd[0] == 'R') { // we determine the direction in which we avoid the cube and remember its color
-      cube_last = 1;
-    }
-    else {
-      cube_last = -1;
-    }
-
-    if (turns == 8 && ((cube_last == 1 && millis() - last_rotate < TURNAROUND_DELAY) || millis() - last_rotate > TURNAROUND_DELAY && before_side_last_cube == 1) && !turned) // if we have are in the position to turn around, the cube is red and we haven't turned around already
-      turn_around(cube_last);
-    else 
-      pass_cube(cube_last);
-    return;
-  }
-}
-
-// hardcoded sequence that turns around
-// we need the last passed cube so that we know which way we take the turn so that we don't hit anything
-void turn_around(int cube_last) {
-  read_gyro(false);
-  double start_angle = gx;
-  move_until_angle(MOTOR_SPEED, start_angle - cube_last * 57);
-  move_until_angle(MOTOR_SPEED, current_angle_gyro + cube_last * 200);
-  current_angle_gyro += cube_last * 180;
-  turn_direction *= -1;
-  turned = true;
-  CASE = PID;
-}
-```
-
-The final challenge in this round consists in parking the robot. The way we implement this is based on the quali. Basically we want to move as close to the outer walls as possible so that we're perfectly positioned for the parking and avoid all of the cubes. How we achieve this is by going perpendicular to the outside walls after we finish the obstacle round (see the ```POSITION_BEFORE_FIND_PARKING``` case). The goal is to position ourselves as close as possible to them. After we receive a trigger from the camera saying that we're in its proximity, we straighten ourselves out and start the basic quali code.
-
-While moving around the map like this (in the ```FIND_PARKING``` case), we are constantly scanning for magenta blobs that represent the parking walls. When we detect them, we send a trigger from the camera to the arduino and then we have a hardcoded sequence that puts us between the walls, perfectly parallel to them, implemented in the ```POSITION_FOR_PARK``` case. After that, we move straight in order to get closer to the outer wall (see the ```PARK``` case). When we receive the trigger from the camera, position ourselves and stop the robot.
-
-Camera code:
-
-```py
-# checks if a parking wall blob meets the height and size requirements
-def is_parking_wall(blob):
-    if not blob:
-        return False
-    if blob.pixels() >= parking_blob_size_trigger and blob.area() >= parking_blob_size_trigger and blob.h() >= parking_blob_height_trigger:
-        return True
-    return False
-
-img = sensor.snapshot()
-
-# find the coloured blobs corresponding to the parking walls
-parking_blobs = img.find_blobs(parking_threshold, roi=parking_roi, pixels_threshold=parking_blob_size_min, area_threshold=parking_blob_size_min, merge=True)
-parking_wall_blob = get_biggest_blob(parking_blobs)
-
-# find the coloured blobs corresponding to the outside walls
-wall_blobs = img.find_blobs(black_threshold, roi=wall_roi, pixels_threshold=wall_blob_size, area_threshold=wall_blob_size, merge=True)
-outer_wall = get_biggest_blob(wall_blobs)
-
-gray_img = img.copy()  # make a copy of the image
-gray_img.to_grayscale()  # convert to grayscale
-
-# determine the brightness of the ROIs to know if we're close to an outside wall or not
-left_dark_pixels = 0
-right_dark_pixels = 0
-middle_dark_pixels = 0
-
-# process pixels in the left ROI
-for y in range(wall_dark_roi[1], wall_dark_roi[1] + wall_dark_roi[3]):
-    for x in range(wall_dark_roi[0], wall_dark_roi[0] + wall_dark_roi[2]):
-        if gray_img.get_pixel(x, y) < dark_threshold:
-            middle_dark_pixels += 1
-
-# process pixels in the left ROI
-for y in range(wall_left_roi[1], wall_left_roi[1] + wall_left_roi[3]):
-    for x in range(wall_left_roi[0], wall_left_roi[0] + wall_left_roi[2]):
-        if gray_img.get_pixel(x, y) < dark_threshold:
-            left_dark_pixels += 1
-
-# process right ROI
-for y in range(wall_right_roi[1], wall_right_roi[1] + wall_right_roi[3]):
-    for x in range(wall_right_roi[0], wall_right_roi[0] + wall_right_roi[2]):
-        if gray_img.get_pixel(x, y) < dark_threshold:
-            right_dark_pixels += 1
-
-
-# calculate darkness percentages
-left_total_pixels = wall_left_roi[2] * wall_left_roi[3]
-right_total_pixels = wall_right_roi[2] * wall_right_roi[3]
-middle_total_pixels = wall_dark_roi[2] * wall_dark_roi[3]
-
-left_dark_percentage = (left_dark_pixels / left_total_pixels) * 100
-right_dark_percentage = (right_dark_pixels / right_total_pixels) * 100
-middle_dark_percentage = (middle_dark_pixels / middle_total_pixels) * 100
-
-if is_parking_wall(parking_wall_blob):
-    # if we saw the parking walls, send the parking trigger
-    uart.write('P\n')
-if wall_blobs:
-    # if the wall is big enough, send a slightly different message that helps us when parking
-    # if not, send the classic one
-    if middle_dark_percentage > 75:
-        uart.write('WP\n')
-    else:
-        uart.write('W\n')
-```
-
-### Parking Wall Detection
-![Parking Wall Detection](./other/readme-images/parking-camera.png)
+**Power Management:**  
+The LEGO car is powered by a 7.4V lithium battery. The Raspberry Pi, camera, and additional sensor modules are powered by a 5V 2.5A power bank. The Pi Camera provides visual input for the AI model, while sensors connected via the Sense HAT and Build HAT support obstacle detection and decision-making. These sensors help the AI model predict steering and throttle adjustments for accurate navigation. Power consumption is carefully monitored, and the system’s wiring ensures efficient energy distribution with minimal loss.
 
 ---
 
-**Arduino code:**
+## Obstacle Management <a name="obstacle-management"></a>
 
-```ino
-case STOP_BEFORE_FIND_PARKING: {
-  // straighten ourselves, start positioning for the parking
-  move_cm_gyro(22, MOTOR_SPEED, current_angle_gyro);
-  motor_break(1000);
-  CASE = POSITION_BEFORE_FIND_PARKING;
-  break;
-}
+![Obstacle Detection](./images/obstacle_detection.png)
 
-case POSITION_BEFORE_FIND_PARKING: {
-  // classic pid on the gyro so that we can move perpendicular to the walls
-  // we don't just call the move_until_angle function so that we can still execute commands
-  double err = current_angle_gyro - gx - turn_direction * 90;
-  pid_error_gyro = (err) * kp_gyro + (pid_error_gyro - pid_last_error_gyro) * kd_gyro;
-  pid_last_error_gyro = pid_error_gyro;
-  move_servo(pid_error_gyro);
-  move_motor(MOTOR_SPEED);
-  break;
-}
+In our autonomous Lego Car vehicle project, the approach to obstacle management is distinctively different from traditional automated programming. Our technical philosophy has been consistent from the beginning, focusing on a strategy that does not rely on pre-defined rules or flowcharts for navigating around obstacles.
 
-case FIND_PARKING: {
-  // classic pid on the gyro so that we can move straight
-  // basically immitating a quali run until we find the parking spot
-  double err = current_angle_gyro - gx;
-  pid_error_gyro = (err) * kp_gyro + (pid_error_gyro - pid_last_error_gyro) * kd_gyro;
-  pid_last_error_gyro = pid_error_gyro;
-  move_servo(pid_error_gyro);
-  move_motor(MOTOR_SPEED);
-  break;
-}
+Instead of traditional programming techniques such as using flowcharts, pseudocode, or annotated code, we employ a data-driven approach with our AI. The AI learns to drive the vehicle through actual operation by a human operator. The machine records how the operator drives, noting steering and throttle data, and then this data is used to train a neural network.
 
-case POSITION_FOR_PARK: {
-  // hardcoded sequence of moves that positions us in the parking spot
-  // after that, we just get closer to the outside wall so that we're fully in
-  move_cm_gyro(16, PARKING_SPEED, current_angle_gyro);
-  drift(PARKING_SPEED, turn_direction, current_angle_gyro + turn_direction * 90);
-  move_cm_gyro(10, -PARKING_SPEED, current_angle_gyro + turn_direction * 90);
-  drift(PARKING_SPEED, -turn_direction, current_angle_gyro - turn_direction * 90);
-  CASE = PARK;
-  break;
-}
+During the training phase, initially, the vehicle could not distinguish colours such as red and green but was able to identify and navigate around obstacles. With the accumulation of more data - around 70,000 data points - the vehicle began to discern obstacles. At 90,000 data points, it could differentiate and react to colors, associating red with turning right and green with turning left.
 
-case PARK: {
-  // classic pid on the gyro so that we can move straight into the parking space
-  // we don't just call the move_until_angle function so that we can still execute commands
-  double err = current_angle_gyro - gx - turn_direction * 90;
-  pid_error_gyro = (err) * kp_gyro + (pid_error_gyro - pid_last_error_gyro) * kd_gyro;
-  pid_last_error_gyro = pid_error_gyro;
-  move_servo(pid_error_gyro);
-  move_motor(PARKING_SPEED);
-  break;
-}
+Our primary focus has been on accurately recording the operator's maneuvers and feeding this extensive dataset to the model, allowing it to learn driving habits and patterns - a process known as 'fitting.' There is no traditional strategy or flowchart involved; the vehicle's ability to navigate through the course and manage obstacles is entirely based on continuous training from the data gathered during these driving sessions.
 
-case STOP_FINAL: {
-  // we finished the challenge, stop the robot
-  is_running = false;
-  Serial.println("Stop case");
-  motor_break(1000000000);
-}
-```
-
-## Additional code <a class="anchor" id="additional-code"></a>
-
-**Arduino code:**
-
-In order to clean up the code, we designed some additional functions. Whenever we want to call locomotion functions or delay functions, functions that would break the continuity of the loop function, we must do two things to make sure everything keeps working: flush the characters sent by the camera (using the ```flush_messages``` function) and read the gyro data. That's why we implemented a custom delay function and our locomotion functions are a bit atypical.
-
-```ino
-void flush_messages() { // flushing messages like this so that we don't get sections of messages
-  // improves the stability of the communication
-  while (Serial0.available() > 0) { // if we have some characters waiting
-    char receivedChar = Serial0.read(); // we get the first character
-    if (receivedChar == '\n') { // if it's the end of message marker
-      receivedMessage = ""; // reset the received message
-    }
-    else {
-      receivedMessage += receivedChar; // append characters to the received message
-    }
-  }
-}
-
-void custom_delay(long long delay_time) { // delay function that flushes all of the data
-  long long start_time = millis();
-  while (millis() - start_time < delay_time) {
-    read_gyro(false);
-    flush_messages();
-  }
-}
-```
-
-Functions used for locomotion:
-```ino
-// makes the robot move until it reaches a certain gyro angle
-void move_until_angle(double speed, double gyro_offset) {
-  int sign = 1;
-  if (speed < 0) // if we're moving backwards, we need to steer in the opposite direction
-    sign = -1;
-  read_gyro(false);
-  double err = gyro_offset - gx;
-  while (abs(err) >= 10) { // while the error is too big
-    // pid on the gyro so that we're moving towards the goal angle
-    read_gyro(false);
-    err = gyro_offset - gx;
-    pid_error_gyro = (err) * kp_gyro + (pid_error_gyro - pid_last_error_gyro) * kd_gyro;
-    pid_last_error_gyro = pid_error_gyro;
-    move_servo(pid_error_gyro * sign);
-    update_servo();
-    move_motor(speed);
-    flush_messages();
-  }
-}
-
-// makes the robot move a certain distance at a certain gyro angle
-void move_cm_gyro(double dis, double speed, double gyro_offset) {
-  double start_cm = read_motor_cm();
-  int sign = 1;
-  if (speed < 0) // if we're moving backwards, we need to steer in the opposite direction
-    sign = -1;
-  while (abs(read_motor_cm() - start_cm) < dis) { // while we haven't moved the requested distance
-    // pid on the gyro so that we're moving at the correct angle
-    read_gyro(false);
-    double err = gyro_offset - gx;
-    pid_error_gyro = (err) * kp_gyro + (pid_error_gyro - pid_last_error_gyro) * kd_gyro;
-    pid_last_error_gyro = pid_error_gyro;
-    move_servo(pid_error_gyro * sign);
-    update_servo();
-    move_motor(speed);
-    flush_messages();
-  }
-}
-
-// makes the robot move at a certain steering angle until it reaches a certain gyro angle
-void drift(double speed, double steering, double gyro_offset) {
-  read_gyro(false);
-  double err = gyro_offset - gx;
-  while (abs(err) >= 10) { // while the error is too big
-    read_gyro(false);
-    err = gyro_offset - gx;
-    move_servo(steering);
-    update_servo();
-    move_motor(speed);
-    flush_messages();
-  }
-}
-```
-
-Lastly, we receive multiple types of commands from the camera, from different triggers, to cube following and avoiding commands. All of these take various forms, therefore we need a function that parses every command and executes it. This is where the ```execute``` and ```valid_command``` functions come in handy. The ```execute``` function executes the command only if the ```valid_command``` function says it's valid.
-
-```ino
-bool valid_command(String cmd) { // function that checks the validity of a command received from the camera
-  if (cmd == "")
-    return false;
-  if ('0' <= cmd[0] && cmd[0] <= '9') {
-    if (cmd[0] > '2' || cmd[0] == '0')
-      return false;
-    if (cmd.length() != 1)
-      return false;
-  }
-  if (cmd[0] == '+' || cmd[0] == '-' || cmd[0] == '.')
-    return false;
-  return true;
-}
-
-// function that parses a command and executes it
-void execute(String cmd) {
-  if (!valid_command(cmd))
-    return;
-
-  // the following sequence gets the number from the command (if available)
-  int pos = 0, sign = 1;
-  if (cmd[pos] == 'r' || cmd[pos] == 'g')
-    pos++;
-  // manually going over the signs since the .toDouble function wouldn't parse them on its own
-  if (cmd[pos] == '+')
-    sign = 1, pos++;
-  else if (cmd[pos] == '-')
-    sign = -1, pos++;
-  double val = cmd.substring(pos).toDouble();
-
-  if (FINAL) { // if we're in the final round
-    if (CASE == FIND_PARKING && cmd[0] == 'P') { // if we're searching for the parking spot and we find it
-      CASE = POSITION_FOR_PARK; // park the robot
-      return;
-    }
-
-    if (cmd[0] == 'P') // if we see the parking slot, but we didn't finish the obstacle round we ignore it
-      return;
-
-    if (CASE == POSITION_BEFORE_FIND_PARKING && cmd[0] == 'W') { // if we're positioning ourselves close to the wall and we're in its proximity
-      move_until_angle(MOTOR_SPEED, current_angle_gyro); // straighten ourselves
-      CASE = FIND_PARKING; // start searching for the parking lot
-      return;
-    }
-
-    if (CASE == PARK && (cmd[0] == 'W' && cmd[1] == 'P')) { // if we're positioning ourselves close to the wall and we're in its proximity
-      // move_cm_gyro(2.75, PARKING_SPEED, current_angle_gyro - turn_direction * 90); // position ourselves closer
-      CASE = STOP_FINAL; // we finished the parking, stop
-      return;
-    }
-
-    if (cmd[0] == 'W') // if we see the outer wall, but we don't need it we ignore it
-      return;
-
-    if (CASE != FIND_PARKING && CASE != POSITION_BEFORE_FIND_PARKING) {
-      if ((cmd[0] == 'R' || cmd[0] == 'G') && millis() - last_cube_time >= PASS_CUBE_DELAY) { // if we're in the proximity of a cube
-        before_side_last_cube = cube_last; // remember the last passed cube (excluding this one)
-        if (cmd[0] == 'R') { // we determine the direction in which we avoid the cube and remember its color
-          cube_last = 1;
-        }
-        else {
-          cube_last = -1;
-        }
-
-        if (turns == 8 && ((cube_last == 1 && millis() - last_rotate < TURNAROUND_DELAY) || millis() - last_rotate > TURNAROUND_DELAY && before_side_last_cube == 1) && !turned) // if we have are in the position to turn around, the cube is red and we haven't turned around already
-          turn_around(cube_last);
-        else 
-          pass_cube(cube_last);
-        return;
-      }
-      if (cmd[0] == 'r' || cmd[0] == 'g') { // if we see a cube but we're not close enough to avoid it
-        follow_cube_angle = val * sign;
-        CASE = FOLLOW_CUBE;
-        last_follow_cube = millis();
-        return;
-      }
-    }
-  }
-  
-  int msg = (int)val;
-  if (msg) { // a turn was detected
-    if (turn_direction == 0) { // if we don't know the direction yet
-      if (msg == 1) { // blue line
-        turn_direction = 1;
-      }
-      else { // orange line
-        turn_direction = -1;
-      }
-    }
-    if (millis() - last_rotate > delay_walls) { // if we can make a turn
-      if (CASE == FIND_PARKING) { // if we're searching for the parking spot
-        // if we're at the first turn, we have to move more in order to position ourselves close to the outer walls
-        move_cm_gyro(CORNER_DISTANCE_PARKING, MOTOR_SPEED, current_angle_gyro);
-      }
-      else if (abs(current_angle_gyro - gx) < 10) { // if we're during the obstacle round or in the quali and we're straight
-        // position ourselves in order to not hit the walls
-        if (FINAL)
-          move_cm_gyro(CORNER_DISTANCE_FINAL, MOTOR_SPEED, current_angle_gyro);
-        else
-          move_cm_gyro(CORNER_DISTANCE_QUALI, MOTOR_SPEED, current_angle_gyro);
-      }
-      else if (CASE == AFTER_CUBE) { // if we're crooked after avoiding a cube we position ourselves for the turn
-        if (-cube_last == turn_direction) { // if we passed by it in the turn's direction then we just need to straighted ourselves for more manuver room
-          move_until_angle(MOTOR_SPEED, current_angle_gyro);
-        }
-        else {
-          move_until_angle(MOTOR_SPEED, current_angle_gyro + turn_direction * 30);
-          move_cm_gyro(7, MOTOR_SPEED, current_angle_gyro + turn_direction * 30);
-        }
-        CASE = PID;
-      }
-      current_angle_gyro += turn_direction * 90; // update the goal angle for the next sequence
-      turns++; // increase the number of turns made
-      delay_walls = 2300; // larger delay for every turn except the first one
-      // as we may have the starting position close to the first turn
-      last_rotate = millis(); // update the last time we turned
-    }
-  }
-}
-```
-
-**Camera code:**
-
-In order to make the robot more stable in any light conditions, we had to make sure that the red, orange and magenta, respectively the green and the blue colors don't get confused in the color detection process. That's why in order to ensure the best accuracy we fine tuned our color thresholds so that we can never see magenta/orange on a red cube or blue on a green cube. The problem that remained is that we saw red in magenta/orange and green in blue. That's why we came up with a simple solution: if a red/green blob is inside another blob that can be mixed up with, such as a line blob or a parking wall blob, we simply ignore it, as it is a false cube detected.
-
-```py
-# detects if a blob is partially inside another blob
-# by checking if the center of one blob is inside the minimum area rectangle that wraps the other blob
-# giving the fact that this rectangle may be crooked, we have to use a special algorithm
-# that is designed to check whether a point is inside a polygon or not based on the coordinates
-def is_blob_in_blob(blob, blob2):
-    if not blob2:
-        return False
-    polygon = blob2.min_corners()
-    num_vertices = len(polygon)
-    (x, y) = (blob.cx(), blob.cy())
-    inside = False
-
-    # store the first point in the polygon
-    (p1x, p1y) = (polygon[0][0], polygon[0][1])
-
-    # loop through each edge in the polygon
-    for i in range(1, num_vertices + 1):
-        # get the next point in the polygon
-        (p2x, p2y) = (polygon[i % num_vertices][0], polygon[i % num_vertices][1])
-
-        # check if the point is above the minimum y coordinate of the edge
-        # check if the point is below the maximum y coordinate of the edge
-        # check if the point is to the left of the maximum x coordinate of the edge
-        if y > min(p1y, p2y) and y <= max(p1y, p2y) and x <= max(p1x, p2x):
-            # calculate the x-intersection of the line connecting the point to the edge
-            x_intersection = (y - p1y) * (p2x - p1x) / (p2y - p1y) + p1x
-
-            # check if the point is on the same line as the edge or to the left of the x-intersection
-            if p1x == p2x or x <= x_intersection:
-                # flip the inside flag
-                inside = not inside
-
-        # store the current point as the first point for the next iteration
-        (p1x, p1y) = (p2x, p2y)
-
-    # return the value of the inside flag
-    return inside
-
-# checks whether a blob is a cube or not based on the minimum height and density filters
-# as well as another check:
-# since in some light conditions the red the cube may be similar to the orange line or magenta parking walls
-# and in some light conditions the green the cube may be similar to the blue line
-# we have to check if the possible cube blob is inside any of these ones
-# if it is, then it may just be a false alarm and we should ignore it
-def is_cube(blob, line_blob, parking_blobs):
-    if blob.density() >= density_thr and blob.h() > min_cube_height and not is_blob_in_blob(blob, line_blob):
-        for parking_wall_blob in parking_blobs:
-            if is_blob_in_blob(blob, parking_wall_blob):
-                return False
-        return True
-    return False
-```
-
-In addition, we created the following functions in order to avoid code repetition or to break down complicated conditions.
-
-```py
-# function that gets the biggest blob by size
-def get_biggest_blob(blob_array):
-    max_area = 0
-    max_blob = None
-    for blob in blob_array:
-        # we're keeping the biggest parking blob
-        if blob.area() > max_area:
-            max_area = blob.area()
-            max_blob = blob
-    return max_blob
-```
-
-<br>
-
-# Robot Construction Guide <a class="anchor" id="robot-construction-guide"></a>
-
-## Step 0: Print the 3D parts <a class="anchor" id="3d-printing"></a>
-
-The part files can be found in the `3d-models` folder. We used and recommend the [BambuLab X1-Carbon](https://bambulab.com/en/x1) 3D printer, with the following settings:
- - Material: PLA
- - Layer height: 0.2mm
- - Infill: 20%
- - Supports: Yes
- - Raft: No
- - Brim: Yes
-
-## Step 1: Assemble the steering system <a class="anchor" id="steering-system-assembly"></a>
-
-1. Mount the `servo` on the `chassis` using 2 zip ties, make sure to cut the excess of the zip ties so it doesnt interfere with the steering arm.
-
-2. Attach the `steering axle` to the `servo` using a ⌀ 2mm metal rod, approximately 4-5mm in length.
-
-3. Attach the `servo mount` to the `chassis` using the peg joints.
-
-4. Hold the `steering hubs` between the `chassis` and the `servo mount` and attach them with a ⌀ 2mm metal rod, approximately 20mm in length.
-
-5. Attach the `steering axle` to the `steering hubs` using two ⌀ 2mm metal rod, approximately 20mm in length.
-
-6. Inside the `steering hubs`, place a `Pin Connector Block`(<a href="https://www.bricklink.com/v2/catalog/catalogitem.page?P=39793&idColor=11#T=C&C=11">39793</a>) using pins. Put a `Axle 3L with Stop`(<a href="https://www.bricklink.com/v2/catalog/catalogitem.page?P=24316&idColor=11#T=C&C=11">24316</a>) inside the `Pin Connector Block`.
-
-## Step 2: Assemble the powertrain <a class="anchor" id="powertrain-assembly"></a>
-1. Attach the `motor support` to the `chassis` using the peg joints.
-
-2. Attach the `motor` to the `motor support` using the `motor mounts` and *M3* screws.
-
-3. On the `motor`, attach the `gearmotor to axle` and, on the other end, attach a lego `Axle 3L`.
-
-4. On the other end of the `Axle 3L`, attach a lego `Gear 20 Tooth Double Bevel`(<a href="https://www.bricklink.com/v2/catalog/catalogitem.page?P=32269#T=C">32269</a>)
-
-5. The `chasiss` has a place for a differential, attach a `Gear Differential 28 Tooth Bevel`(<a href="https://www.bricklink.com/v2/catalog/catalogitem.page?P=62821b&name=Technic,%20Gear%20Differential%2028%20Tooth%20Bevel%20-%20Inner%20Tabs%20with%20Closed%20Center&category=%5BTechnic,%20Gear%5D#T=C">62821b</a>) there, connected to the `Gear 20 Tooth Double Bevel`. The differential should have 3 `Gear 12 Tooth Bevel`(<a href="https://www.bricklink.com/v2/catalog/catalogitem.page?P=6589#T=C">6589</a>) inside it. The differential should be attached to the `chassis` using lego `Axles 7L`. Where the `Axles 7L` go, there should be a half stud gap in the `chassis`, place a `Bush 1/2`(<a href="https://www.bricklink.com/v2/catalog/catalogitem.page?P=4265c&idColor=3#T=C&C=3">4265c</a>) on each side. This will hold the wheels in place better.
-
-## Step 3: Attach the electronics <a class="anchor" id="electronics-attachment"></a> 
-
-1. Make the `pcb` using a `10x24 prototype board`. Using the `electrical diagram` and the pcb images, solder the connections, and headers and the `voltage regulator`. Place the `Arduino Nano ESP32` and `motor driver` on the pcb. The pcb should be attached to the `pcb plaque` using screws.
-
-2. Place the `battery` in under the `pcb` in the place provided in the `chassis`.
-
-3. Use a `6x12 prototype board` to make a holder for the `power switch` and `start button`, which need to be souldered. On the bottom of the board, soulder headers so that you can use father-father wires to connect to the arduino. We used a longer prototype board and cut it to the desired size. The holder should be attached to the `chassis` using double sided tape. You can also soulder a `led` to the board and connect it to the arduino for debuging purposes.
-
-4. Attach the `IMU` to the `motor support` using screws. Soulder a wire on the `IMU` on the `INT1` pin.
-
-5. Attach the `camera` to the `chassis` using screws. The `camera` should be slighly tilted up.
-
-6. Connect all the wires according to the `electrical diagram`. The `camera` should be connected to the `Arduino` using the `UART` protocol. The `IMU` should be connected to the `Arduino` using the `I2C` protocol. The wires can be store bought, or you can make them yourself. We custom-made our wires to achieve the exact lengths needed and combined certain connections into single Dupont connectors—for example, the camera power, camera UART, and IMU I2C wires are each grouped within individual Dupont connectors.
-
-7. (Optional) All the wires that are longer than needed can be wrapped arrond the `chassis` to make the robot look cleaner. You can use zip ties to secure the wires in place.
-
-## Step 4: Attach the wheels <a class="anchor" id="wheel-attachment"></a>
-
-1. Attach the front `wheels`(<a href="https://www.bricklink.com/v2/catalog/catalogitem.page?P=39367pb01&idColor=11#T=C&C=11">39367pb01</a>) to the `Axles 3L with Stop`. Use a `Bush 1/2` on each side of the `wheels` to hold them in place.
-
-2. Attach the back `wheels`(<a href="https://www.bricklink.com/v2/catalog/catalogitem.page?P=39367pb01&idColor=11#T=C&C=11">39367pb01</a>)  to the `Axles 7L`. Use a `Bush 1/2` on each side of the `wheels` to hold them in place. Also add spacers so the wheels are on the same level as the front ones.
-
-## Step 5: Final touches <a class="anchor" id="final-touches"></a>
-
-1. Place a *100g* weight on the back of the robot and one on the `servo mount` to enhance stability and increase grip. The weights should stay in place, but you can stabilize them with some duct tape.
-
-## Step 6: Upload the code <a class="anchor" id="code-upload"></a>
-
-1. Connect the `Arduino` to your computer using a USB cable.
-
-2. Open the `Arduino IDE` and install the ESP32 board manager.
-
-3. Upload the code to the `Arduino`.
-
-4. Connect the `OpenMV Cam H7` to the your computer using a USB cable.
-
-5. Open the `OpenMV IDE` and upload the code to the `OpenMV Cam H7`.
-
-<br>
-
-# Cost Report <a class="anchor" id="cost-report"></a>
-
-## Components <a class="anchor" id="components-cost"></a>
-
-| Component                                   | Quantity | Cost per Unit (€) | Total (€) |
-|---------------------------------------------|----------|--------------------|-----------|
-| 50:1 Micro Metal Gearmotor HPCB 12V         | 1        | 21.00             | 21.00     |
-| SparkFun Motor Driver - Dual TB6612FNG      | 1        | 13.00             | 13.00     |
-| Motor Servo MG90S                           | 1        | 4.00              | 4.00      |
-| LiPo Battery (450mAh, 7.4V, 30C)            | 1        | 9.00              | 9.00      |
-| Arduino Nano ESP32                          | 1        | 24.00             | 24.00     |
-| Grove - 6-Axis Accelerometer & Gyroscope    | 1        | 26.50             | 26.50     |
-| OpenMV Cam H7 R2                            | 1        | 60.50             | 60.50     |
-| Prototype Boards                            | 2        | 5.00              | 10.00     |
-| Metal Rods (2mm diameter, various lengths)  | 6        | 0.50              | 3.00      |
-| 100g Fishing Weights                        | 2        | 5.00              | 10.00     |
-| **LEGO Pieces:**                            |          |                    |           |
-| Pin Connector Block (39793)                 | 2        | 0.40              | 0.80      |
-| Axle 3L with Stop (24316)                   | 2        | 0.50              | 1.00      |
-| Gear 20 Tooth Double Bevel (32269)          | 1        | 1.20              | 1.20      |
-| Gear Differential 28 Tooth Bevel (62821b)   | 1        | 3.50              | 3.50      |
-| Gear 12 Tooth Bevel (6589)                  | 3        | 0.50              | 1.50      |
-| Axles 7L                                    | 2        | 0.60              | 1.20      |
-| Bush 1/2 (4265c)                            | 4        | 0.20              | 0.80      |
-| Wheels (39367pb01)                          | 4        | 2.00              | 8.00      |
-
-**Total for Components:** **€201.00**
+**Key Points:**  
+The LEGO car uses a combination of AI-driven image processing and sensor input from the Pi Camera and Sense HAT.  
+Real-time visual data is analyzed to determine throttle and steering commands.  
+Color-based recognition was added to distinguish between obstacle types when shape recognition alone was insufficient.  
+The AI system was refined through trial and error, with detailed documentation available in the GitHub source files.  
+A major challenge was real-time performance; we addressed this by optimizing the recognition algorithm and streamlining throttle/steering prediction.  
+The system's ability to adapt to dynamic environments stems from its data-centric learning method, mimicking human decision-making through iterative training.
 
 ---
 
-## 3D Printing Costs <a class="anchor" id="3d-printing-costs"></a>
+## Software and Coding Explanation <a name="software-and-coding-explanation"></a>
 
-- **Filament Used:**
-  - Prototypes: 1kg of PLA filament
-  - Final Parts: 80g of PLA-CF filament
-- **PLA-CF Filament Cost:** €32.00 per 1kg
-- **PLA Filament Cost:** €25.00 per 1kg
 
-| Filament Use      | Weight (g) | Cost (€) |
-|--------------------|------------|----------|
-| Prototypes         | 1,000      | 25.00    |
-| Final Parts        | 80         | 2.56     |
+In our project, the hardware components primarily consist of a display, a single-board computer—specifically the Raspberry Pi 4—and a camera. We use the Raspberry Pi 4 in conjunction with the camera to capture real-time images from the play area. Additionally, during the learning phase, we employ a joystick to collect control data. This setup enables us to synchronize live footage with control inputs, such as steering and throttle actions, thereby creating a detailed dataset for the AI to refine its driving algorithms.
 
-**Total for 3D Printing:** **€27.56**
+At the outset, we gather raw data, such as images, using the Raspberry Pi. This data is subsequently transferred to a conventional computer for advanced processing.
 
----
+On this computer, we run a series of specialized programs that use the collected data to train an AI model capable of autonomous driving. The result of this training is a file that encapsulates the trained AI model, which we then load back onto the Raspberry Pi.
 
-## Other Parts Tested <a class="anchor" id="other-parts-tested"></a>
+Armed with this AI model, the Raspberry Pi analyzes live images and generates precise control instructions, including throttle and steering commands. These commands are sent wirelessly to the LEGO car, where they are executed via the Build HAT, which controls the LEGO motors accordingly.
 
-- **Approximate Cost for Additional Parts Tested:** €150.00
 
----
+## Photos of the Data We Captured <a name="photos-of-the-data-we-captured"></a>
 
-## Tools and Equipment <a class="anchor" id="tools-and-equipment"></a>
+<p align="center">
+  <!-- Paste your data photos here -->
+  <img src="./images/data_collected_1.jpg" width="80%" alt="Data Collected 1">
+  <img src="./images/data_collected_2.jpg" width="80%" alt="Data Collected 2">
+</p>
 
-| Tool                                   | Cost (€) |
-|----------------------------------------|----------|
-| Bambu Lab X1 Carbon 3D Printer         | 1,100.00 |
-| Soldering Kit                          | 46.00    |
-| Multimeter                             | 28.00    |
-| Miscellaneous Tools (e.g., pliers)     | 19.00    |
 
-**Total for Tools and Equipment:** **€1,193.00**
+## Schematic Diagram of the CNN <a name="schematic-diagram-of-the-cnn"></a>
+
+<p align="center">
+  <!-- Paste your CNN schematic image here -->
+  <img src="./images/cnn_diagram.jpg" width="80%" alt="CNN Schematic">
+</p>
 
 ---
 
-## Summary of Costs <a class="anchor" id="summary-of-costs"></a>
+## Code Explanations & Code Blocks <a name="code-explanations--code-blocks"></a>
 
-| Category               | Total (€) |
-|------------------------|-----------|
-| Components             | 201.00    |
-| 3D Printing            | 27.56     |
-| Other Parts Tested      | 150.00    |
-| Tools and Equipment    | 1,193.00  |
-| Shipping Approximation | 80.00     |
+### GPIO Button Code
 
-**Grand Total:** **€1,651.56**
+```python
+# GPIO Pin setup and car start logic
+# Your full code here
+```
+We use the GPIO.BCM mode to reference the pins by their Broadcom numbers. GPIO 25 is set up as an input pin with an internal pull-up resistor, which means it will be "high" (on) unless the button is pressed, which would then bring the signal "low" (off). This setup helps the code to distinguish when the button is pressed. The program runs in a loop, checking the button state every 0.1 seconds. If the button is pressed (GPIO 25 goes low), the car can then start running, making this code crucial for triggering the car's activation. The continuous checking ensures the car responds immediately to the button press.
 
 ---
 
-*Note: Costs are approximate and based on current exchange rates and market prices.*
+### PiCamera Color Detection
 
-<br>
+```python
+# PiCamera color detection code for red/green
+# Your full code here
+```
+In this code, we use the PiCamera with the Picamera2 library to continuously capture frames from the camera. The frames are processed to detect specific colors, namely red and green, in the image. We use OpenCV’s cv2 library to convert the captured frames to the HSV (Hue, Saturation, Value) color space, which helps in better detecting color ranges.
 
-# Randomizer <a class="anchor" id="randomizer"></a>
+The code defines two color ranges for red and one for green. It then creates masks for each color by filtering the HSV image. The number of non-zero pixels in each mask is counted to determine the presence of red or green. If there are more red pixels than green pixels and the red count exceeds a threshold (1000 pixels), it prints "Red detected". Similarly, if green has a higher count, it prints "Green detected". If neither color is detected, it prints "No red or green detected". This code helps the car detect obstacles using the camera. It looks for red and green colors to understand which direction to go on the third round because at the end of the second round it will be able to use this code to know which obstacle its looking at to determine if it will continue towards the third round or it will reverse directions and continue to the third round going in the same direction.
 
-To ensure the robot's ability to adapt to any course, we developed a randomizer that generates a random sequence of colors and positions for the cubes. You can find this web application at the following link: https://nerdvana.ro/wro-fe/
+---
 
-<br>
+### WT901 Yaw Sensor
 
-# Resources <a class="anchor" id="resources"></a>
+```python
+# WT901 yaw sensor code
+# Your full code here
+```
+This code helps our car track how much it’s turning by reading data from a WT901 sensor. The sensor measures the car’s rotation around the Z-axis (yaw), which tells us how the car is facing. It works like this: First, the car uses I2C to talk to the sensor and get data about its Z-axis rotation. The sensor gives us a raw number that represents how fast the car is turning. We convert that number into degrees per second, so we know how much it’s rotating. Then, the code keeps track of how long it’s been since the last time it checked the sensor. It uses that time difference to calculate how much the car’s yaw angle has changed. This way, we can figure out the car’s exact direction by adding up the changes over time. So, when the car is running, the code updates the yaw angle and prints out the car’s direction in real time. This helps the car know where it’s facing this is important as it lets us know when to change between ai models for example we trained models for parking and many other stuff once the car reaches a certain degree or location this lets us use a different ai model to accomplish a different task that is required at that point in time of the run.
 
-## Images <a class="anchor" id="images-resources"></a>
-<li> DC Motor - https://a.pololu-files.com/picture/0J10610.1200.jpg?204e9b873c23906503616db5c4950010
-<li> MG90S Servo motor - https://www.robotistan.com/tower-pro-mg90s-micro-servo-motor-continuously-rotating-37080-99-B.jpg
-<li> Sparkfun Motor Driver - https://cdn.sparkfun.com//assets/parts/1/2/4/8/2/14450a-01.jpg
-<li> Arduino Nano ESP32 - https://ardushop.ro/7735-thickbox_default/arduino-nano-esp32-with-headers.jpg
-<li> OpenMV Cam H7 R2 - https://openmv.io/cdn/shop/products/new-cam-v4-angle-web_3a8c4a96-13b4-4d3f-95f8-c3b8a8cc8e05_1000x_crop_center.jpg?v=1715736312
-<li> LiPo Battery - https://hpi-racing.ro/29739-medium_default/acumulator-lipo-gens-ace-g-tech-soaring-450mah-74v-30c-2s1p-cu-jst-syp.jpg
-<li> Grove BMI088 Gyroscope - https://files.seeedstudio.com/wiki/Grove-6-Axis_Accelerometer-Gyroscope-BMI088/img/main.jpg
-<li> Linear voltage regulator - https://m.media-amazon.com/images/I/71gro1yTESL._SL1500_.jpg
+---
 
+### Keyboard & Joystick Control
+
+```python
+# Keyboard/Joystick manual control code
+# Your full code here
+```
+This code is used to control the car’s speed and direction using a keyboard. It begins by setting up the signals for controlling the car’s motors. The car starts with a default speed and steering values, both set to 350, which represent the car’s starting movement. You can control how the car moves by pressing certain keys on the keyboard. Pressing the i key increases the car’s speed, while pressing the k key decreases the speed. If you press j, the car will steer left, and pressing L will steer it right. Each time you press one of these keys, the car’s speed or direction will change accordingly.
+
+To stop controlling the car, you can press the q key. This will stop the car’s movement and end the program. After stopping, the car will automatically reset to its default speed and steering position, moving in a neutral state for a short time before the program ends. In summary, this code allows you to control the car’s speed and steering by using the i, k, j, and l keys, and you can stop the car anytime by pressing the q key and this important for us as that lets up to adjust the car by using manual controls from keyboard to drive it around and observe its movements for further adjustments.
+
+This script is designed for us to control a car's movement using a joystick, with the help of the Adafruit PCA9685 module to adjust the car's throttle and steering. First, we set the PWM frequency for the servos at 60Hz, which is standard for servo motors, and initialize the joystick with the Pygame library. After the joystick is connected, the script waits for input. Once data is received from the joystick, it moves forward with setting default values for the throttle and steering signals, which help control the car’s movement. In the main loop, we read the joystick's axis values to control the throttle and steering. The vertical axis (axis4) controls the car’s throttle, and the signal is adjusted between 300 and 400. The horizontal axis (axis0) controls the steering, with the signal adjusted between 220 and 520. These PWM signals are then sent to the PCA9685 module, which controls the servos, allowing us to steer and adjust the throttle in real-time. The script continuously updates the servo positions based on joystick input, giving us full control over the car’s movement this is like 07_Control_RCcar_with_KB.py where the difference is we are controlling the car this time with controller which makes it easier to drive the car and observe the car in at the same time.
+
+---
+
+### Autonomous Car Main Loop
+
+```python
+# Main autonomous car loop with CNN prediction
+# Your full code here
+```
+The Python code is designed to control an Lego car autonomously using machine learning, camera input, and sensor data. It utilizes a Raspberry Pi camera to capture images, which are then processed by a pre-trained AI model to predict the car’s steering and throttle control. This allows the car to navigate without human intervention. The car’s rotation is monitored using a gyroscope, which measures its yaw angle. The system tracks the car’s rotation through the Z-axis data from the gyroscope, and the car stops after completing three full rotations (1080 degrees). This ensures the car follows a precise path and halts at the correct time. The movement of the car is controlled by adjusting PWM signals, which are sent to a motor driver to control the motor’s speed and direction based on the AI model's predictions. The car only starts moving once it receives a signal from the GPIO input, ensuring everything is set up before it begins operation. Real-time feedback is displayed on an LCD screen, showing useful information such as the yaw angle and the AI model’s status. This allows the car's performance to be monitored continuously. The car also includes a basic color detection feature, which can identify specific colors, though it is not fully integrated in the current version of the code. In the main loop, sensor data is gathered, images are captured, predictions are made by the AI model, and the car’s movement is controlled. Once the three rotations are completed, the car stops as planned. Finally, the code includes a shutdown process to safely power down the system, ensuring that everything, including the camera, is properly turned off after the task is complete.
+
+This code enables our robot to navigate the obstacle run, detect signals, and park autonomously. It uses a camera and a machine-learning model to process what the robot sees, helping it decides how to steer and move forward. A gyroscope tracks the robot's orientation, ensuring it completes three full laps before stopping. The code also allows the robot to detect red signals, which trigger a U-turn, enabling it to adapt dynamically to the course. The robot's motors and steering are controlled by PWM signals for smooth and precise movement, with a GPIO pin used to start or stop its actions. Its status, like running or waiting, is displayed on an LCD screen. At the end of the obstacle course, the code switches the robot to parking mode, where a specific AI model guides it into a parking space. This makes the robot fully autonomous and ready for robotics competitions.
+
+
+---
+
+## Car Components and Explanation <a name="car-components-and-explanation"></a>
+
+### LEGO Motor
+
+<p align="center">
+  <!-- Replace with your actual LEGO motor image -->
+  <img src="./images/lego_motor.jpg" width="60%" alt="LEGO Motor">
+</p>
+
+The LEGO motor is a critical part of our robot, responsible for controlling the car’s movement and driving. In our design, the LEGO motor was chosen as an improvement over motors used in previous seasons. We found that the LEGO motor provides smoother acceleration, consistent speed, and precise control, making it easy to integrate with our Build HAT and Raspberry Pi system. The simplicity and reliability of the LEGO motor allowed us to focus on developing the AI and navigation systems, confident that the mechanical aspect of movement would be handled effectively. Its compatibility with LEGO Technic elements also meant we could easily adjust or expand our drivetrain as needed during testing and competition.
+
+---
+
+### VL53L0X ToF (Time-of-Flight) Sensor
+
+<p align="center">
+  <!-- Replace with your actual VL53L0X sensor image -->
+  <img src="./images/vl53l0x.jpg" width="60%" alt="VL53L0X ToF Sensor">
+</p>
+
+The VL53L0X ToF sensor is an essential upgrade in our car’s sensing suite, especially for parking and wall detection. As a laser-based distance sensor, it provides millimeter-accurate measurements of the distance between the car and nearby objects. This sensor plays a crucial role in our parking control system, enabling the robot to detect walls and avoid contact with barriers. By continuously measuring the distance to obstacles in real-time, the VL53L0X allows our car to stop at the perfect position when parking, and to navigate tight spaces with confidence. Its fast response and precise readings have made it the ideal solution for obstacle avoidance and parking maneuvers, boosting our robot’s performance and reliability compared to previous approaches.
+
+
+### Raspberry Pi Description
+
+![Raspberry Pi](./images/rpi.jpg)
+
+The Raspberry Pi is a compact, affordable computer designed for learning, prototyping, and experimentation. Despite being about the size of a credit card, it functions as a full-fledged computer capable of running complex programs, handling input/output operations, and interfacing with a wide variety of devices. Due to its versatility, portability, and low cost, it is widely used in electronics projects, programming, and robotics.
+
+**Raspberry Pi in Our LEGO Car:**  
+In our LEGO car system, the Raspberry Pi plays a central role by handling all core operations required for autonomous driving. It processes the video feed from the Pi Camera, enabling the car to interpret its environment, and runs the AI model responsible for making real-time decisions regarding steering and speed.
+
+Its small form factor and low power consumption allow it to integrate seamlessly into the LEGO structure without compromising space or performance. Additionally, the Raspberry Pi’s compatibility with modules like the Sense HAT and Build HAT makes it ideal for connecting to sensors and motors in a LEGO-based system. Without the Raspberry Pi, the vehicle would not be able to process environmental data or respond to dynamic conditions, making it a vital component for the success of our autonomous LEGO car.
+
+### Pi Camera Description
+
+![Pi Camera](./images/picamera.jpg)
+
+The Raspberry Pi Camera is a compact, high-definition camera module designed specifically for use with Raspberry Pi boards. It connects via the CSI (Camera Serial Interface) port and is capable of capturing high-resolution still images and video. The Pi Camera is widely used in DIY electronics, robotics, and computer vision applications due to its small size, flexibility, and support for various image processing modes. It integrates effectively with machine learning models for tasks such as object detection, tracking, and real-time video analysis.
+
+**Pi Camera in Our LEGO Car:**  
+In our LEGO car system, the Pi Camera serves as the "eyes" of the self-driving robot, delivering essential visual input to the AI model. During initial training sessions, the camera captures images of the environment, track layout, and surrounding obstacles. These images are then used to train a machine learning model using TensorFlow, enabling the system to identify patterns and make informed driving decisions.
+
+Once the AI model is trained, the Pi Camera continues to play a vital role during autonomous operation by providing real-time visual data. This live feed is processed by the AI to determine appropriate throttle and steering commands. As such, the Pi Camera is crucial to both the training and real-time navigation phases, making it one of the key components of our LEGO-based autonomous driving platform.
+
+### Sense HAT Description
+
+![Sense HAT](./images/sense_hat.jpg)
+
+The Sense HAT is an add-on board for the Raspberry Pi that provides a suite of sensors and a programmable LED matrix. It includes sensors for temperature, humidity, barometric pressure, and orientation (via gyroscope, accelerometer, and magnetometer). Originally developed for educational and space-related projects, it allows real-time environmental data collection and interactive feedback.
+
+**Sense HAT in Our LEGO Car:**  
+In our LEGO car, the Sense HAT is used primarily for motion sensing and directional feedback. By reading values from its onboard gyroscope and accelerometer, we are able to monitor the car’s orientation and rotational changes during movement. This data helps the AI determine when the car has completed certain maneuvers, such as turns or laps, and allows us to switch AI models or driving modes at the right moments. The compact design of the Sense HAT, combined with its direct compatibility with the Raspberry Pi, makes it a convenient and powerful tool for integrating real-time feedback into our autonomous vehicle.
+
+### Build HAT Description
+
+![Build HAT](./images/build_hat.jpg)
+
+The Build HAT (Hardware Attached on Top) is a LEGO-compatible motor and sensor controller developed by Raspberry Pi. It allows up to four LEGO Technic motors or sensors to be controlled directly from a Raspberry Pi using the standard LPF2 connectors. The Build HAT simplifies control of LEGO elements by handling the communication and power management needed to operate motors with precision.
+
+**Build HAT in Our LEGO Car:**  
+In our LEGO car, the Build HAT is used to control the car’s movement by managing the LEGO motors responsible for throttle and steering. It interfaces seamlessly with the Raspberry Pi and enables precise motor control through Python code. The Build HAT eliminates the need for third-party servo controllers or custom circuits, providing a clean and reliable solution for motor management. Its native support for LEGO components makes it an essential bridge between our AI control system and the physical LEGO hardware, ensuring smooth and responsive driving behavior during autonomous runs.
+
+---
+
+## Component Cost Table <a name="component-cost-table"></a>
+
+Below is a chart of estimated costs for each major component, with purchase links (Amazon or manufacturer):
+
+| Component                  | Quantity | Estimated Price (USD) | Purchase Link |
+|----------------------------|----------|-----------------------|--------------|
+| Raspberry Pi 4             | 1        | $50                   | [Amazon](https://www.amazon.com/dp/B07TD42S27) |
+| Pi Camera v2               | 1        | $25                   | [Amazon](https://www.amazon.com/dp/B01ER2SKFS) |
+| Sense HAT                  | 1        | $40                   | [Amazon](https://www.amazon.com/dp/B01EGB0H7O) |
+| Build HAT                  | 1        | $35                   | [Pi Shop](https://www.raspberrypi.com/products/build-hat/) |
+| LEGO DC Motor              | 1        | $15                   | [LEGO Shop](https://www.lego.com/en-us/product/m-motor-8883) |
+| LEGO Servo                 | 1        | $20                   | [LEGO Shop](https://www.lego.com/en-us/product/servo-motor-88004) |
+| 7.4V LiPo Battery          | 1        | $18                   | [Amazon](https://www.amazon.com/dp/B07KZ8YQJH) |
+| Power Bank (5V/2.5A)       | 1        | $20                   | [Amazon](https://www.amazon.com/dp/B07QK2SPP7) |
+| LEGO Chassis Parts         | -        | $50                   | [LEGO Shop](https://www.lego.com/en-us/themes/technic) |
+| Miscellaneous Wires        | -        | $10                   | [Amazon](https://www.amazon.com/dp/B07GD2BWPY) |
+
+**Total Estimated Cost:** ~$283
+
+
+
+---
+
+## Assembly Instructions <a name="assembly-instructions"></a>
+
+![LEGO Chassis](./images/chassis.jpg)
+![3D Model](./images/3d_model.png)
+
+To facilitate the replication and further development of our Autonomous Robotic Vehicle (ARV), we have provided detailed assembly instructions that guide builders through every step of the construction process. In addition, we have produced a video that gives an overview of our ARV's components, which is available on YouTube.
+
+We hope to share these resources for the use of educational institutions and enthusiasts alike, with the aim of fostering a collaborative and innovative environment in the field of robotics technology.
+
+---
+
+## Challenges and Solutions <a name="challenges-and-solutions"></a>
+
+Throughout the development of this project, we encountered a series of challenges. First, there was the issue of image resolution. When using larger image sizes, the processing demands increased significantly, causing training sessions to last over 8 hours. To resolve this, we downscaled the input data and selected a resolution of 160 by 120 pixels to optimize training efficiency.
+
+Next, we faced difficulties with overly lengthy road models. To make training more effective, we segmented portions of the data model and trained them in smaller batches. Lastly, we ran into software compatibility issues. For example, models trained using TensorFlow 2.9 were not compatible with older versions like TensorFlow 2.4. To address this, we standardized all systems to run TensorFlow 2.9 for consistency and improved integration.
+
+---
+
+## Conclusion <a name="conclusion"></a>
+
+Our team has employed a unique approach in the design of our intelligent vehicle, which is characterized using a purely Artificial Intelligence (AI)-driven model. At the heart of this system is a Convolutional Neural Network (CNN) running in a Linux environment, built using Google’s TensorFlow framework. The CNN is designed to learn and replicate the driving habits of a human operator by analyzing images captured by the camera and movement data from the remote control. This allows the AI model to self-train and adapt based on real-world input.
+
+In practice, the neural network processes visual data from the course and makes predictions about optimal movements. These decisions are then communicated to the vehicle’s control system — in our case, the LEGO car.
+
+Our design philosophy has been consistent from the start: to integrate the strengths of traditional programming with modern AI. By feeding the AI a large volume of real driving data, it can make intelligent predictions while also learning the operator’s behavior, resulting in a more human-like and adaptable driving system. The vehicle is not just mechanically responsive; it is guided by an intelligent system that blends precision control with learned behavior for a more sophisticated autonomous experience.
+
+---
