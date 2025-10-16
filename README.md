@@ -99,13 +99,13 @@ TensorFlow is a renowned, open-source software library dedicated to machine lear
 
 Here are multiple views of our AI Lego Car.  
 
-| <img src="./images/front.jpg" width="90%" /> | <img src="./images/back.jpg" width="85%" /> | 
+| <img src="v-photos/birdseye view.jpg" width="90%" /> | <img src="v-photos/back view.jpg" width="85%" /> | 
 | :--: | :--: | 
-| *Front* | *Back* |
-| <img src="./images/left.jpg" width="90%" /> | <img src="./images/right.jpg" width="85%" /> | 
-| *Left* | *Right* |
-| <img src="./images/top.jpg" width="90%" /> | <img src="./images/bottom.jpg" width="85%" /> | 
-| *Top* | *Bottom* |
+| *Birdeye* | *Back* |
+| <img src="v-photos/center view.jpg" width="90%" /> | <img src="v-photos/camera view.jpg" width="85%" /> | 
+| *Center* | *Camera* |
+| <img src="v-photos/top view.jpg" width="90%" /> | <img src="v-photos/low view.jpg" width="85%" /> | 
+| *Top* | *low* |
 
 ---
 
