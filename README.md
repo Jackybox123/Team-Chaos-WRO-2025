@@ -785,6 +785,7 @@ Debounce Testing: The color detection code is tested to make sure each strip is 
 After calibration, the car goes through test runs. It first drives in manual mode to confirm motor and steering performance. Then, in AI mode, the car navigates the track autonomously. The Raspberry Pi camera detects red and green pillars, which the system uses to decide whether to turn left or right. Throughout the run, the Sense HAT provides live feedback on color counts and system status.
 
 The assembly and setup are designed to be modular and safe, allowing quick replacements or upgrades for each part—camera, sensors, motors, or AI controller. The layout keeps the car balanced and reduces vibration, which helps the AI model perform more accurately. In the end, the Team Chaos self-driving car stands as a durable, flexible, and intelligent platform for robotics learning and competition, built from accessible components and careful engineering.
+
 ---
 
 ## Challenges and Solutions <a name="challenges-and-solutions"></a>
