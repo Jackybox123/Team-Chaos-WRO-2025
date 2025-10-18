@@ -757,10 +757,32 @@ Below is a chart of estimated costs for each major component, with purchase link
 
 
 
-To facilitate the replication and further development of our Autonomous Robotic Vehicle (ARV), we have provided detailed assembly instructions that guide builders through every step of the construction process. In addition, we have produced a video that gives an overview of our ARV's components, which is available on YouTube.
+The assembly process for the Team Chaos self-driving car focuses on combining mechanical strength, electrical stability, and AI decision-making into a small and modular design. The car’s frame is mainly built from LEGO Technic pieces, which provide both durability and flexibility for fast adjustments during testing. At the center of the system is the Raspberry Pi 4 Model B, which acts as the main control unit. It connects directly to the LEGO Build HAT, allowing easy motor and sensor control through Python and keeping the wiring organized and light.
 
-We hope to share these resources for the use of educational institutions and enthusiasts alike, with the aim of fostering a collaborative and innovative environment in the field of robotics technology.
+The build begins by creating a rectangular chassis using LEGO Technic beams and connectors. This structure forms the base that supports the motors, sensors, and control modules. Two large LEGO motors are installed on the rear axle and connected to the Build HAT’s ports A and B. These motors power the car’s movement. A differential gear is added between the rear wheels to keep the car stable during turns, helping it distribute torque smoothly. The front of the car holds a medium motor connected to the steering system. This motor, attached to port C, lets the car turn left and right precisely according to the AI’s steering commands.
 
+The Raspberry Pi is mounted on top of the chassis using a flat LEGO or 3D-printed mounting plate, leaving enough space underneath for cable management and airflow. The Build HAT fits neatly on top of the Pi’s GPIO pins, keeping everything compact. To prevent overheating during long runs, a small fan and heatsink are attached to the Pi’s CPU and powered from the 5V GPIO pins.
+
+At the front, the Raspberry Pi Camera Module is mounted using a LEGO bracket that angles slightly downward. This helps the camera capture both the track and upcoming obstacles. The CSI ribbon cable is carefully routed to avoid getting caught in the steering system. When calibrating, the camera’s angle is adjusted so that the AI model consistently recognizes lanes and pillars.
+
+Under the chassis, a LEGO color sensor is installed between the front wheels, facing downward. It detects colored strips on the ground, identifying transitions between white and colored surfaces like blue or orange. Each time a strip is detected, the robot updates counters displayed on the Sense HAT LED matrix. The color sensor connects to the Build HAT’s port D.
+
+Behind the Raspberry Pi, the Sense HAT is placed on a small LEGO platform with its LED display facing upward. It shows the live count of orange and blue strips, as well as indicators of the car’s current mode. For example, it lights up green while moving forward, yellow during turns, and red when the car stops after completing its 24-strip goal.
+
+The power system uses two separate sources: a 9V LEGO battery box for the Build HAT and a USB power bank for the Raspberry Pi. This separation avoids interference between motor power and logic circuits. All wires are secured with clips along the side of the chassis so nothing blocks the wheels or sensors.
+
+Once the hardware is ready, software setup begins. The Raspberry Pi runs on Raspberry Pi OS, with the libraries buildhat, opencv-python, tensorflow, and sense_hat installed. The CNN model, trained with image data from different lighting and track conditions, is stored in the /models folder. The main program initializes the camera feed, predicts steering and speed, and sends motor commands through the Build HAT interface.
+
+Before any autonomous runs, calibration steps are performed to ensure accuracy:
+
+Camera Calibration: The car is placed on the track while OpenCV adjusts brightness and contrast for clear detection of color strips and obstacles.
+Color Sensor Calibration: The sensor reads RGBI values for white, blue, and orange to define reliable detection thresholds.
+Steering Alignment: The steering motor is centered so that the wheels start from a neutral position.
+Debounce Testing: The color detection code is tested to make sure each strip is counted once, avoiding false readings.
+
+After calibration, the car goes through test runs. It first drives in manual mode to confirm motor and steering performance. Then, in AI mode, the car navigates the track autonomously. The Raspberry Pi camera detects red and green pillars, which the system uses to decide whether to turn left or right. Throughout the run, the Sense HAT provides live feedback on color counts and system status.
+
+The assembly and setup are designed to be modular and safe, allowing quick replacements or upgrades for each part—camera, sensors, motors, or AI controller. The layout keeps the car balanced and reduces vibration, which helps the AI model perform more accurately. In the end, the Team Chaos self-driving car stands as a durable, flexible, and intelligent platform for robotics learning and competition, built from accessible components and careful engineering.
 ---
 
 ## Challenges and Solutions <a name="challenges-and-solutions"></a>
