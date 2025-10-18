@@ -182,8 +182,18 @@ The system's ability to adapt to dynamic environments stems from its data-centri
 ### GPIO Button Code
 
 ```python
-# GPIO Pin setup and car start logic
-# Your full code here
+import RPi.GPIO as GPIO
+import time
+
+# Set the GPIO mode
+GPIO.setmode(GPIO.BCM) # Use BCM GPIO numbering
+
+gpio_Num = 25
+GPIO.setup(gpio_Num, GPIO.IN,GPIO.PUD_UP)
+
+while True:
+  print(GPIO.input(gpio_Num))
+  time.sleep(0.1)
 ```
 We use the GPIO.BCM mode to reference the pins by their Broadcom numbers. GPIO 25 is set up as an input pin with an internal pull-up resistor, which means it will be "high" (on) unless the button is pressed, which would then bring the signal "low" (off). This setup helps the code to distinguish when the button is pressed. The program runs in a loop, checking the button state every 0.1 seconds. If the button is pressed (GPIO 25 goes low), the car can then start running, making this code crucial for triggering the car's activation. The continuous checking ensures the car responds immediately to the button press.
 
