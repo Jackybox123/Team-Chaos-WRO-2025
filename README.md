@@ -735,8 +735,8 @@ Below is a chart of estimated costs for each major component, with purchase link
 | Pi Camera v2               | 1        | $25                   | [Amazon](https://www.amazon.com/dp/B01ER2SKFS) |
 | Sense HAT                  | 1        | $40                   | [Amazon](https://www.amazon.com/dp/B01EGB0H7O) |
 | Build HAT                  | 1        | $35                   | [Pi Shop](https://www.raspberrypi.com/products/build-hat/) |
-| LEGO DC Motor              | 2        | $15                   | [LEGO Shop](https://www.lego.com/en-us/product/m-motor-8883) |
-| LEGO Servo                 | 2        | $20                   | [LEGO Shop](https://www.lego.com/en-us/product/servo-motor-88004) |
+| LEGO DC Motor              | 2        | $45                   | [LEGO Shop](https://www.lego.com/en-us/product/m-motor-8883) |
+| LEGO Servo                 | 2        | $40                   | [LEGO Shop](https://www.lego.com/en-us/product/servo-motor-88004) |
 | 7.4V LiPo Battery          | 1        | $18                   | [Amazon](https://www.amazon.com/dp/B07KZ8YQJH) |
 | Power Bank (5V/2.5A)       | 1        | $20                   | [Amazon](https://www.amazon.com/dp/B07QK2SPP7) |
 | LEGO Chassis Parts         | -        | $50                   | [LEGO Shop](https://www.lego.com/en-us/themes/technic) |
@@ -744,7 +744,7 @@ Below is a chart of estimated costs for each major component, with purchase link
 | Miscellaneous Wires        | -        | $10                   | [Amazon](https://www.amazon.com/dp/B07GD2BWPY) |
 
 
-**Total Estimated Cost:** ~$283
+**Total Estimated Cost:** ~$343
 
 
 
